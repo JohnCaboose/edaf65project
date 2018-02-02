@@ -29,7 +29,7 @@ public class GameStateMonitor {
 		Coordinate.height = boardHeight;
 		this.playerSnakes = new ArrayList<Snake>(playerCount);
 		for(int i = 0; i < playerCount; i++) {
-			//TODO: Initialize player initial snake positions and directions
+			//TODO: Initialize player initial snake positions (whole body!) and directions(point away from body!)
 		}
 	}
 	
@@ -45,6 +45,15 @@ public class GameStateMonitor {
 		
 		//TODO: check collisions and kill snakes accordingly		
 		
+	}
+	
+	/**
+	 * Serializes the player snakes (the game state) as a json string
+	 * @return the json string for the snakes of the players
+	 */
+	public synchronized String getStateAsJson() {
+		//TODO: implement
+		return "";
 	}
 	
 	
