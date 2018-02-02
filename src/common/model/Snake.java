@@ -1,5 +1,6 @@
 package common.model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -7,6 +8,18 @@ import java.util.List;
  */
 public class Snake {
 	//public int score;
-	public Coordinate head;
-	public List<Coordinate> body;
+	public LinkedList<Coordinate> body;
+	
+	/**
+	 * Moves the snake one step in the direction provided
+	 * @param direction the direction to move the snake
+	 */
+	public void move(Direction direction) {
+		Coordinate head = body.removeFirst();
+		body.addFirst(body.removeLast());
+		body.getFirst().x = head.x;
+		body.getFirst().y = head.y;
+		head.move(direction);
+		body.addFirst(head);
+	}
 }

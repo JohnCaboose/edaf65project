@@ -39,11 +39,18 @@ public class GameStateMonitor {
 	 * This corresponds to a game logic "tick".
 	 */
 	public synchronized void updateGameState() {
-		for(int i = 0; i < playerDirections.size(); i++) {
-			//TODO: implement player movement logic
+		
+		for(int i = 0; i < playerSnakes.size(); i++) {
+			playerSnakes.get(i).move(playerDirections.get(i));
 		}
 		
+		//TODO: check collisions and kill snakes accordingly		
+		
 	}
+	
+	
+	
+	
 	/**
 	 * Changes the direction of one of the players
 	 * @param PlayerID the PlayerIdentity of the player to change direction for 
