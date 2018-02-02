@@ -3,6 +3,7 @@ package server.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import common.model.Coordinate;
 import common.model.Direction;
 import common.model.PlayerIdentity;
 import common.model.Snake;
@@ -14,7 +15,6 @@ import common.model.Snake;
 public class GameStateMonitor {
 	
 	private List<Direction> playerDirections;
-	private final int boardWidth, boardHeight;
 	private List<Snake> playerSnakes;
 	
 	/**
@@ -25,14 +25,13 @@ public class GameStateMonitor {
 	 */
 	public GameStateMonitor(int playerCount, int boardWidth, int boardHeight) {
 		playerDirections = new ArrayList<Direction>(playerCount);
-		this.boardWidth = boardWidth;
-		this.boardHeight = boardHeight;
+		Coordinate.width = boardWidth;
+		Coordinate.height = boardHeight;
 		this.playerSnakes = new ArrayList<Snake>(playerCount);
 		for(int i = 0; i < playerCount; i++) {
 			//TODO: Initialize player initial snake positions and directions
 		}
 	}
-	
 	
 	/**
 	 * Updates the game board positions and other game state variables based on current player input and previous state.

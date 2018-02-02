@@ -1,7 +1,6 @@
 package common.model;
 
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * The client and server common definition of a snake
