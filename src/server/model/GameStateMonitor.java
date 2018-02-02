@@ -16,6 +16,7 @@ public class GameStateMonitor {
 	
 	private List<Direction> playerDirections;
 	private List<Snake> playerSnakes;
+	private String jsonState;
 	
 	/**
 	 * Creates a new monitor that handles the game state-machine
@@ -44,7 +45,7 @@ public class GameStateMonitor {
 		}
 		
 		//TODO: check collisions and kill snakes accordingly		
-		
+		//TODO: Save state as json string
 	}
 	
 	/**
@@ -52,8 +53,7 @@ public class GameStateMonitor {
 	 * @return the json string for the snakes of the players
 	 */
 	public synchronized String getStateAsJson() {
-		//TODO: implement
-		return "";
+		return jsonState;
 	}
 	
 	
