@@ -5,6 +5,7 @@ import java.util.List;
 
 import common.model.Direction;
 import common.model.PlayerIdentity;
+import common.model.Snake;
 
 /**
  * The servers game state, implemented as a monitor
@@ -13,6 +14,8 @@ import common.model.PlayerIdentity;
 public class GameStateMonitor {
 	
 	private List<Direction> playerDirections;
+	private final int boardWidth, boardHeight;
+	private List<Snake> playerSnakes;
 	
 	/**
 	 * Creates a new monitor that handles the game state-machine
@@ -22,13 +25,23 @@ public class GameStateMonitor {
 	 */
 	public GameStateMonitor(int playerCount, int boardWidth, int boardHeight) {
 		playerDirections = new ArrayList<Direction>(playerCount);
+		this.boardWidth = boardWidth;
+		this.boardHeight = boardHeight;
+		this.playerSnakes = new ArrayList<Snake>(playerCount);
+		for(int i = 0; i < playerCount; i++) {
+			//TODO: Initialize player initial snake positions and directions
+		}
 	}
+	
 	
 	/**
 	 * Updates the game board positions and other game state variables based on current player input and previous state.
 	 * This corresponds to a game logic "tick".
 	 */
 	public synchronized void updateGameState() {
+		for(int i = 0; i < playerDirections.size(); i++) {
+			//TODO: implement player movement logic
+		}
 		
 	}
 	/**
