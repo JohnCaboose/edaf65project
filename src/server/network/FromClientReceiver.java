@@ -25,9 +25,10 @@ public class FromClientReceiver implements Runnable {
 	public void run() {
 		try (InputStream is = socket.getInputStream()){
 			//TODO: Use a good buffered stream instead so that json objects can be read as easily as possible using gson
-			//TODO: Read directions from inputstream
-			//TODO: once a direction has been read, update the gamestatemonitor
-			
+			while(true) {
+				//TODO: Read direction from stream
+				//TODO: Update gamestatemonitor with new direction
+			}
 		}catch (IOException e) {
 			e.printStackTrace();
 		}
