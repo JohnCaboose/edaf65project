@@ -31,7 +31,7 @@ public class GameStateMonitor {
 	 * @param boardHeight height of the game board
 	 */
 	public GameStateMonitor(int playerCount, int boardWidth, int boardHeight) {
-		playerDirections = new ArrayList<Direction>(playerCount);
+		
 		Coordinate.width = boardWidth;
 		Coordinate.height = boardHeight;
 		
@@ -62,10 +62,13 @@ public class GameStateMonitor {
 		initialDirections.add(Direction.RIGHT);
 		initialDirections.add(Direction.LEFT);
 		
+		playerDirections = new ArrayList<Direction>(playerCount);
 		ArrayList<Snake> playerSnakes = new ArrayList<Snake>(playerCount);
 		for(int i = 0; i < playerCount; i++) {
 			playerSnakes.add(new Snake(initialCorners.get(i), initialDirections.get(i), 3));
+			playerDirections.add(initialDirections.get(i));
 		}
+		
 		gameState = new GameState(playerSnakes);
 		updateJSONState();
 	}

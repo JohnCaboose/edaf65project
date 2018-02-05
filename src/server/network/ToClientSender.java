@@ -21,6 +21,7 @@ public class ToClientSender implements Runnable {
 
 	@Override
 	public void run() {
+		//TODO: Figure out how to send what player is each snake (playeridentity)
 		while(true) {
 			String stateAsJson = gameStateMonitor.getStateAsJson(playerIdentity);
 			//TODO: Send the gamestate string to outputstream, remember to flush
