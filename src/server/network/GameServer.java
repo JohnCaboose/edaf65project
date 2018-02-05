@@ -23,6 +23,8 @@ public class GameServer implements Runnable {
 	
 	private final GameStateMonitor gameStateMonitor;
 	
+	//TODO: Figure out how to send what player is each snake (playeridentity)
+	
 	/**
 	 * 
 	 * @param port server will listen to connections for this socket

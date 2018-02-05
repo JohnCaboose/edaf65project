@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import com.google.gson.Gson;
+
 import common.model.Coordinate;
 import common.model.Direction;
 import common.model.PlayerIdentity;
@@ -20,6 +22,7 @@ public class GameStateMonitor {
 	private final GameState gameState;
 	private String jsonState;
 	private final Map<PlayerIdentity,Integer> lastStateSent;
+	private final Gson gson = new Gson();
 	
 	/**
 	 * Creates a new monitor that handles the game state-machine
@@ -46,11 +49,24 @@ public class GameStateMonitor {
 				break;
 		}
 		
-		gameState = new GameState(new ArrayList<Snake>(playerCount));
-		for(int i = 0; i < playerCount; i++) {
-			//TODO: Initialize player initial snake positions (whole body!) and directions(point away from body!)
-		}
 		
+		//Define the initial spawn corners
+		ArrayList<Coordinate> initialCorners = new ArrayList<Coordinate>();
+		ArrayList<Direction> initialDirections = new ArrayList<Direction>();
+		initialCorners.add(new Coordinate(0,boardHeight-1));
+		initialCorners.add(new Coordinate(boardWidth-1, 0));
+		initialCorners.add(new Coordinate(0, 0));
+		initialCorners.add(new Coordinate(boardWidth-1, boardHeight-1));
+		initialDirections.add(Direction.UP);
+		initialDirections.add(Direction.DOWN);
+		initialDirections.add(Direction.RIGHT);
+		initialDirections.add(Direction.LEFT);
+		
+		ArrayList<Snake> playerSnakes = new ArrayList<Snake>(playerCount);
+		for(int i = 0; i < playerCount; i++) {
+			playerSnakes.add(new Snake(initialCorners.get(i), initialDirections.get(i), 3));
+		}
+		gameState = new GameState(playerSnakes);
 		updateJSONState();
 	}
 	
@@ -84,12 +100,9 @@ public class GameStateMonitor {
 		return jsonState;
 	}
 	
-	private void updateJSONState() {
-		//TODO: update the string jsonstate to match the current state
+	private synchronized void updateJSONState() {
+		jsonState = gson.toJson(gameState, GameState.class);
 	}
-	
-	
-	
 	
 	/**
 	 * Changes the direction of one of the players

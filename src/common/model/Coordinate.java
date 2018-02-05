@@ -6,6 +6,10 @@ public class Coordinate{
 	
 	public static int width, height;
 	
+	public Coordinate(int x, int y) {
+		this.x = x;
+		this.y = y;
+	}
 	@Override
 	public boolean equals(Object other) {
 		if(this == other) {
