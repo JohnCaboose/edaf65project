@@ -9,7 +9,8 @@ public class GameServer implements Runnable {
 	}
 
 	/**
-	 * Starts the game server, this is the only direct contact permissible between server and client classes
+	 * Starts the game server, this is run in the terminal separately from the client.
+	 * (The client being able to boot up a server will be added in a later step.)
 	 * 
 	 * @param args the parameters for starting the game server, defined as:<br/>
 	 * args[0] = portnumber (values from ? to ? acceptable, inclusive) <br/>
