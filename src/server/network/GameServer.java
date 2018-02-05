@@ -2,7 +2,12 @@ package server.network;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
+import java.rmi.UnexpectedException;
+import java.util.Map;
+import java.util.TreeMap;
 
+import common.model.PlayerIdentity;
 import server.model.GameStateMonitor;
 
 public class GameServer implements Runnable {
@@ -52,9 +57,26 @@ public class GameServer implements Runnable {
 	@Override
 	public void run() {
 		try (ServerSocket serverSocket = new ServerSocket(port)){
-			while(true) {
+			Map<PlayerIdentity,Boolean> connectedPlayers = new TreeMap<PlayerIdentity, Boolean>();
+			switch(playerCount) {
+				case 4:
+					connectedPlayers.put(PlayerIdentity.FOUR, false);
+				case 3:
+					connectedPlayers.put(PlayerIdentity.THREE, false);
+				case 2:
+					connectedPlayers.put(PlayerIdentity.TWO, false);
+				case 1:
+					connectedPlayers.put(PlayerIdentity.ONE, false);
+				default:
+					break;
+			}
+			while(connectedPlayers.containsValue(false)) {
 				//TODO: wait for players to connect
-				//TODO: run the game once all players are connected
+				Socket socket = serverSocket.accept();
+								
+			}
+			while(true) {
+				//TODO: run the game now that all players are connected
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

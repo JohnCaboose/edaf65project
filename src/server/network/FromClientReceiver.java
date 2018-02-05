@@ -5,14 +5,15 @@ import java.net.Socket;
 import common.model.PlayerIdentity;
 import server.model.GameStateMonitor;
 
-public class ConnectionToClient implements Runnable {
+public class FromClientReceiver implements Runnable {
 	
 	private final PlayerIdentity playerIdentity;
 	private final GameStateMonitor gameStateMonitor;
 	private final Socket socket;
+	//TODO: how should we handle the socket closing stuff in this and the other client-interacting class?
 	
 	
-	public ConnectionToClient(PlayerIdentity playerIdentity, GameStateMonitor gameStateMonitor, Socket socket) {
+	public FromClientReceiver(PlayerIdentity playerIdentity, GameStateMonitor gameStateMonitor, Socket socket) {
 		this.playerIdentity = playerIdentity;
 		this.gameStateMonitor = gameStateMonitor;
 		this.socket = socket;
@@ -20,9 +21,11 @@ public class ConnectionToClient implements Runnable {
 
 	@Override
 	public void run() {
-		//TODO: Read directions from inputstream
-		//TODO: Send the gamestate to outputstream
-		//TODO: Consider reading and sending to be implemented as different threads as they should be able to run independently of one another?
+		while(true) {
+			//TODO: Read directions from inputstream
+			//TODO: once a direction has been read, update the gamestatemonitor
+		}
+
 	}
 
 }
