@@ -1,11 +1,64 @@
 package server.network;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+
+import server.model.GameStateMonitor;
+
 public class GameServer implements Runnable {
+	private final int port;
+	private final int playerCount;
+	private final int width, height;
+	
+	private final int FIRST_LEGAL_PORT = 1024;
+	private final int LAST_LEGAL_PORT = 65535;
+	private final int LOWEST_LEGAL_PLAYERCOUNT = 1;
+	private final int HIGHEST_LEGAL_PLAYERCOUNT = 4;
+	private final int SMALLEST_SIZE_FIELD = 20;
+	
+	private final GameStateMonitor gameStateMonitor;
+	
+	/**
+	 * 
+	 * @param port server will listen to connections for this socket
+	 * @param playerCount the amount of players for the game
+	 * @param width size of game board width
+	 * @param height size of game board height
+	 * @throws IllegalArgumentException when any of the parameters are not in a permissable range
+	 */
+	public GameServer(int port, int playerCount, int width, int height) throws IllegalArgumentException{
+		if(port >= FIRST_LEGAL_PORT && port <= LAST_LEGAL_PORT) {
+			this.port = port;
+		} else {
+			throw new IllegalArgumentException(String.format("Port supplied (%d) is out of range.", port));
+		}
+		if(playerCount >= LOWEST_LEGAL_PLAYERCOUNT && playerCount <= HIGHEST_LEGAL_PLAYERCOUNT) {
+			this.playerCount = playerCount;
+		} else {
+			throw new IllegalArgumentException(String.format("Amount of players supplied (%d) is out of range.", playerCount));
+		}
+		if(width >= SMALLEST_SIZE_FIELD && height >= SMALLEST_SIZE_FIELD) {
+			this.width = width;
+			this.height = height;
+		} else {
+			throw new IllegalArgumentException(String.format("Size of field supplied (%d,%d) must not be too small (minimum side length is %d).", width,height,SMALLEST_SIZE_FIELD));
+		}
+		
+		gameStateMonitor = new GameStateMonitor(this.playerCount, this.width, this.height);
+		
+	}
+	
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-
+		try (ServerSocket serverSocket = new ServerSocket(port)){
+			while(true) {
+				//TODO: wait for players to connect
+				//TODO: run the game once all players are connected
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -20,7 +73,21 @@ public class GameServer implements Runnable {
 	 *  
 	 */
 	public static void main(String[] args) {
-		
+		if(args.length == 4) {
+			int port = Integer.parseInt(args[0]);
+			int playerCount = Integer.parseInt(args[1]);
+			int width = Integer.parseInt(args[2]);
+			int height = Integer.parseInt(args[3]);
+			try {
+				GameServer gameServer = new GameServer(port, playerCount, width, height);
+				new Thread(gameServer).start();
+			} catch (IllegalArgumentException e) {
+				e.printStackTrace();
+				System.exit(-1);
+			}
+		} else {
+			System.err.println("Wrong number of arguments. See javadoc for class GameServer for more information.");
+		}
 		
 	}
 }
