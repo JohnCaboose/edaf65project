@@ -80,6 +80,7 @@ public class GameStateMonitor {
 				e.printStackTrace();
 			}
 		}
+		lastStateSent.put(playerIdentity, gameState.getTickCounter());
 		return jsonState;
 	}
 	
