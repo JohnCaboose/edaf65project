@@ -19,6 +19,7 @@ public class GameServer implements Runnable {
 	private final int LOWEST_LEGAL_PLAYERCOUNT = 1;
 	private final int HIGHEST_LEGAL_PLAYERCOUNT = 4;
 	private final int SMALLEST_SIZE_FIELD = 20;
+	private final int MILLIS_PER_STATE_FRAME = 1000;
 	
 	private final GameStateMonitor gameStateMonitor;
 	
@@ -69,14 +70,27 @@ public class GameServer implements Runnable {
 				default:
 					break;
 			}
+			//Wait for all players to connect
 			while(connectedPlayers.containsValue(false)) {
-				//TODO: wait for players to connect
 				Socket socket = serverSocket.accept();
-				//Spin up threads for the players
-								
+				for(PlayerIdentity identity : connectedPlayers.keySet()) {
+					if(!connectedPlayers.get(identity)) {
+						new Thread(new ToClientSender(identity, gameStateMonitor, socket)).start();
+						new Thread(new FromClientReceiver(identity, gameStateMonitor, socket)).start();
+						connectedPlayers.put(identity, true);
+						break;
+					}
+				}
 			}
+			//Start game
 			while(true) {
-				//TODO: run the game now that all players are connected
+				long frameStartTime = System.currentTimeMillis();
+				gameStateMonitor.updateGameState();
+				try {
+					Thread.sleep(frameStartTime + MILLIS_PER_STATE_FRAME - System.currentTimeMillis());
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
