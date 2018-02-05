@@ -14,11 +14,12 @@ public class Snake {
 	 * @param direction the direction to move the snake
 	 */
 	public void move(Direction direction) {
-		Coordinate head = body.removeFirst();
+		//Take last body part of snake and put it first (make it new head)
 		body.addFirst(body.removeLast());
-		body.getFirst().x = head.x;
-		body.getFirst().y = head.y;
-		head.move(direction);
-		body.addFirst(head);
+		//Give the new head the old head's coordinates
+		body.getFirst().x = body.get(1).x;
+		body.getFirst().y = body.get(1).y;
+		//Move the new head
+		body.getFirst().move(direction);
 	}
 }
