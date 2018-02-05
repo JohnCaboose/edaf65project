@@ -46,14 +46,12 @@ public class GameStateMonitor {
 				break;
 		}
 		
-		gameState = new GameState();
-		gameState.playerSnakes = new ArrayList<Snake>(playerCount);
+		gameState = new GameState(new ArrayList<Snake>(playerCount));
 		for(int i = 0; i < playerCount; i++) {
 			//TODO: Initialize player initial snake positions (whole body!) and directions(point away from body!)
 		}
 		
-		//TODO: set initial JSON state string
-		
+		updateJSONState();
 	}
 	
 	/**
@@ -61,12 +59,12 @@ public class GameStateMonitor {
 	 * This corresponds to a game logic "tick".
 	 */
 	public synchronized void updateGameState() {		
-		for(int i = 0; i < gameState.playerSnakes.size(); i++) {
-			gameState.playerSnakes.get(i).move(playerDirections.get(i));
+		for(int i = 0; i < gameState.getPlayerSnakes().size(); i++) {
+			gameState.getPlayerSnakes().get(i).move(playerDirections.get(i));
 		}
 		
 		//TODO: check collisions and kill snakes accordingly		
-		//TODO: Save state as json string
+		updateJSONState();
 		this.notifyAll();
 	}
 	
@@ -75,7 +73,7 @@ public class GameStateMonitor {
 	 * @return the JSON string for the snakes of the players
 	 */
 	public synchronized String getStateAsJson(PlayerIdentity playerIdentity) {
-		while(gameState.tickCounter <= lastStateSent.get(playerIdentity)) {
+		while(gameState.getTickCounter() <= lastStateSent.get(playerIdentity)) {
 			try {
 				this.wait();
 			} catch (InterruptedException e) {
@@ -83,6 +81,10 @@ public class GameStateMonitor {
 			}
 		}
 		return jsonState;
+	}
+	
+	private void updateJSONState() {
+		//TODO: update the string jsonstate to match the current state
 	}
 	
 	

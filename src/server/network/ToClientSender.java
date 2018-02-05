@@ -23,7 +23,7 @@ public class ToClientSender implements Runnable {
 	public void run() {
 		while(true) {
 			String stateAsJson = gameStateMonitor.getStateAsJson(playerIdentity);
-			//TODO: Send the gamestate to outputstream, remember to flush
+			//TODO: Send the gamestate string to outputstream, remember to flush
 		}
 	}
 	

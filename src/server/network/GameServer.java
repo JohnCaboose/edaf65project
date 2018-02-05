@@ -3,7 +3,6 @@ package server.network;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.rmi.UnexpectedException;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -73,6 +72,7 @@ public class GameServer implements Runnable {
 			while(connectedPlayers.containsValue(false)) {
 				//TODO: wait for players to connect
 				Socket socket = serverSocket.accept();
+				//Spin up threads for the players
 								
 			}
 			while(true) {

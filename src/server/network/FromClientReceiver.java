@@ -1,5 +1,7 @@
 package server.network;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.Socket;
 
 import common.model.PlayerIdentity;
@@ -21,11 +23,14 @@ public class FromClientReceiver implements Runnable {
 
 	@Override
 	public void run() {
-		while(true) {
+		try (InputStream is = socket.getInputStream()){
+			//TODO: Use a good buffered stream instead so that json objects can be read as easily as possible using gson
 			//TODO: Read directions from inputstream
 			//TODO: once a direction has been read, update the gamestatemonitor
+			
+		}catch (IOException e) {
+			e.printStackTrace();
 		}
-
 	}
 
 }
