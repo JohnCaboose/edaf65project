@@ -1,6 +1,6 @@
 # How to use View
 
-The class `View` is a monitor which consists of a grid of `Tile`s representing the play field. Every `Tile` on the play field can be colored by calling `View.color(int, int, String)`. At the time of writing, five different colors are supported:
+The class `View` is a monitor which consists of a grid of `Tile`s representing the play field. Every `Tile` on the play field can be colored by calling `View.colorTileAt(int, int, String)`. At the time of writing, five different colors are supported:
 
 * Red
 * Green
