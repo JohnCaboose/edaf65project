@@ -1,22 +1,27 @@
 package client.view;
 
-import java.awt.Dimension;
-
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
+@SuppressWarnings("serial")
 public class MainFrame extends JFrame {
-	private static final long serialVersionUID = -7805775198833044790L;
-	private static final int WIDTH = 500;
-	private static final int HEIGHT = 500;
 
-	public MainFrame(String title) {
+	// TODO: better names
+	private TopPanel top;
+	private MiddlePanel middle;
+	private BottomPanel bottom;
+
+	public MainFrame(String title, int rows, int cols) {
 		super(title);
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-		setPreferredSize(new Dimension(WIDTH, HEIGHT));
-		add(new TopPanel());
-		add(new MiddlePanel());
-		add(new BottomPanel());
+		add(top = new TopPanel());
+		add(middle = new MiddlePanel(rows, cols));
+		add(bottom = new BottomPanel());
+	}
+
+	/* Forwarding */
+	public void colorTileAt(int x, int y, String color) {
+		middle.colorTileAt(x, y, color);
 	}
 
 }
