@@ -3,10 +3,7 @@ package server.network;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Map;
-import java.util.TreeMap;
 
-import common.model.PlayerIdentity;
 import server.model.GameStateMonitor;
 
 public class GameServer implements Runnable {

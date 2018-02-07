@@ -1,8 +1,5 @@
 package server.network;
 
-import java.net.Socket;
-
-import common.model.PlayerIdentity;
 import server.model.GameStateMonitor;
 
 public class ToClientsSender implements Runnable {
