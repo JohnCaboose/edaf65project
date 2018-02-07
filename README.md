@@ -1,4 +1,4 @@
-# MultiSnake - EDAF65 Projekt
+# MultiSnake - EDAF65 Projektspecifikation
 
 Vi ska göra en implementation av spelet snake.
 
@@ -21,3 +21,7 @@ Vi vill använda MVC-modellen. Vyn visar spelplanen och modellen bevarar spelets
 2. Om ormarna krockar ska det detekteras och ormar dör
 3. Ormarna blir längre med tiden
 4. Lägga till mat slumpmässigt
+
+# Klassdiagram
+Gå in på denna länk för att lägga till eller ändra klasser i klassdiagrammet:
+[Projektet i draw.io, redigerbart från LU-konton](https://drive.google.com/file/d/1ySFAS2BC3kVP5scLmQCLO6bZMZbVb02T/view?usp=sharing)
