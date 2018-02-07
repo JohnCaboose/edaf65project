@@ -57,30 +57,11 @@ public class GameServer implements Runnable {
 	@Override
 	public void run() {
 		try (ServerSocket serverSocket = new ServerSocket(port)){
-			Map<PlayerIdentity,Boolean> connectedPlayers = new TreeMap<PlayerIdentity, Boolean>();
-			switch(playerCount) {
-				case 4:
-					connectedPlayers.put(PlayerIdentity.FOUR, false);
-				case 3:
-					connectedPlayers.put(PlayerIdentity.THREE, false);
-				case 2:
-					connectedPlayers.put(PlayerIdentity.TWO, false);
-				case 1:
-					connectedPlayers.put(PlayerIdentity.ONE, false);
-				default:
-					break;
-			}
 			//Wait for all players to connect
-			while(connectedPlayers.containsValue(false)) {
+			new Thread(new ToClientsSender(gameStateMonitor)).start();
+			while(!gameStateMonitor.allPlayersConnected()) {
 				Socket socket = serverSocket.accept();
-				for(PlayerIdentity identity : connectedPlayers.keySet()) {
-					if(!connectedPlayers.get(identity)) {
-						new Thread(new ToClientSender(identity, gameStateMonitor, socket)).start();
-						new Thread(new FromClientReceiver(identity, gameStateMonitor, socket)).start();
-						connectedPlayers.put(identity, true);
-						break;
-					}
-				}
+				gameStateMonitor.addPlayer(socket);
 			}
 			//Start game
 			while(true) {
@@ -95,6 +76,7 @@ public class GameServer implements Runnable {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		System.exit(0);
 	}
 
 	/**
@@ -102,7 +84,7 @@ public class GameServer implements Runnable {
 	 * (The client being able to boot up a server will be added in a later step.)
 	 * 
 	 * @param args the parameters for starting the game server, defined as:<br/>
-	 * args[0] = portnumber (values from ? to ? acceptable, inclusive) <br/>
+	 * args[0] = portnumber (values from 1024 to 65535 acceptable, inclusive) <br/>
 	 * args[1] = number of players (values from 1 to 4 acceptable, inclusive) <br/>
 	 * args[2] = width of game board <br/>
 	 * args[3] = height of game board <br/>

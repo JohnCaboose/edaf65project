@@ -15,9 +15,10 @@ import com.google.gson.Gson;
 
 import common.model.Coordinate;
 import common.model.GameState;
+import common.model.PacketType;
 import common.model.Snake;
 
-public class JSONTests {
+public class ProtocolAndJSONTests {
 
 	private static Gson gson;
 
@@ -64,6 +65,13 @@ public class JSONTests {
 		}
 		assertEquals(expectedstate.getTickCounter(), convertedstate.getTickCounter());
 
+	}
+	
+	@Test
+	public void testEnumConversion() {
+		assertEquals("DIRECTION", PacketType.DIRECTION.name());
+		assertEquals("GAMESTATE", PacketType.GAMESTATE.name());
+		assertEquals("PLAYERIDENTITY", PacketType.PLAYERIDENTITY.name());
 	}
 
 }
