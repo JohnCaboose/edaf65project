@@ -8,13 +8,13 @@ import common.model.PlayerIdentity;
 import server.model.GameStateMonitor;
 
 public class FromClientReceiver implements Runnable {
-	
+
 	private final PlayerIdentity playerIdentity;
 	private final GameStateMonitor gameStateMonitor;
 	private final Socket socket;
-	//TODO: how should we handle the socket closing stuff in this and the other client-interacting class?
-	
-	
+	// TODO: how should we handle the socket closing stuff in this and the other
+	// client-interacting class?
+
 	public FromClientReceiver(PlayerIdentity playerIdentity, GameStateMonitor gameStateMonitor, Socket socket) {
 		this.playerIdentity = playerIdentity;
 		this.gameStateMonitor = gameStateMonitor;
@@ -28,8 +28,9 @@ public class FromClientReceiver implements Runnable {
 			while(true) {
 				//TODO: Read direction from stream
 				//TODO: Update gamestatemonitor with new direction
+
 			}
-		}catch (IOException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

@@ -40,4 +40,12 @@ public class View {
 		frame.colorTileAt(x, y, color);
 		notifyAll();
 	}
+
+	public synchronized void clearPlayField() {
+		for (int x = 0; x < FIELD_SIZE_X; x++) {
+			for (int y = 0; y < FIELD_SIZE_Y; y++) {
+				colorTileAt(x, y, "black");
+			}
+		}
+	}
 }

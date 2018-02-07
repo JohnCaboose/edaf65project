@@ -26,7 +26,7 @@ Vi vill använda MVC-modellen. Vyn visar spelplanen och modellen bevarar spelets
 Gå in på denna länk för att lägga till eller ändra klasser i klassdiagrammet:
 [Projektet i draw.io, redigerbart från LU-konton](https://drive.google.com/file/d/1ySFAS2BC3kVP5scLmQCLO6bZMZbVb02T/view?usp=sharing)
 
-##Protokoll
+## Protokoll
 Spelet använder följande protokoll för att kommunicera mellan server och klient:
 
 ```
@@ -34,4 +34,5 @@ Spelet använder följande protokoll för att kommunicera mellan server och klie
 ```
 
 Där type är namnen på PacketType enums: DIRECTION, GAMESTATE, PLAYERIDENTITY
+
 Och jsonContents är jsonrepresentationen av ett Direction, GameState, och PlayerIdentity objekt, respektive.
