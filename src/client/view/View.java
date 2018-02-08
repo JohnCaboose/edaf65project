@@ -6,8 +6,8 @@ import javax.swing.SwingUtilities;
 /* Monitor for the GUI */
 public class View {
 	private final static String WINDOW_TITLE = "MultiSnake";
-	private static final int FIELD_SIZE_X = 16;
-	private static final int FIELD_SIZE_Y = 16;
+	public static final int FIELD_SIZE_X = 24;
+	public static final int FIELD_SIZE_Y = 24;
 	private MainFrame frame;
 	private boolean visible;
 
