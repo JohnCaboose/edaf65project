@@ -12,7 +12,7 @@ public class FromClientReceiver implements Runnable {
 	private final PlayerIdentity playerIdentity;
 	private final GameStateMonitor gameStateMonitor;
 	private final Socket socket;
-	//TODO: how should we handle the socket closing stuff in this and the other client-interacting class?
+	// TODO: how should we handle the socket closing stuff in this and the other client-interacting class?
 	
 	
 	public FromClientReceiver(PlayerIdentity playerIdentity, GameStateMonitor gameStateMonitor, Socket socket) {
