@@ -10,6 +10,8 @@ public class Snake {
 	//public int score;
 	private LinkedList<Coordinate> body;
 	private Direction travelDirection;
+	private boolean alive; 
+	//TODO: implement what a snake being dead/alive means
 	
 	/**
 	 * Creates a new snake

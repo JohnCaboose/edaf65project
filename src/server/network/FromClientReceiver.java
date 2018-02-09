@@ -12,7 +12,7 @@ public class FromClientReceiver implements Runnable {
 	private final PlayerIdentity playerIdentity;
 	private final GameStateMonitor gameStateMonitor;
 	private final Socket socket;
-	// TODO: how should we handle the socket closing stuff in this and the other client-interacting class? 
+	// TODO: how should we handle the socket closing stuff in this and the other client-interacting class? Kill snakes, remove the player and stuff
 
 	public FromClientReceiver(PlayerIdentity playerIdentity, GameStateMonitor gameStateMonitor, Socket socket) {
 		this.playerIdentity = playerIdentity;
@@ -26,8 +26,7 @@ public class FromClientReceiver implements Runnable {
 			//TODO: Use a good buffered stream instead so that json objects can be read as easily as possible using gson?
 			while(true) {
 				//TODO: Read direction from stream
-				//TODO: Update gamestatemonitor with new direction
-
+				//TODO: Update gamestatemonitor with new direction, when updating do no allow snake to walk "backwards" into itself, ignore the command if so
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
