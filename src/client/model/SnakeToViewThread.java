@@ -1,5 +1,6 @@
 package client.model;
 
+import common.model.Snake;
 import java.util.Queue;
 
 import client.view.View;

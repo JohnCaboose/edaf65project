@@ -22,7 +22,7 @@ import common.model.PacketType;
  * The servers game state, implemented as a monitor
  */
 public class GameStateMonitor {
-	
+	//TODO: use snakes directions instead of this variable
 	private final List<Direction> playerDirections;
 	private final GameState gameState;
 	private String jsonState;
@@ -55,7 +55,7 @@ public class GameStateMonitor {
 				playerSockets.put(PlayerIdentity.ONE, null);
 			default:
 				break;
-	}
+		}
 		
 		//Define the initial spawn corners
 		ArrayList<Coordinate> initialCorners = new ArrayList<Coordinate>();
@@ -88,7 +88,7 @@ public class GameStateMonitor {
 		for(int i = 0; i < gameState.getPlayerSnakes().size(); i++) {
 			gameState.getPlayerSnakes().get(i).move(playerDirections.get(i));
 		}
-		
+		//TODO: update tickCounter
 		//TODO: check collisions and kill snakes accordingly		
 		updateJSONState();
 		this.notifyAll();

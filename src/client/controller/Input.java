@@ -1,9 +1,9 @@
 package client.controller;
 
+import common.model.Snake;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-import client.model.Snake;
 import client.model.SnakeToViewThread;
 import client.view.View;
 import common.model.Direction;
