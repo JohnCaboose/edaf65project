@@ -14,7 +14,7 @@ public class MainFrame extends JFrame {
 	public MainFrame(String title, int rows, int cols) {
 		super(title);
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-		add(top = new TopPanel());
+		add(top = new TopPanel("blue"));
 		add(middle = new MiddlePanel(rows, cols));
 		add(bottom = new BottomPanel());
 	}
@@ -22,6 +22,12 @@ public class MainFrame extends JFrame {
 	/* Forwarding */
 	public void colorTileAt(int x, int y, String color) {
 		middle.colorTileAt(x, y, color);
+	}
+
+	/* Forwarding */
+	public void displayDeadSnakeStatus() {
+		top.displayDeadSnakeStatus();
+		
 	}
 
 }

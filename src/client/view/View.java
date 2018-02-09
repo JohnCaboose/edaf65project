@@ -25,12 +25,22 @@ public class View {
 		});
 	}
 
-	/* Called by AWT event dispatching thread. */
+	/* Called by the AWT event dispatching thread. */
 	private synchronized void setVisible(boolean on) {
 		visible = on;
 		notifyAll();
 	}
 
+	/**
+	 * Colors the specified tile with the specified color in the play field.
+	 * 
+	 * @param x
+	 *            the x coordinate of the specified tile
+	 * @param y
+	 *            the y coordinate of the specified tile
+	 * @param color
+	 *            what color to paint on the specified tile
+	 */
 	public synchronized void colorTileAt(int x, int y, String color) {
 		try {
 			while (!visible)
@@ -40,12 +50,8 @@ public class View {
 		frame.colorTileAt(x, y, color);
 		notifyAll();
 	}
-
-	public synchronized void clearPlayField() {
-		for (int x = 0; x < FIELD_SIZE_X; x++) {
-			for (int y = 0; y < FIELD_SIZE_Y; y++) {
-				colorTileAt(x, y, "black");
-			}
-		}
+	
+	public synchronized void displayDeadSnakeStatus() {
+		frame.displayDeadSnakeStatus();
 	}
 }

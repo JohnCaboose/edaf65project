@@ -59,6 +59,9 @@ public class SnakeToViewThread extends Thread {
 				moveSnake();
 				moveSnake();
 				
+				/* For testing purposes */
+				v.displayDeadSnakeStatus();
+				
 			} catch (InterruptedException e) {
 			}
 		}

@@ -30,6 +30,8 @@ public class Tile extends JLabel {
 			c = Color.blue;
 		} else if (arg.equals("orange")) {
 			c = Color.orange;
+		} else if (arg.equals("red")) {
+			c = Color.red;
 		} else {
 			c = Color.black; /* Default color */
 		}
