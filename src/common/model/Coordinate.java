@@ -13,7 +13,6 @@ public class Coordinate {
 		moveTo(x, y);
 	}
 
-	@Override
 	public boolean equals(Object other) {
 		if (this == other) {
 			return true;
@@ -76,43 +75,12 @@ public class Coordinate {
 	}
 
 	/**
-	 * <p>
-	 * Helper function for client.model.Snake. May be removed later.
-	 * </p>
+	 * Returns a <code>String</code> representation of this coordinate.
 	 * 
-	 * <p>
-	 * Returns a new Coordinate which is <code>offset</code> units away from the
-	 * <code>head</code> in the <b>negative</b> direction <code>dir</code>. Used
-	 * when initially creating a new snake.
-	 * </p>
-	 * 
-	 * @param head
-	 *            the head of the snake
-	 * @param dir
-	 *            the travel direction of the snake
-	 * @param offset
-	 *            the distance between the returning coordinate and the head of
-	 *            the snake
+	 * @return the <code>String</code> representation of this coordinate
 	 */
-	public static Coordinate foo(Coordinate head, Direction dir, int offset) {
-		int x = head.x;
-		int y = head.y;
-		switch (dir) {
-		case UP:
-			y += offset;
-			break;
-		case DOWN:
-			y -= offset;
-			break;
-		case LEFT:
-			x += offset;
-			break;
-		case RIGHT:
-			x -= offset;
-			break;
-		}
-		Coordinate coord = new Coordinate(x, y);
-		return coord;
+	public String toString() {
+		return String.format("(%d, %d)", x, y);
 	}
 
 }

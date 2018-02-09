@@ -12,21 +12,21 @@ public class SnakeToViewThread extends Thread {
 	private Snake snake;
 	private View v;
 	private String color;
-	private static final long delay = 250;
+	private static final long delay = 200;
 
 	public SnakeToViewThread(View v) {
 		this.v = v;
 		color = "blue";
 		Coordinate head = new Coordinate(10, 10);
 		Direction dir = Direction.RIGHT;
-		int size = 4;
+		int size = 10;
 		snake = new Snake(head, dir, size);
 	}
 
 	public void run() {
 		while (true) {
 			try {
-				snake.setDirection(Direction.RIGHT);
+				snake.setDirection(Direction.LEFT);
 				moveSnake();
 				moveSnake();
 				moveSnake();
@@ -35,21 +35,11 @@ public class SnakeToViewThread extends Thread {
 				moveSnake();
 				moveSnake();
 				moveSnake();
-				snake.setDirection(Direction.LEFT);
+				snake.setDirection(Direction.RIGHT);
 				
 				moveSnake();
 				moveSnake();
 				moveSnake();
-				moveSnake();
-				moveSnake();
-				moveSnake();
-				snake.setDirection(Direction.UP);
-				
-				moveSnake();
-				moveSnake();
-				moveSnake();
-				snake.setDirection(Direction.LEFT);
-				
 				moveSnake();
 				moveSnake();
 				moveSnake();
@@ -60,25 +50,38 @@ public class SnakeToViewThread extends Thread {
 				moveSnake();
 				snake.setDirection(Direction.RIGHT);
 				
+				moveSnake();
+				moveSnake();
+				moveSnake();
+				snake.setDirection(Direction.UP);
+				
+				moveSnake();
+				moveSnake();
+				moveSnake();
+				
 			} catch (InterruptedException e) {
 			}
 		}
 	}
 
 	private void moveSnake() throws InterruptedException {
-		Coordinate tail = snake.getTail();
-		int x = tail.x;
-		int y = tail.y;
+		Thread.sleep(delay);
+		removePreviouslyPaintedSnake();
 		snake.moveForward();
 		paintSnake();
-		v.colorTileAt(x, y, "black");
-		Thread.sleep(delay);
 	}
 
 	private void paintSnake() {
 		LinkedList<Coordinate> occupiedSpaces = snake.getOccupiedSpaces();
 		for (Coordinate coordinate : occupiedSpaces) {
 			v.colorTileAt(coordinate.x, coordinate.y, color);
+		}
+	}
+	
+	private void removePreviouslyPaintedSnake() {
+		LinkedList<Coordinate> occupiedSpaces = snake.getOccupiedSpaces();
+		for (Coordinate coordinate : occupiedSpaces) {
+			v.colorTileAt(coordinate.x, coordinate.y, "black");
 		}
 	}
 }
