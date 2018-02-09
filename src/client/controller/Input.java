@@ -1,34 +1,24 @@
 package client.controller;
 
 import common.model.Snake;
-import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
-
-import client.model.SnakeToViewThread;
-import client.view.View;
+import java.awt.event.KeyListener;
 import common.model.Direction;
+import client.view.View;
 
 /* In this package we can have classes that deal with user input */
 /* Interpreted (parsed) input should affect the state of the model */
-public class Input implements java.awt.event.ActionListener {
+public class Input implements KeyListener {
 	private Snake modelSnake;
-	private SnakeToViewThread snakeToView;
-	private View view; //needed?
 	private int key;
 	private boolean W = false;
     private boolean A = true;
     private boolean S = false;
     private boolean D = false;
+    private View observer;
     
-	public Input(Snake model, View view) {
+	public Input(Snake model) {
 		this.modelSnake = model;
-		this.view = view;
-		snakeToView = new SnakeToViewThread(view);
-	}
-	
-	public void actionPerformed(ActionEvent e) {
-			Object source = e.getSource();
-			//call model's method/s
 	}
     
     public void keyPressed(KeyEvent ke) {
@@ -70,4 +60,8 @@ public class Input implements java.awt.event.ActionListener {
         S = false;
         D = false;
     }
+
+	public void keyTyped(KeyEvent ke) {
+		
+	}
 }
