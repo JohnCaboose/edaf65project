@@ -1,5 +1,7 @@
 package server.model;
 
+import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,17 +13,21 @@ import common.model.Coordinate;
 import common.model.Direction;
 import common.model.PlayerIdentity;
 import common.model.Snake;
+import server.network.FromClientReceiver;
 import common.model.GameState;
+import common.model.PacketHandler;
+import common.model.PacketType;
 
 /**
  * The servers game state, implemented as a monitor
  */
 public class GameStateMonitor {
-	
+	//TODO: use snakes directions instead of this variable
 	private final List<Direction> playerDirections;
 	private final GameState gameState;
 	private String jsonState;
-	private final Map<PlayerIdentity,Integer> lastStateSent;
+	private int lastStateSent;
+	private final Map<PlayerIdentity,Socket> playerSockets;
 	private final Gson gson = new Gson();
 	
 	/**
@@ -35,20 +41,21 @@ public class GameStateMonitor {
 		Coordinate.width = boardWidth;
 		Coordinate.height = boardHeight;
 		
-		lastStateSent = new TreeMap<PlayerIdentity,Integer>();
+		lastStateSent = -2;
+		playerSockets = new TreeMap<PlayerIdentity, Socket>();
+		
 		switch(playerCount) {
 			case 4:
-				lastStateSent.put(PlayerIdentity.FOUR, -2);
+				playerSockets.put(PlayerIdentity.FOUR, null);
 			case 3:
-				lastStateSent.put(PlayerIdentity.THREE, -2);
+				playerSockets.put(PlayerIdentity.THREE, null);
 			case 2:
-				lastStateSent.put(PlayerIdentity.TWO, -2);
+				playerSockets.put(PlayerIdentity.TWO, null);
 			case 1:
-				lastStateSent.put(PlayerIdentity.ONE, -2);
+				playerSockets.put(PlayerIdentity.ONE, null);
 			default:
 				break;
 		}
-		
 		
 		//Define the initial spawn corners
 		ArrayList<Coordinate> initialCorners = new ArrayList<Coordinate>();
@@ -81,26 +88,63 @@ public class GameStateMonitor {
 		for(int i = 0; i < gameState.getPlayerSnakes().size(); i++) {
 			gameState.getPlayerSnakes().get(i).move(playerDirections.get(i));
 		}
-		
+		gameState.incrementTickCounter();
 		//TODO: check collisions and kill snakes accordingly		
 		updateJSONState();
 		this.notifyAll();
 	}
 	
 	/**
+	 * Adds a new player to the game, sends the playerIdentity to the player
+	 * @param socket the socket of the player
+	 */
+	public synchronized void addPlayer(Socket socket) {	
+		for(PlayerIdentity identity : playerSockets.keySet()) {
+			if(playerSockets.get(identity) == null) {
+				playerSockets.put(identity, socket);
+				String message = PacketHandler.createProtocolPacket(PacketType.PLAYERIDENTITY, gson.toJson(identity, PlayerIdentity.class));
+				try {
+					socket.getOutputStream().write(message.getBytes());
+					socket.getOutputStream().flush();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				new Thread(new FromClientReceiver(identity, this, socket)).start();
+				break;
+			}
+		}
+		
+	}
+	/**
+	 * Check if all players have connected to the session
+	 * @return true if all players are connected, false otherwise
+	 */
+	public synchronized boolean allPlayersConnected() {
+		return !playerSockets.containsValue(null);
+	}
+	
+	/**
 	 * Serializes the player snakes (the game state) as a JSON string
 	 * @return the JSON string for the snakes of the players
 	 */
-	public synchronized String getStateAsJson(PlayerIdentity playerIdentity) {
-		while(gameState.getTickCounter() <= lastStateSent.get(playerIdentity)) {
+	public synchronized void broadcastState() {
+		while(gameState.getTickCounter() <= lastStateSent) {
 			try {
 				this.wait();
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
-		lastStateSent.put(playerIdentity, gameState.getTickCounter());
-		return jsonState;
+		lastStateSent = gameState.getTickCounter();
+		for(Socket s : playerSockets.values()) {
+			try {
+				s.getOutputStream().write(jsonState.getBytes());
+				s.getOutputStream().flush();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		}
 	}
 	
 	private synchronized void updateJSONState() {

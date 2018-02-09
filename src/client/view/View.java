@@ -6,8 +6,8 @@ import javax.swing.SwingUtilities;
 /* Monitor for the GUI */
 public class View {
 	private final static String WINDOW_TITLE = "MultiSnake";
-	private static final int FIELD_SIZE_X = 16;
-	private static final int FIELD_SIZE_Y = 16;
+	public static final int FIELD_SIZE_X = 24;
+	public static final int FIELD_SIZE_Y = 24;
 	private MainFrame frame;
 	private boolean visible;
 
@@ -39,5 +39,13 @@ public class View {
 		}
 		frame.colorTileAt(x, y, color);
 		notifyAll();
+	}
+
+	public synchronized void clearPlayField() {
+		for (int x = 0; x < FIELD_SIZE_X; x++) {
+			for (int y = 0; y < FIELD_SIZE_Y; y++) {
+				colorTileAt(x, y, "black");
+			}
+		}
 	}
 }

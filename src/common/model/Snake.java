@@ -1,13 +1,15 @@
 package common.model;
 
 import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * The client and server common definition of a snake
  */
 public class Snake {
 	//public int score;
-	public LinkedList<Coordinate> body;
+	private LinkedList<Coordinate> body;
+	private Direction travelDirection;
 	
 	/**
 	 * Creates a new snake
@@ -20,7 +22,7 @@ public class Snake {
 		int startY = tail.y;
 		body = new LinkedList<Coordinate>();
 		for(int i = 0; i< length; i++) {
-			body.add(new Coordinate(startX, startY));
+			body.addFirst(new Coordinate(startX, startY));
 		}
 		for(int i = 0; i< length; i++) {
 			Coordinate c = body.get(i);
@@ -43,5 +45,42 @@ public class Snake {
 		body.getFirst().y = body.get(1).y;
 		//Move the new head
 		body.getFirst().move(direction);
+	}
+	
+	/**
+	 * Moves this snake one space forward in its assigned traveling direction.
+	 * All pieces of the snake that come after its head will follow.
+	 */
+	public void moveForward() {
+		move(this.travelDirection);
+	}
+	
+	/**
+	 * Returns the length of this snake.
+	 * 
+	 * @return the length of the snake
+	 */
+	public int length() {
+		return body.size();
+	}
+
+	/**
+	 * Assigns a new direction to this snake.
+	 * 
+	 * @param dir
+	 *            the direction to change to
+	 */
+	public void setDirection(Direction dir) {
+		travelDirection = dir;
+	}
+
+	/**
+	 * Returns an array of coordinates which explain which spaces this snake is
+	 * occupying. The coordinates are sorted from head to tail.
+	 * 
+	 * @return an array of coordinates occupied by the snake
+	 */
+	public Queue<Coordinate> getOccupiedSpaces() {
+		return body;
 	}
 }
