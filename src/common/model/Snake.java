@@ -82,7 +82,11 @@ public class Snake {
 	 * 
 	 * @return an array of coordinates occupied by the snake
 	 */
-	public Queue<Coordinate> getOccupiedSpaces() {
+	public LinkedList<Coordinate> getOccupiedSpaces() {
 		return body;
+	}
+	
+	public Coordinate getTail() {
+		return body.getLast();
 	}
 }

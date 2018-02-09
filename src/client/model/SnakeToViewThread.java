@@ -1,11 +1,11 @@
 package client.model;
 
-import common.model.Snake;
-import java.util.Queue;
+import java.util.LinkedList;
 
 import client.view.View;
 import common.model.Coordinate;
 import common.model.Direction;
+import common.model.Snake;
 
 /* Periodic thread, currently used for testing Snake. */
 public class SnakeToViewThread extends Thread {
@@ -26,6 +26,7 @@ public class SnakeToViewThread extends Thread {
 	public void run() {
 		while (true) {
 			try {
+				snake.setDirection(Direction.RIGHT);
 				moveSnake();
 				moveSnake();
 				moveSnake();
@@ -65,14 +66,17 @@ public class SnakeToViewThread extends Thread {
 	}
 
 	private void moveSnake() throws InterruptedException {
-		Thread.sleep(delay);
-		paintSnake();
+		Coordinate tail = snake.getTail();
+		int x = tail.x;
+		int y = tail.y;
 		snake.moveForward();
+		paintSnake();
+		v.colorTileAt(x, y, "black");
+		Thread.sleep(delay);
 	}
 
 	private void paintSnake() {
-		v.clearPlayField();
-		Queue<Coordinate> occupiedSpaces = snake.getOccupiedSpaces();
+		LinkedList<Coordinate> occupiedSpaces = snake.getOccupiedSpaces();
 		for (Coordinate coordinate : occupiedSpaces) {
 			v.colorTileAt(coordinate.x, coordinate.y, color);
 		}
