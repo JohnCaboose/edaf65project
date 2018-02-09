@@ -1,7 +1,6 @@
 package common.model;
 
 import java.util.LinkedList;
-import java.util.Queue;
 
 /**
  * The client and server common definition of a snake
@@ -89,7 +88,7 @@ public class Snake {
 	 * Returns a list of coordinates which this snake is occupying. The
 	 * coordinates are sorted from head to tail.
 	 * 
-	 * @return an array of coordinates occupied by the snake
+	 * @return a list of coordinates occupied by the snake
 	 */
 	public LinkedList<Coordinate> getOccupiedSpaces() {
 		return body;
@@ -98,7 +97,7 @@ public class Snake {
 	/**
 	 * Checks if this snake is currently alive or not.
 	 * 
-	 * @return true if snake is <code>alive</code>, otherwise <code>false</code>
+	 * @return <code>true</code> if snake is alive, otherwise <code>false</code>
 	 */
 	public boolean isAlive() {
 		return alive;
