@@ -60,7 +60,7 @@ public class ProtocolAndJSONTests {
 		for (int i = 0; i < 2; i++) {
 			for (int k = 0; k < 3; k++) {
 				//assertEquals(expectedstate.getPlayerSnakes().get(i).body.get(k), convertedstate.getPlayerSnakes().get(i).body.get(k));
-				//TODO: use equals function when implemented
+				//TODO: use equals function (and implement equals function...)
 			}
 		}
 		assertEquals(expectedstate.getTickCounter(), convertedstate.getTickCounter());

@@ -88,7 +88,7 @@ public class GameStateMonitor {
 		for(int i = 0; i < gameState.getPlayerSnakes().size(); i++) {
 			gameState.getPlayerSnakes().get(i).move(playerDirections.get(i));
 		}
-		//TODO: update tickCounter
+		gameState.incrementTickCounter();
 		//TODO: check collisions and kill snakes accordingly		
 		updateJSONState();
 		this.notifyAll();
