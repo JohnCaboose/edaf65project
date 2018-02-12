@@ -1,5 +1,6 @@
 package server.network;
 
+import common.model.PlayerIdentity;
 import server.model.GameStateMonitor;
 
 public class ToClientsSender implements Runnable {
@@ -14,6 +15,11 @@ public class ToClientsSender implements Runnable {
 		do {
 			gameStateMonitor.broadcastState();
 		} while (!gameStateMonitor.isGameOver());
+		//Kill all connections as they are no longer needed
+		for(PlayerIdentity pi : PlayerIdentity.values()) {
+			gameStateMonitor.removePlayer(pi);
+		}
+		
 	}
 
 }
