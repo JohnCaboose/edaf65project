@@ -85,9 +85,11 @@ public class GameStateMonitor {
 		for(int i = 0; i < gameState.getPlayerSnakes().size(); i++) {
 			gameState.getPlayerSnakes().get(i).moveForward();
 		}
-		gameState.incrementTickCounter();
-		//TODO: check collisions and kill snakes accordingly
 		//TODO: add spawning of fruit and that whole thing, if time allows and stuff 
+		gameState.checkSnakeCollisions();
+		
+		
+		gameState.incrementTickCounter();
 		updateJSONState();
 		this.notifyAll();
 	}

@@ -75,14 +75,14 @@ public class SnakeToViewThread extends Thread {
 	}
 
 	private void paintSnake() {
-		LinkedList<Coordinate> occupiedSpaces = snake.getOccupiedSpaces();
+		LinkedList<Coordinate> occupiedSpaces = snake.getBody();
 		for (Coordinate coordinate : occupiedSpaces) {
 			v.colorTileAt(coordinate.x, coordinate.y, color);
 		}
 	}
 	
 	private void removePreviouslyPaintedSnake() {
-		LinkedList<Coordinate> occupiedSpaces = snake.getOccupiedSpaces();
+		LinkedList<Coordinate> occupiedSpaces = snake.getBody();
 		for (Coordinate coordinate : occupiedSpaces) {
 			v.colorTileAt(coordinate.x, coordinate.y, "black");
 		}

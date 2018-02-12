@@ -92,7 +92,7 @@ public class Snake {
 	 * 
 	 * @return a list of coordinates occupied by the snake
 	 */
-	public LinkedList<Coordinate> getOccupiedSpaces() {
+	public LinkedList<Coordinate> getBody() {
 		return body;
 	}
 
@@ -119,6 +119,42 @@ public class Snake {
 	 */
 	public Direction getDirection() {
 		return this.travelDirection;
+	}
+	/**
+	 * Checks if this Snakes head is entering any part of the body of the Snake provided
+	 * @param other the snake to check the body
+	 * @return true if this snake's head is overlapping with the body of the other snake (head excluded), otherwise false 
+	 */
+	public boolean isCrashingIntoBodyOf(Snake other) {
+		for(int i = 1; i < other.body.size(); i++) {
+			if(this.body.getFirst().equals(other.body.get(i))) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if (this == other) {
+			return true;
+		}
+
+		if (other == null || (this.getClass() != other.getClass())) {
+			return false;
+		}
+		Snake otherSnake = (Snake) other;
+		if(this.body.size()!=otherSnake.body.size()) {
+			return false;
+		}
+		for(int i = 0; i < this.body.size(); i++) {
+			if(!body.get(i).equals(otherSnake.body.get(i))) {
+				return false;
+			}
+		}
+		
+		return true;
+		
 	}
 	
 	//TODO implement comparison functions for purpose of effectively syncing predictions with server (optional)

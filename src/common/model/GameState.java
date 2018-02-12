@@ -14,6 +14,33 @@ public class GameState {
 		this.playerSnakes = playerSnakes;
 	}
 	
+	public void checkSnakeCollisions() {
+		//check "head into body" collisions
+		for(Snake s1 : playerSnakes) {
+			for(Snake s2 : playerSnakes) {
+				if(s1.isCrashingIntoBodyOf(s2)) {
+					s1.kill();
+				}
+			}
+		}
+		
+		//check "head into head" collisions
+		for(int i = 0; i < playerSnakes.size(); i++) {
+			for(int k = 1; k < playerSnakes.size(); k++) {
+				if( i != k ) {
+					Snake s1 = playerSnakes.get(i);
+					Snake s2 = playerSnakes.get(k);
+					Coordinate s1Head = s1.getBody().getFirst();
+					Coordinate s2Head = s2.getBody().getFirst();
+					if(s1Head.equals(s2Head)) {
+						s1.kill();
+						s2.kill();
+					}
+				}
+			}
+		}
+	}
+	
 	/**
 	 * The Snake objects for the game is returned as a list
 	 * @return the list of snakes in the game
