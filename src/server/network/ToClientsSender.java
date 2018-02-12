@@ -11,9 +11,9 @@ public class ToClientsSender implements Runnable {
 
 	@Override
 	public void run() {
-		while (!gameStateMonitor.isGameOver()) {
+		do {
 			gameStateMonitor.broadcastState();
-		}
+		} while (!gameStateMonitor.isGameOver());
 	}
 
 }
