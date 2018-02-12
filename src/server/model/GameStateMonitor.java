@@ -194,8 +194,11 @@ public class GameStateMonitor {
 	 */
 	public synchronized void changePlayerDirection(PlayerIdentity player, Direction direction) {
 		if(player.ordinal() < gameState.getPlayerSnakes().size()) {
-			gameState.getPlayerSnakes().get(player.ordinal()).setDirection(direction);
-			
+			Snake snake = gameState.getPlayerSnakes().get(player.ordinal());
+			Direction oldDirection = snake.getDirection();
+			snake.setDirection(direction);
+			Direction newDirection = snake.getDirection();
+			System.out.println("Changed direction of Snake " + player.name() +" from " + oldDirection + " to " + newDirection);
 		}
 	}
 

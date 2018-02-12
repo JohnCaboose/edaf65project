@@ -75,13 +75,15 @@ public class Snake {
 	}
 
 	/**
-	 * Assigns a new direction to this snake.
+	 * Assigns a new direction to this snake, but only if it doesn't walk right back into itself by doing so
 	 * 
 	 * @param dir
 	 *            the direction to change to
 	 */
 	public void setDirection(Direction dir) {
-		travelDirection = dir;
+		if(travelDirection.getOppositeDirection() != dir) {
+			travelDirection = dir;
+		}
 	}
 
 	/**
@@ -109,6 +111,14 @@ public class Snake {
 	public void kill() {
 		//TODO decide if Snake should be removed from playing field
 		alive = false;
+	}
+	
+	/**
+	 * This snake's current travel direction
+	 * @return travel direction of this snake
+	 */
+	public Direction getDirection() {
+		return this.travelDirection;
 	}
 	
 	//TODO implement comparison functions for purpose of effectively syncing predictions with server (optional)

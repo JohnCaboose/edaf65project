@@ -14,9 +14,12 @@ import org.junit.Test;
 import com.google.gson.Gson;
 
 import common.model.Coordinate;
+
 import common.model.GameState;
+
 import common.model.PacketType;
 import common.model.Snake;
+
 
 public class ProtocolAndJSONTests {
 
