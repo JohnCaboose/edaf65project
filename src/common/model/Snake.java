@@ -10,7 +10,6 @@ public class Snake {
 	private LinkedList<Coordinate> body;
 	private Direction travelDirection;
 	private boolean alive;
-	// TODO: implement what a snake being dead/alive means
 
 	/**
 	 * Creates a new snake
@@ -36,6 +35,7 @@ public class Snake {
 			}
 		}
 		alive = true;
+		travelDirection = directionFromTailToHead;
 	}
 
 	/**
@@ -102,4 +102,14 @@ public class Snake {
 	public boolean isAlive() {
 		return alive;
 	}
+	
+	/**
+	 * Sets the snake's alive status to false
+	 */
+	public void kill() {
+		//TODO decide if Snake should be removed from playing field
+		alive = false;
+	}
+	
+	//TODO implement comparison functions for purpose of effectively syncing predictions with server (optional)
 }

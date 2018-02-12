@@ -3,7 +3,6 @@ package server.model;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -13,20 +12,19 @@ import common.model.Coordinate;
 import common.model.Direction;
 import common.model.PlayerIdentity;
 import common.model.Snake;
-import server.network.FromClientReceiver;
 import common.model.GameState;
 import common.model.PacketHandler;
 import common.model.PacketType;
+
+import server.network.FromClientReceiver;
 
 /**
  * The servers game state, implemented as a monitor
  */
 public class GameStateMonitor {
-	//TODO: use snakes directions instead of this variable
-	private final List<Direction> playerDirections;
 	private final GameState gameState;
 	private String jsonState;
-	private int lastStateSent;
+	private long lastStateSent;
 	private final Map<PlayerIdentity,Socket> playerSockets;
 	private final Gson gson = new Gson();
 	
@@ -69,11 +67,9 @@ public class GameStateMonitor {
 		initialDirections.add(Direction.RIGHT);
 		initialDirections.add(Direction.LEFT);
 		
-		playerDirections = new ArrayList<Direction>(playerCount);
 		ArrayList<Snake> playerSnakes = new ArrayList<Snake>(playerCount);
 		for(int i = 0; i < playerCount; i++) {
 			playerSnakes.add(new Snake(initialCorners.get(i), initialDirections.get(i), 3));
-			playerDirections.add(initialDirections.get(i));
 		}
 		
 		gameState = new GameState(playerSnakes);
@@ -84,9 +80,10 @@ public class GameStateMonitor {
 	 * Updates the game board positions and other game state variables based on current player input and previous state.
 	 * This corresponds to a game logic "tick".
 	 */
-	public synchronized void updateGameState() {		
+	public synchronized void updateGameState() {
+		System.out.println("Updating game state #" + gameState.getTickCounter()+1);
 		for(int i = 0; i < gameState.getPlayerSnakes().size(); i++) {
-			gameState.getPlayerSnakes().get(i).move(playerDirections.get(i));
+			gameState.getPlayerSnakes().get(i).moveForward();
 		}
 		gameState.incrementTickCounter();
 		//TODO: check collisions and kill snakes accordingly		
@@ -99,22 +96,57 @@ public class GameStateMonitor {
 	 * @param socket the socket of the player
 	 */
 	public synchronized void addPlayer(Socket socket) {	
-		for(PlayerIdentity identity : playerSockets.keySet()) {
-			if(playerSockets.get(identity) == null) {
-				playerSockets.put(identity, socket);
-				String message = PacketHandler.createProtocolPacket(PacketType.PLAYERIDENTITY, gson.toJson(identity, PlayerIdentity.class));
+		for(PlayerIdentity playerIdentity : playerSockets.keySet()) {
+			if(playerSockets.get(playerIdentity) == null) {
+				System.out.println("Adding new player " + playerIdentity);
+				playerSockets.put(playerIdentity, socket);
+				String message = PacketHandler.createProtocolPacket(PacketType.PLAYERIDENTITY, gson.toJson(playerIdentity, PlayerIdentity.class));
 				try {
 					socket.getOutputStream().write(message.getBytes());
 					socket.getOutputStream().flush();
 				} catch (IOException e) {
 					e.printStackTrace();
+					this.removePlayer(playerIdentity);
+					return;
 				}
-				new Thread(new FromClientReceiver(identity, this, socket)).start();
+				new Thread(new FromClientReceiver(playerIdentity, this, socket)).start();
 				break;
 			}
 		}
 		
 	}
+	
+	/**
+	 * Removes player from game, killing their snake if the game is running or otherwise waiting for more players
+	 * @param playerIdentity the identity of the player
+	 */
+	public synchronized void removePlayer(PlayerIdentity playerIdentity) {
+		Socket socket = playerSockets.get(playerIdentity);
+		if(socket != null) {
+			System.out.println("Removing player " + playerIdentity.name());
+			try {
+				socket.close();
+			} catch (IOException e) {
+				//Doesn't matter
+			}
+			playerSockets.put(playerIdentity, null);
+			gameState.getPlayerSnakes().get(playerIdentity.ordinal()).kill();
+		}
+	}
+	/**
+	 * Removes player from game, killing their snake if the game is running or otherwise waiting for more players
+	 * @param socket the socket of the player
+	 */
+	public synchronized void removePlayer(Socket socket) {
+		for(PlayerIdentity pi : playerSockets.keySet()) {
+			if(socket.equals(playerSockets.get(pi))) {
+				removePlayer(pi);
+				return;
+			}
+		}
+	}
+	
+	
 	/**
 	 * Check if all players have connected to the session
 	 * @return true if all players are connected, false otherwise
@@ -136,14 +168,18 @@ public class GameStateMonitor {
 			}
 		}
 		lastStateSent = gameState.getTickCounter();
-		for(Socket s : playerSockets.values()) {
-			try {
-				s.getOutputStream().write(jsonState.getBytes());
-				s.getOutputStream().flush();
-			} catch (IOException e) {
-				e.printStackTrace();
+		System.out.println(String.format("Broadcasting game state #%d to all players", gameState.getTickCounter()));
+		//TODO consider moving outside synchronized zone for performance
+		for(Socket socket : playerSockets.values()) {
+			if(socket != null) {
+				try {
+					socket.getOutputStream().write(jsonState.getBytes());
+					socket.getOutputStream().flush();
+				} catch (IOException e) {
+					this.removePlayer(socket);
+					e.printStackTrace();
+				}
 			}
-			
 		}
 	}
 	
@@ -153,13 +189,22 @@ public class GameStateMonitor {
 	
 	/**
 	 * Changes the direction of one of the players
-	 * @param PlayerID the PlayerIdentity of the player to change direction for 
+	 * @param player the PlayerIdentity of the player to change direction for 
 	 * @param direction the direction to change to
 	 */
 	public synchronized void changePlayerDirection(PlayerIdentity player, Direction direction) {
-		if(player.ordinal() < playerDirections.size()) {
-			playerDirections.set(player.ordinal(),direction);
+		if(player.ordinal() < gameState.getPlayerSnakes().size()) {
+			gameState.getPlayerSnakes().get(player.ordinal()).setDirection(direction);
+			
 		}
+	}
+
+	/**
+	 * Uses isGameOver() from GameState
+	 * @return true if game is over, false if not
+	 */
+	public synchronized boolean isGameOver() {
+		return this.gameState.isGameOver();
 	}
 
 }

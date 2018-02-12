@@ -30,9 +30,7 @@ public class Coordinate {
 	 * Moves this coordinate one step in the direction provided. Uses the static
 	 * width and height variables to wrap around when traversing outside the
 	 * board.
-	 * 
-	 * @param direction
-	 *            the direction to move in
+	 * @param direction the direction to move in
 	 */
 	public void move(Direction direction) {
 		switch (direction) {
@@ -63,11 +61,8 @@ public class Coordinate {
 
 	/**
 	 * Moves the coordinate to a fixed point.
-	 * 
-	 * @param x
-	 *            the x value to move to
-	 * @param y
-	 *            the y value to move to
+	 * @param x the x value to move to
+	 * @param y the y value to move to
 	 */
 	public void moveTo(int x, int y) {
 		this.x = x;
@@ -76,7 +71,6 @@ public class Coordinate {
 
 	/**
 	 * Returns a <code>String</code> representation of this coordinate.
-	 * 
 	 * @return the <code>String</code> representation of this coordinate
 	 */
 	public String toString() {

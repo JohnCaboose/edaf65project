@@ -71,6 +71,9 @@ public class GameServer implements Runnable {
 			while (true) {
 				long frameStartTime = System.currentTimeMillis();
 				gameStateMonitor.updateGameState();
+				if(gameStateMonitor.isGameOver()) {
+					break;
+				}
 				try {
 					Thread.sleep(frameStartTime + MILLIS_PER_STATE_FRAME - System.currentTimeMillis());
 				} catch (InterruptedException e) {
@@ -79,8 +82,9 @@ public class GameServer implements Runnable {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.exit(-1);
 		}
-		System.exit(0);
+		//Game is over
 	}
 
 	/**
