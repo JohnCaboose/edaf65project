@@ -1,9 +1,18 @@
 package client.network;
 
-public class ToServerSender implements Runnable {
+import client.model.DirectionMonitor;
 
+public class ToServerSender implements Runnable {
+	private final DirectionMonitor directionMonitor;
+	
+	public ToServerSender(DirectionMonitor directionMonitor){
+		this.directionMonitor = directionMonitor;
+	}
+	
 	@Override
 	public void run() {
-		// TODO Use PacketHandler to send direction to server.
+		do{
+		directionMonitor.broadcastDirection();
+		}while(directionMonitor.directionExists());
 	}
 }
