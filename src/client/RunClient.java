@@ -33,14 +33,14 @@ public class RunClient {
 		/* Starts communication with server. */
 		try (Socket socket = new Socket(hostname, port)) {
 			DirectionMonitor monitor = new DirectionMonitor(socket);
-			new Thread(new FromServerReciever(monitor, socket)).run();
-			new Thread(new ToServerSender(monitor)).run();
+			new Thread(new FromServerReciever(monitor, socket)).start();
+			new Thread(new ToServerSender(monitor)).start();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 			System.err.println("Host not found:" + hostname);
 			System.exit(1);
 		} catch (IOException e) {
-			System.err.println("An IO Exception occured.");
+			System.err.println("An IO Exception occurred.");
 			e.printStackTrace();
 			System.exit(1);
 		}
