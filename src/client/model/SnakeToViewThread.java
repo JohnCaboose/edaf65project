@@ -12,7 +12,7 @@ public class SnakeToViewThread extends Thread {
 	private Snake snake;
 	private View v;
 	private String color;
-	private static final long delay = 200;
+	private static final long delay = 300;
 
 	public SnakeToViewThread(View v) {
 		this.v = v;
@@ -24,9 +24,10 @@ public class SnakeToViewThread extends Thread {
 	}
 
 	public void run() {
+		snake.setDirection(Direction.DOWN);
+		paintSnake();
 		while (true) {
 			try {
-				snake.setDirection(Direction.LEFT);
 				moveSnake();
 				moveSnake();
 				moveSnake();
@@ -58,6 +59,7 @@ public class SnakeToViewThread extends Thread {
 				moveSnake();
 				moveSnake();
 				moveSnake();
+				snake.setDirection(Direction.LEFT);
 				
 				/* For testing purposes */
 				v.displayDeadSnakeStatus();
@@ -69,9 +71,9 @@ public class SnakeToViewThread extends Thread {
 
 	private void moveSnake() throws InterruptedException {
 		Thread.sleep(delay);
-		removePreviouslyPaintedSnake();
+		removeTailOfSnake();
 		snake.moveForward();
-		paintSnake();
+		paintHeadOfSnake();
 	}
 
 	private void paintSnake() {
@@ -81,10 +83,15 @@ public class SnakeToViewThread extends Thread {
 		}
 	}
 	
-	private void removePreviouslyPaintedSnake() {
+	private void removeTailOfSnake() {
 		LinkedList<Coordinate> occupiedSpaces = snake.getBody();
-		for (Coordinate coordinate : occupiedSpaces) {
-			v.colorTileAt(coordinate.x, coordinate.y, "black");
-		}
+		Coordinate tail = occupiedSpaces.getLast();
+		v.colorTileAt(tail.x, tail.y, "black");
+	}
+	
+	private void paintHeadOfSnake() {
+		LinkedList<Coordinate> occupiedSpaces = snake.getBody();
+		Coordinate head = occupiedSpaces.getFirst();
+		v.colorTileAt(head.x, head.y, color);
 	}
 }
