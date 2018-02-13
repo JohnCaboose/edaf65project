@@ -22,8 +22,8 @@ public class DirectionMonitor {
 
 	public synchronized void broadcastDirection() {
 		String message = PacketHandler.createProtocolPacket(PacketType.DIRECTION, direction.toString());
-		try{
-			
+		try {
+
 		} catch (Exception e) {
 			System.out.println("Error in DirectionMonitor");
 		}
@@ -32,5 +32,13 @@ public class DirectionMonitor {
 
 	public synchronized boolean directionExists() {
 		return direction != null;
+	}
+
+	/**
+	 * Store the parameter in this monitor in some way. TODO: implement this
+	 */
+	public synchronized void send(char newInput) {
+		// TODO Auto-generated method stub
+
 	}
 }
