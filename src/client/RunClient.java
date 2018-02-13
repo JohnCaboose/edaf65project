@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import client.model.DirectionMonitor;
+import client.network.*;
 import common.model.Snake;
 
 /**
@@ -13,7 +14,6 @@ import common.model.Snake;
  */
 public class RunClient {
 	public static void main(String[] args) {
-		//TODO Connect to server, show view etc.
 		String hostname = null;
 		int port = -1;
 		
@@ -29,11 +29,12 @@ public class RunClient {
 			System.err.println("Second parameter is not a number.");
 			System.exit(1);
 		}
-		/* End of argument parse. */
 		
-		Socket socket = null;
-		try {
-			socket = new Socket(hostname, port);
+		/* Starts communication with server. */
+		try (Socket socket = new Socket(hostname, port)) {
+			DirectionMonitor monitor = new DirectionMonitor(socket);
+			new Thread(new FromServerReciever(monitor, socket)).run();
+			new Thread(new ToServerSender(monitor)).run();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 			System.err.println("Host not found:" + hostname);

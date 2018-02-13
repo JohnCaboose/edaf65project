@@ -23,11 +23,18 @@ public class FromServerReciever extends Thread {
 	}
 
 	public void run() {
-		try {
-			inputStream = socket.getInputStream();
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
 			while (true) {
-				BufferedReader buffererdreader = new BufferedReader(new InputStreamReader(inputStream));
-				String packet = "";//Will fix it
+				StringBuilder sb = new StringBuilder();
+				int c;
+				while ((c = reader.read()) != -1) {
+					sb.append((char) c);
+				}
+				
+				//TODO: Analyze data from server to identify packets;
+				
+				String packet = "";
+				
 				if(PacketHandler.stringContainsProtocolPacket(packet)){
 					if(PacketHandler.getProtocolPacketType(packet) == PacketType.GAMESTATE){
 						if(gameState != null){
