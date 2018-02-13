@@ -20,14 +20,17 @@ public class MainFrame extends JFrame {
 	}
 
 	/* Forwarding */
+	public void displayDeadSnakeStatus() {
+		top.displayDeadSnakeStatus();	
+	}
+	
+	/* Forwarding */
 	public void colorTileAt(int x, int y, String color) {
 		middle.colorTileAt(x, y, color);
 	}
-
+	
 	/* Forwarding */
-	public void displayDeadSnakeStatus() {
-		top.displayDeadSnakeStatus();
-		
+	public void println(String content) {
+		bottom.println(content);
 	}
-
 }

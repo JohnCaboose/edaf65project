@@ -93,5 +93,6 @@ public class SnakeToViewThread extends Thread {
 		LinkedList<Coordinate> occupiedSpaces = snake.getBody();
 		Coordinate head = occupiedSpaces.getFirst();
 		v.colorTileAt(head.x, head.y, color);
+		v.println(String.format("Snake moved to (%d, %d).", head.x, head.y));
 	}
 }

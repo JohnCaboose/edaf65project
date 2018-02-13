@@ -32,6 +32,14 @@ public class View {
 	}
 
 	/**
+	 * Signals to the user that their snake is dead by updating the appropriate
+	 * field in the top panel.
+	 */
+	public synchronized void displayDeadSnakeStatus() {
+		frame.displayDeadSnakeStatus();
+	}
+
+	/**
 	 * Colors the specified tile with the specified color in the play field.
 	 * 
 	 * @param x
@@ -50,8 +58,16 @@ public class View {
 		frame.colorTileAt(x, y, color);
 		notifyAll();
 	}
-	
-	public synchronized void displayDeadSnakeStatus() {
-		frame.displayDeadSnakeStatus();
+
+	/**
+	 * Prints the provided <code>String</code> to the console window in the
+	 * bottom panel. A timestamp is prepended and a new line is appended to the
+	 * <code>String</code>.
+	 * 
+	 * @param content
+	 *            the text to display in the console window
+	 */
+	public synchronized void println(String content) {
+		frame.println(content);
 	}
 }
