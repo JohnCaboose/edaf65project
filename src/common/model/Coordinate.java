@@ -1,13 +1,13 @@
 package common.model;
 
-import client.view.View;
+import common.constants.Constants;
 
 public class Coordinate {
 
 	public int x, y;
 
-	public static int width = View.FIELD_SIZE_X;
-	public static int height = View.FIELD_SIZE_Y;
+	public static int width = Constants.BOARDWIDTH;
+	public static int height = Constants.BOARDHEIGHT;
 
 	public Coordinate(int x, int y) {
 		moveTo(x, y);

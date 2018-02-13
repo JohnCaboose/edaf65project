@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import common.constants.Constants;
 import server.model.GameStateMonitor;
 
 public class GameServer implements Runnable {
@@ -91,6 +92,7 @@ public class GameServer implements Runnable {
 	 * Starts the game server, this is run in the terminal separately from the
 	 * client. (The client being able to boot up a server will be added in a
 	 * later step.)
+	 * Note that game board size is currently fixed.
 	 * 
 	 * @param args
 	 *            the parameters for starting the game server, defined as:<br/>
@@ -98,16 +100,15 @@ public class GameServer implements Runnable {
 	 *            inclusive) <br/>
 	 *            args[1] = number of players (values from 1 to 4 acceptable,
 	 *            inclusive) <br/>
-	 *            args[2] = width of game board <br/>
-	 *            args[3] = height of game board <br/>
+
 	 * 
 	 */
 	public static void main(String[] args) {
-		if (args.length == 4) {
+		if (args.length == 2) {
 			int port = Integer.parseInt(args[0]);
 			int playerCount = Integer.parseInt(args[1]);
-			int width = Integer.parseInt(args[2]);
-			int height = Integer.parseInt(args[3]);
+			int width = Constants.BOARDWIDTH;
+			int height = Constants.BOARDHEIGHT;
 			try {
 				GameServer gameServer = new GameServer(port, playerCount, width, height);
 				new Thread(gameServer).start();

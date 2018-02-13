@@ -3,11 +3,13 @@ package client.view;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import common.constants.Constants;
+
 /* Monitor for the GUI */
 public class View {
 	private final static String WINDOW_TITLE = "MultiSnake";
-	public static final int FIELD_SIZE_X = 24;
-	public static final int FIELD_SIZE_Y = 24;
+	public static final int FIELD_SIZE_X = Constants.BOARDWIDTH;
+	public static final int FIELD_SIZE_Y = Constants.BOARDHEIGHT;
 	private MainFrame frame;
 	private boolean visible;
 
