@@ -61,7 +61,7 @@ public class View {
 
 	/**
 	 * Prints the provided <code>String</code> to the console window in the
-	 * bottom panel. A timestamp is prepended and a new line is appended to the
+	 * bottom panel. A timestamp and a new line is prepended to the
 	 * <code>String</code>.
 	 * 
 	 * @param content
