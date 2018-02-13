@@ -2,13 +2,11 @@ package server.model;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
 import com.google.gson.Gson;
 
-import common.model.Coordinate;
 import common.model.Direction;
 import common.model.PlayerIdentity;
 import common.model.Snake;
