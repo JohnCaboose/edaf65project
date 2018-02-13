@@ -44,16 +44,7 @@ public class ProtocolAndJSONTests {
 
 	@Test
 	public void testStateConversion() {
-		List<Snake> snakes = new ArrayList<Snake>(2);
-		Coordinate.height = 51;
-		Coordinate.width = 52;
-		Snake p1 = new Snake(new Coordinate(1, 1), common.model.Direction.RIGHT, 3);
-		Snake p2 = new Snake(new Coordinate(10, 10), common.model.Direction.LEFT, 3);
-
-		snakes.add(p1);
-		snakes.add(p2);
-
-		GameState expectedstate = new GameState(snakes);
+		GameState expectedstate = new GameState(2,10,10);
 
 		String jsonState = gson.toJson(expectedstate, GameState.class);
 		// System.out.println(jsonState);
@@ -62,8 +53,7 @@ public class ProtocolAndJSONTests {
 
 		for (int i = 0; i < 2; i++) {
 			for (int k = 0; k < 3; k++) {
-				//assertEquals(expectedstate.getPlayerSnakes().get(i).body.get(k), convertedstate.getPlayerSnakes().get(i).body.get(k));
-				//TODO: use equals function (and implement equals function...)
+				assertTrue(expectedstate.getPlayerSnakes().get(i).equals(convertedstate.getPlayerSnakes().get(i)));
 			}
 		}
 		assertEquals(expectedstate.getTickCounter(), convertedstate.getTickCounter());
@@ -75,6 +65,15 @@ public class ProtocolAndJSONTests {
 		assertEquals("DIRECTION", PacketType.DIRECTION.name());
 		assertEquals("GAMESTATE", PacketType.GAMESTATE.name());
 		assertEquals("PLAYERIDENTITY", PacketType.PLAYERIDENTITY.name());
+	}
+	
+	@Test
+	public void testGameTickMovement() {
+		GameState gameState = new GameState(2,common.constants.Constants.BOARDWIDTH,common.constants.Constants.BOARDHEIGHT);
+		
+		//TODO implement
+		
+		
 	}
 
 }

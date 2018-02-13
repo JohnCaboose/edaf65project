@@ -1,5 +1,6 @@
 package common.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameState {
@@ -10,8 +11,23 @@ public class GameState {
 	private long tickCounter = -1;
 	private final List<Snake> playerSnakes;
 	
-	public GameState(List<Snake> playerSnakes) {
-		this.playerSnakes = playerSnakes;
+	public GameState(int playerCount, int boardWidth, int boardHeight) {
+		//Define the initial spawn corners
+		ArrayList<Coordinate> initialCorners = new ArrayList<Coordinate>();
+		ArrayList<Direction> initialDirections = new ArrayList<Direction>();
+		initialCorners.add(new Coordinate(0,boardHeight-1));
+		initialCorners.add(new Coordinate(boardWidth-1, 0));
+		initialCorners.add(new Coordinate(0, 0));
+		initialCorners.add(new Coordinate(boardWidth-1, boardHeight-1));
+		initialDirections.add(Direction.UP);
+		initialDirections.add(Direction.DOWN);
+		initialDirections.add(Direction.RIGHT);
+		initialDirections.add(Direction.LEFT);
+		
+		playerSnakes = new ArrayList<Snake>(playerCount);
+		for(int i = 0; i < playerCount; i++) {
+			playerSnakes.add(new Snake(initialCorners.get(i), initialDirections.get(i), 3));
+		}
 	}
 	
 	public void checkSnakeCollisions() {

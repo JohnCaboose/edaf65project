@@ -55,24 +55,9 @@ public class GameStateMonitor {
 				break;
 		}
 		
-		//Define the initial spawn corners
-		ArrayList<Coordinate> initialCorners = new ArrayList<Coordinate>();
-		ArrayList<Direction> initialDirections = new ArrayList<Direction>();
-		initialCorners.add(new Coordinate(0,boardHeight-1));
-		initialCorners.add(new Coordinate(boardWidth-1, 0));
-		initialCorners.add(new Coordinate(0, 0));
-		initialCorners.add(new Coordinate(boardWidth-1, boardHeight-1));
-		initialDirections.add(Direction.UP);
-		initialDirections.add(Direction.DOWN);
-		initialDirections.add(Direction.RIGHT);
-		initialDirections.add(Direction.LEFT);
 		
-		ArrayList<Snake> playerSnakes = new ArrayList<Snake>(playerCount);
-		for(int i = 0; i < playerCount; i++) {
-			playerSnakes.add(new Snake(initialCorners.get(i), initialDirections.get(i), 3));
-		}
 		
-		gameState = new GameState(playerSnakes);
+		gameState = new GameState(playerCount,boardWidth,boardHeight);
 		updateJSONState();
 	}
 	
