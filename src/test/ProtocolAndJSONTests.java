@@ -14,7 +14,7 @@ import org.junit.Test;
 import com.google.gson.Gson;
 
 import common.model.Coordinate;
-
+import common.model.Direction;
 import common.model.GameState;
 
 import common.model.PacketType;
@@ -68,12 +68,35 @@ public class ProtocolAndJSONTests {
 	}
 	
 	@Test
-	public void testGameTickMovement() {
+	public void testGameTick() {
 		GameState gameState = new GameState(2,common.constants.Constants.BOARDWIDTH,common.constants.Constants.BOARDHEIGHT);
-		
-		//TODO implement
-		
-		
+		gameState.performGameTick();
+		String expected = "{\"tickCounter\":0,\"playerSnakes\":[{\"body\":[{\"x\":0,\"y\":20},{\"x\":0,\"y\":21},{\"x\":0,\"y\":22}],\"travelDirection\":\"UP\",\"alive\":true},{\"body\":[{\"x\":23,\"y\":3},{\"x\":23,\"y\":2},{\"x\":23,\"y\":1}],\"travelDirection\":\"DOWN\",\"alive\":true}]}";
+		String actual = gson.toJson(gameState);
+		assertEquals(expected, actual);
 	}
+	@Test
+	public void testSnakeMovement() {
+		Snake s = new Snake(new Coordinate(0,0), Direction.RIGHT,3);
+		s.moveForward();
+		
+		Coordinate[] expectedLocations = new Coordinate[3];
+		expectedLocations[0] = new Coordinate(3,0);
+		expectedLocations[1] = new Coordinate(2,0);
+		expectedLocations[2] = new Coordinate(1,0);
+		assertArrayEquals(expectedLocations,s.getBody().toArray());
+	}
+	@Test
+	public void testSnakeCreation() {
+		Snake s = new Snake(new Coordinate(0,0), Direction.RIGHT,3);
+		Coordinate[] expectedLocations = new Coordinate[3];
+		expectedLocations[0] = new Coordinate(2,0);
+		expectedLocations[1] = new Coordinate(1,0);
+		expectedLocations[2] = new Coordinate(0,0);
+		assertArrayEquals(expectedLocations,s.getBody().toArray());
+	}
+	
+	
+	
 
 }

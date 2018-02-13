@@ -89,9 +89,14 @@ public class GameState {
 	}
 	
 	/**
-	 * Increments the tick counter by one
+	 * Performs a tick of the game logic
 	 */
-	public void incrementTickCounter() {
+	public void performGameTick() {
+		for(int i = 0; i < playerSnakes.size(); i++) {
+			playerSnakes.get(i).moveForward();
+		}
+		//TODO: add spawning of fruit and that whole thing, if time allows and stuff 
+		checkSnakeCollisions();
 		tickCounter++;
 	}
 	

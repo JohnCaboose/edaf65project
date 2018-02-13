@@ -26,13 +26,11 @@ public class Snake {
 		int startY = tail.y;
 		body = new LinkedList<Coordinate>();
 		for (int i = 0; i < length; i++) {
-			body.addFirst(new Coordinate(startX, startY));
-		}
-		for (int i = 0; i < length; i++) {
-			Coordinate c = body.get(i);
+			Coordinate coordinate = new Coordinate(startX,startY);
 			for (int k = 0; k < i; k++) {
-				c.move(directionFromTailToHead);
+				coordinate.move(directionFromTailToHead);
 			}
+			body.addFirst(coordinate);
 		}
 		alive = true;
 		travelDirection = directionFromTailToHead;

@@ -36,8 +36,8 @@ public class GameStateMonitor {
 	 */
 	public GameStateMonitor(int playerCount, int boardWidth, int boardHeight) {
 		
-		Coordinate.width = boardWidth;
-		Coordinate.height = boardHeight;
+		//Coordinate.width = boardWidth;
+		//Coordinate.height = boardHeight;
 		
 		lastStateSent = -2;
 		playerSockets = new TreeMap<PlayerIdentity, Socket>();
@@ -67,14 +67,7 @@ public class GameStateMonitor {
 	 */
 	public synchronized void updateGameState() {
 		System.out.println("Updating game state #" + gameState.getTickCounter()+1);
-		for(int i = 0; i < gameState.getPlayerSnakes().size(); i++) {
-			gameState.getPlayerSnakes().get(i).moveForward();
-		}
-		//TODO: add spawning of fruit and that whole thing, if time allows and stuff 
-		gameState.checkSnakeCollisions();
-		
-		
-		gameState.incrementTickCounter();
+		gameState.performGameTick();
 		updateJSONState();
 		this.notifyAll();
 	}
@@ -157,7 +150,7 @@ public class GameStateMonitor {
 		}
 		lastStateSent = gameState.getTickCounter();
 		System.out.println(String.format("Broadcasting game state #%d to all players", gameState.getTickCounter()));
-		//TODO consider moving outside synchronized zone for performance
+		//TODO consider moving outside synchronized zone for performance, this should include making a new connectionmonitor
 		for(Socket socket : playerSockets.values()) {
 			if(socket != null) {
 				try {

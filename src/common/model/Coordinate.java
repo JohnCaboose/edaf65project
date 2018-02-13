@@ -6,8 +6,8 @@ public class Coordinate {
 
 	public int x, y;
 
-	public static int width = Constants.BOARDWIDTH;
-	public static int height = Constants.BOARDHEIGHT;
+	public static final int width = Constants.BOARDWIDTH;
+	public static final int height = Constants.BOARDHEIGHT;
 
 	public Coordinate(int x, int y) {
 		moveTo(x, y);
