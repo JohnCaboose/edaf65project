@@ -12,6 +12,8 @@ import javax.swing.border.EmptyBorder;
 @SuppressWarnings("serial")
 public class BottomPanel extends JPanel {
 	private JTextArea textArea;
+	private boolean autoscroll;
+	private boolean firstLine;
 
 	public BottomPanel() {
 		setLayout(new GridLayout(1, 1));
@@ -19,12 +21,23 @@ public class BottomPanel extends JPanel {
 		textArea = new JTextArea(10, 1);
 		textArea.setEditable(false);
 		add(new JScrollPane(textArea));
+		autoscroll = true;
+		firstLine = true;
 	}
 	
 	public void println(String content) {
 		String systemTime = getTime();
-		String line = String.format("[%s]: %s\n", systemTime, content);
+		String line;
+		if (firstLine) {
+			line = String.format("[%s]: %s", systemTime, content);
+			firstLine = false;
+		} else {
+			line = String.format("\n[%s]: %s", systemTime, content);
+		}
 		textArea.append(line);
+		if (autoscroll) {
+			textArea.setCaretPosition(textArea.getDocument().getLength());
+		}
 	}
 	
 	private String getTime() {
