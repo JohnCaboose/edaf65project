@@ -22,8 +22,8 @@ public class Tile extends JLabel {
 	public void setColor(String color) {
 		String arg = color.toLowerCase();
 		Color c;
-		if (arg.equals("red")) {
-			c = Color.red;
+		if (arg.equals("pink")) {
+			c = Color.pink;
 		} else if (arg.equals("green")) {
 			c = Color.green;
 		} else if (arg.equals("blue")) {

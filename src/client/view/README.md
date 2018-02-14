@@ -4,7 +4,7 @@ The class `View` is a monitor which holds a `JFrame` object which contains the G
 
 At the time of writing, six different colors are supported:
 
-* Red
+* Pink
 * Green
 * Blue
 * Orange
