@@ -7,6 +7,7 @@ import java.net.Socket;
 import com.google.gson.Gson;
 
 import client.controller.Input;
+import client.controller.UserInputInterpreter.Key;
 import common.model.Direction;
 import common.model.GameState;
 import common.model.PacketHandler;
@@ -46,7 +47,7 @@ public class DirectionMonitor {
 	/**
 	 * Store the parameter in this monitor in some way. TODO: implement this
 	 */
-	public synchronized void send(char newInput) {
+	public synchronized void send(Key newInput) {
 		// TODO Auto-generated method stub
 
 	}

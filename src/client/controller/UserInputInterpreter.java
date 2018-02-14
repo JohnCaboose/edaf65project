@@ -7,11 +7,11 @@ import client.model.DirectionMonitor;
 
 public class UserInputInterpreter implements KeyListener {
 	private DirectionMonitor monitor;
-	private int previousInput;
+	private Key previousInput;
 
 	public UserInputInterpreter(DirectionMonitor monitor) {
 		this.monitor = monitor;
-		previousInput = -1;
+		previousInput = Key.W; // TODO: better start value
 	}
 
 	@Override
@@ -19,43 +19,44 @@ public class UserInputInterpreter implements KeyListener {
 		int key = e.getKeyCode();
 		switch (key) {
 		case KeyEvent.VK_W:
-			sendInput('W');
+			sendInput(Key.W);
 			break;
 		case KeyEvent.VK_A:
-			sendInput('A');
+			sendInput(Key.A);
 			break;
 		case KeyEvent.VK_S:
-			sendInput('S');
+			sendInput(Key.S);
 			break;
 		case KeyEvent.VK_D:
-			sendInput('D');
+			sendInput(Key.D);
 			break;
 		}
 
 	}
 
-	private void sendInput(char newInput) {
-		if ((newInput == 'W' && previousInput == 'S') || 
-				(newInput == 'S' && previousInput == 'W') ||
-				(newInput == 'A' && previousInput == 'D') ||
-				(newInput == 'D' && previousInput == 'A')) {
+	private void sendInput(Key newInput) {
+		if ((newInput == Key.W && previousInput == Key.S) || (newInput == Key.S && previousInput == Key.W)
+				|| (newInput == Key.A && previousInput == Key.D) || (newInput == Key.D && previousInput == Key.A)) {
 			return; // movement does not make sense
 		} else {
 			monitor.send(newInput);
 			previousInput = newInput;
 		}
-		
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		return;
-
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 		return;
+	}
+
+	public enum Key {
+		W, A, S, D
 	}
 
 }
