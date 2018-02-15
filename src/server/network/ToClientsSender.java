@@ -1,12 +1,12 @@
 package server.network;
 
 import common.model.PlayerIdentity;
-import server.model.GameStateMonitor;
+import server.model.ServerGameStateMonitor;
 
 public class ToClientsSender implements Runnable {
-	private final GameStateMonitor gameStateMonitor;
+	private final ServerGameStateMonitor gameStateMonitor;
 
-	public ToClientsSender(GameStateMonitor gameStateMonitor) {
+	public ToClientsSender(ServerGameStateMonitor gameStateMonitor) {
 		this.gameStateMonitor = gameStateMonitor;
 	}
 

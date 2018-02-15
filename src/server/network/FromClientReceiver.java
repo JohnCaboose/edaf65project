@@ -10,15 +10,15 @@ import common.model.Direction;
 import common.model.PacketHandler;
 import common.model.PacketType;
 import common.model.PlayerIdentity;
-import server.model.GameStateMonitor;
+import server.model.ServerGameStateMonitor;
 
 public class FromClientReceiver implements Runnable {
 
 	private final PlayerIdentity playerIdentity;
-	private final GameStateMonitor gameStateMonitor;
+	private final ServerGameStateMonitor gameStateMonitor;
 	private final Socket socket;
 
-	public FromClientReceiver(PlayerIdentity playerIdentity, GameStateMonitor gameStateMonitor, Socket socket) {
+	public FromClientReceiver(PlayerIdentity playerIdentity, ServerGameStateMonitor gameStateMonitor, Socket socket) {
 		this.playerIdentity = playerIdentity;
 		this.gameStateMonitor = gameStateMonitor;
 		this.socket = socket;

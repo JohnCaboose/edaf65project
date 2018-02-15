@@ -5,9 +5,9 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import client.model.DirectionMonitor;
-import client.network.*;
+import client.network.FromServerReceiver;
+import client.network.ToServerSender;
 import client.view.View;
-import server.model.GameStateMonitor;
 
 /**
  * Run this class to start a client. 
@@ -36,7 +36,7 @@ public class RunClient {
 			Socket socket = new Socket(hostname, port);
 			DirectionMonitor directionMonitor = new DirectionMonitor();
 			ClientGameStateMonitor stateMonitor = new ClientGameStateMonitor();
-			View view = new View(directionMonitor);
+			new View(directionMonitor);
 			new Thread(new FromServerReceiver(stateMonitor, socket)).start();
 			new Thread(new ToServerSender(directionMonitor, socket)).start();
 		} catch (UnknownHostException e) {

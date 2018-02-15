@@ -5,7 +5,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import common.constants.Constants;
-import server.model.GameStateMonitor;
+import server.model.ServerGameStateMonitor;
 
 public class GameServer implements Runnable {
 	private final int port;
@@ -19,7 +19,7 @@ public class GameServer implements Runnable {
 	private final int SMALLEST_SIZE_FIELD = 20;
 	private final int MILLIS_PER_STATE_FRAME = 1000;
 
-	private final GameStateMonitor gameStateMonitor;
+	private final ServerGameStateMonitor gameStateMonitor;
 
 	/**
 	 * 
@@ -55,7 +55,7 @@ public class GameServer implements Runnable {
 							width, height, SMALLEST_SIZE_FIELD));
 		}
 
-		gameStateMonitor = new GameStateMonitor(this.playerCount, this.width, this.height);
+		gameStateMonitor = new ServerGameStateMonitor(this.playerCount, this.width, this.height);
 
 	}
 

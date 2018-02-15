@@ -19,7 +19,7 @@ import server.network.FromClientReceiver;
 /**
  * The servers game state, implemented as a monitor
  */
-public class GameStateMonitor {
+public class ServerGameStateMonitor {
 	private final GameState gameState;
 	private String jsonState;
 	private long lastStateSent;
@@ -32,7 +32,7 @@ public class GameStateMonitor {
 	 * @param boardWidth width of the game board
 	 * @param boardHeight height of the game board
 	 */
-	public GameStateMonitor(int playerCount, int boardWidth, int boardHeight) {
+	public ServerGameStateMonitor(int playerCount, int boardWidth, int boardHeight) {
 		
 		//Coordinate.width = boardWidth;
 		//Coordinate.height = boardHeight;
