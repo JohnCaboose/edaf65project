@@ -76,4 +76,15 @@ public class View {
 	public synchronized void println(String content) {
 		frame.println(content);
 	}
+
+	/**
+	 * Returns true if the given tile coordinate is not black, i.e. the tile is
+	 * occupied by another snake.
+	 * @param x the x coordinate of the tile
+	 * @param y the y coordinate of the tile
+	 * @return <code>true</code> if tile is colored, otherwise <code>false</code>
+	 */
+	public synchronized boolean isColoredAt(int x, int y) {
+		return frame.isColoredAt(x, y);
+	}
 }

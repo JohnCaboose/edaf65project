@@ -17,7 +17,6 @@ public class UserInputInterpreter implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println("Howdy ho");
 		int key = e.getKeyCode();
 		switch (key) {
 		case KeyEvent.VK_W:
@@ -43,11 +42,9 @@ public class UserInputInterpreter implements KeyListener {
 				|| (newInput == Direction.RIGHT && previousInput == Direction.LEFT)) {
 			return; // movement does not make sense
 		} else {
-			System.out.println("Monitor: " + monitor == null);
-			System.out.println("NewInput: " + newInput == null);
+			if (monitor != null)
 			monitor.submit(newInput);
 			previousInput = newInput;
-			System.out.println("Direction sent: " + newInput);
 		}
 	}
 

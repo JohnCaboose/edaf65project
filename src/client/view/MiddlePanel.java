@@ -24,4 +24,10 @@ public class MiddlePanel extends JPanel {
 		Tile t = playField[x][y];
 		t.setColor(color);
 	}
+
+	public boolean isColoredAt(int x, int y) {
+		Tile t = playField[x][y];
+		String color = t.getColor();
+		return !color.equals("black");
+	}
 }

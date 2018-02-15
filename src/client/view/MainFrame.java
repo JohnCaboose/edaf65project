@@ -38,4 +38,9 @@ public class MainFrame extends JFrame {
 	public void println(String content) {
 		bottom.println(content);
 	}
+
+	/* Forwarding */
+	public boolean isColoredAt(int x, int y) {
+		return middle.isColoredAt(x, y);
+	}
 }
