@@ -3,6 +3,9 @@ package client.view;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 
+import client.controller.UserInputInterpreter;
+import client.model.DirectionMonitor;
+
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
 
@@ -17,6 +20,8 @@ public class MainFrame extends JFrame {
 		add(top = new TopPanel("blue"));
 		add(middle = new MiddlePanel(rows, cols));
 		add(bottom = new BottomPanel());
+		setFocusable(true);
+		addKeyListener(new UserInputInterpreter(new DirectionMonitor(null)));
 	}
 
 	/* Forwarding */

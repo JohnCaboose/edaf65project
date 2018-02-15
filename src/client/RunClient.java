@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 
 import client.model.DirectionMonitor;
 import client.network.*;
+import client.view.View;
 
 /**
  * Run this class to start a client. 
@@ -33,6 +34,7 @@ public class RunClient {
 		try {
 			Socket socket = new Socket(hostname, port);
 			DirectionMonitor monitor = new DirectionMonitor(socket);
+			View view = new View(monitor);
 			new Thread(new FromServerReciever(monitor, socket)).start();
 			new Thread(new ToServerSender(monitor)).start();
 		} catch (UnknownHostException e) {

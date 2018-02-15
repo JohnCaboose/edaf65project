@@ -3,6 +3,8 @@ package client.view;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
+import client.controller.UserInputInterpreter;
+import client.model.DirectionMonitor;
 import common.constants.Constants;
 
 /* Monitor for the GUI */
@@ -13,7 +15,7 @@ public class View {
 	private MainFrame frame;
 	private boolean visible;
 
-	public View() {
+	public View(DirectionMonitor monitor) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				frame = new MainFrame(WINDOW_TITLE, FIELD_SIZE_X, FIELD_SIZE_Y);
@@ -22,6 +24,8 @@ public class View {
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
+				frame.setFocusable(true);
+				frame.addKeyListener(new UserInputInterpreter(monitor));
 				setVisible(true);
 			}
 		});
