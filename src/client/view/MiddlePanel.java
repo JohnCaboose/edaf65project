@@ -2,7 +2,6 @@ package client.view;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 
 import javax.swing.JPanel;
 
@@ -14,8 +13,8 @@ public class MiddlePanel extends JPanel {
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		playField = new Tile[rows][cols];
-		for (int y = 0; y < rows; y++) {
-			for (int x = 0; x < cols; x++) {
+		for (int y = 0; y < cols; y++) {
+			for (int x = 0; x < rows; x++) {
 				c.gridx = x;
 				c.gridy = y;
 				Tile t = new Tile();
