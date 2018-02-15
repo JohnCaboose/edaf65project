@@ -21,7 +21,6 @@ public class MainFrame extends JFrame {
 		add(middle = new MiddlePanel(rows, cols));
 		add(bottom = new BottomPanel());
 		setFocusable(true);
-		addKeyListener(new UserInputInterpreter(new DirectionMonitor(null)));
 	}
 
 	/* Forwarding */
