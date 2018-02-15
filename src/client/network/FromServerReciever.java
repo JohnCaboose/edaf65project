@@ -9,7 +9,6 @@ import client.model.DirectionMonitor;
 import common.model.GameState;
 import common.model.PacketHandler;
 import common.model.PacketType;
-import sun.misc.IOUtils;
 
 public class FromServerReciever extends Thread {
 	private final DirectionMonitor directionMonitor;

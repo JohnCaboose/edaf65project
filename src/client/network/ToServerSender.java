@@ -13,8 +13,15 @@ public class ToServerSender implements Runnable {
 	
 	@Override
 	public void run() {
-		do {
+		while (directionMonitor.directionExists()) {
+			while(!directionMonitor.newDirection()) {
+				try {
+					wait(); 
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
 			directionMonitor.broadcastDirection();
-		} while (directionMonitor.directionExists()); //TODO: Make this happen only when direction is updated.
+		}
 	}
 }

@@ -31,7 +31,8 @@ public class RunClient {
 		}
 		
 		/* Starts communication with server. */
-		try (Socket socket = new Socket(hostname, port)) {
+		try {
+			Socket socket = new Socket(hostname, port);
 			DirectionMonitor monitor = new DirectionMonitor(socket);
 			new Thread(new FromServerReciever(monitor, socket)).start();
 			new Thread(new ToServerSender(monitor)).start();
