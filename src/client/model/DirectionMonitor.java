@@ -2,10 +2,10 @@ package client.model;
 
 import java.io.IOException;
 import java.net.Socket;
+
 import com.google.gson.Gson;
 
 import client.controller.Input;
-import client.controller.UserInputInterpreter.Key;
 import common.model.Direction;
 import common.model.PacketHandler;
 import common.model.PacketType;
@@ -51,7 +51,7 @@ public class DirectionMonitor {
 	/**
 	 * Store the parameter in this monitor in some way. TODO: implement this
 	 */
-	public synchronized void send(Key newInput) {
+	public synchronized void send(Direction newInput) {
 		// TODO Auto-generated method stub
 
 	}

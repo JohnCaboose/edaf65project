@@ -4,14 +4,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import client.model.DirectionMonitor;
+import common.model.Direction;
 
 public class UserInputInterpreter implements KeyListener {
 	private DirectionMonitor monitor;
-	private Key previousInput;
+	private Direction previousInput;
 
 	public UserInputInterpreter(DirectionMonitor monitor) {
 		this.monitor = monitor;
-		previousInput = Key.W; // TODO: better start value
+		previousInput = Direction.UP; // TODO: better start value
 	}
 
 	@Override
@@ -19,24 +20,24 @@ public class UserInputInterpreter implements KeyListener {
 		int key = e.getKeyCode();
 		switch (key) {
 		case KeyEvent.VK_W:
-			sendInput(Key.W);
+			sendInput(Direction.UP);
 			break;
 		case KeyEvent.VK_A:
-			sendInput(Key.A);
+			sendInput(Direction.LEFT);
 			break;
 		case KeyEvent.VK_S:
-			sendInput(Key.S);
+			sendInput(Direction.DOWN);
 			break;
 		case KeyEvent.VK_D:
-			sendInput(Key.D);
+			sendInput(Direction.RIGHT);
 			break;
 		}
 
 	}
 
-	private void sendInput(Key newInput) {
-		if ((newInput == Key.W && previousInput == Key.S) || (newInput == Key.S && previousInput == Key.W)
-				|| (newInput == Key.A && previousInput == Key.D) || (newInput == Key.D && previousInput == Key.A)) {
+	private void sendInput(Direction newInput) {
+		if ((newInput == Direction.UP && previousInput == Direction.DOWN) || (newInput == Direction.DOWN && previousInput == Direction.UP)
+				|| (newInput == Direction.LEFT && previousInput == Direction.RIGHT) || (newInput == Direction.RIGHT && previousInput == Direction.LEFT)) {
 			return; // movement does not make sense
 		} else {
 			monitor.send(newInput);
@@ -54,9 +55,4 @@ public class UserInputInterpreter implements KeyListener {
 	public void keyTyped(KeyEvent e) {
 		return;
 	}
-
-	public enum Key {
-		W, A, S, D
-	}
-
 }
