@@ -7,6 +7,7 @@ import java.net.UnknownHostException;
 import client.model.DirectionMonitor;
 import client.network.*;
 import client.view.View;
+import server.model.GameStateMonitor;
 
 /**
  * Run this class to start a client. 
@@ -33,10 +34,11 @@ public class RunClient {
 		/* Starts communication with server. */
 		try {
 			Socket socket = new Socket(hostname, port);
-			DirectionMonitor monitor = new DirectionMonitor();
-			View view = new View(monitor);
-			new Thread(new FromServerReciever(monitor, socket)).start();
-			new Thread(new ToServerSender(monitor, socket)).start();
+			DirectionMonitor directionMonitor = new DirectionMonitor();
+			ClientGameStateMonitor stateMonitor = new ClientGameStateMonitor();
+			View view = new View(directionMonitor);
+			new Thread(new FromServerReceiver(stateMonitor, socket)).start();
+			new Thread(new ToServerSender(directionMonitor, socket)).start();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 			System.err.println("Host not found:" + hostname);
