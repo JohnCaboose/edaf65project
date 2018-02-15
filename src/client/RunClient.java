@@ -6,7 +6,6 @@ import java.net.UnknownHostException;
 
 import client.model.DirectionMonitor;
 import client.network.*;
-import common.model.Snake;
 
 /**
  * Run this class to start a client. 

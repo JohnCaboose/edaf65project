@@ -1,7 +1,4 @@
 package client.network;
-
-import java.net.Socket;
-
 import client.model.DirectionMonitor;
 
 public class ToServerSender implements Runnable {
@@ -14,7 +11,7 @@ public class ToServerSender implements Runnable {
 	@Override
 	public void run() {
 		while (directionMonitor.directionExists()) {
-			while(!directionMonitor.newDirection()) {
+			while(!directionMonitor.hasNewDirection()) {
 				try {
 					wait(); 
 				} catch (InterruptedException e) {

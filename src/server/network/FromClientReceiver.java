@@ -1,7 +1,9 @@
 package server.network;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.Socket;
 
 import common.model.Direction;
@@ -25,13 +27,22 @@ public class FromClientReceiver implements Runnable {
 	@Override
 	public void run() {
 		try (InputStream is = socket.getInputStream()){
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			
 			while(true) {
-				//TODO read an actual packet from stream here and put it in packet
+				StringBuilder sb = new StringBuilder();
+				String packet ="";
 				
-				String packet = "<GAMEPACKET TYPE=DIRECTION>\"LEFT\"</GAMEPACKET>";
+				int c;
+				while ((c = reader.read()) != -1) {
+					sb.append((char) c);
+				}
 				
-				if(PacketHandler.stringContainsProtocolPacket(packet)) {
-					if(PacketHandler.getProtocolPacketType(packet) == PacketType.DIRECTION) {
+				if(PacketHandler.stringContainsProtocolPacket(sb.toString())) {
+					packet = PacketHandler.extractFirstPacketFromMultiPacketStringBuilder(sb);
+					PacketType type = PacketHandler.getProtocolPacketType(packet);
+					
+					if(type == PacketType.DIRECTION) {
 						Direction direction = PacketHandler.getDirectionFromProtocolPacket(packet);
 						if(direction != null) {
 							gameStateMonitor.changePlayerDirection(playerIdentity, direction);
