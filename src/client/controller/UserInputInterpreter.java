@@ -12,7 +12,7 @@ public class UserInputInterpreter implements KeyListener {
 
 	public UserInputInterpreter(DirectionMonitor monitor) {
 		this.monitor = monitor;
-		previousInput = Direction.UP; // TODO: better start value
+		previousInput = Direction.NONE;
 	}
 
 	@Override
@@ -36,11 +36,13 @@ public class UserInputInterpreter implements KeyListener {
 	}
 
 	private void sendInput(Direction newInput) {
-		if ((newInput == Direction.UP && previousInput == Direction.DOWN) || (newInput == Direction.DOWN && previousInput == Direction.UP)
-				|| (newInput == Direction.LEFT && previousInput == Direction.RIGHT) || (newInput == Direction.RIGHT && previousInput == Direction.LEFT)) {
+		if ((newInput == Direction.UP && previousInput == Direction.DOWN)
+				|| (newInput == Direction.DOWN && previousInput == Direction.UP)
+				|| (newInput == Direction.LEFT && previousInput == Direction.RIGHT)
+				|| (newInput == Direction.RIGHT && previousInput == Direction.LEFT)) {
 			return; // movement does not make sense
 		} else {
-			monitor.send(newInput);
+			monitor.submit(newInput);
 			previousInput = newInput;
 		}
 

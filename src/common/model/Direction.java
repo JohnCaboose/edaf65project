@@ -1,7 +1,7 @@
 package common.model;
 
 public enum Direction {
-	UP, DOWN, LEFT, RIGHT;
+	UP, DOWN, LEFT, RIGHT, NONE;
 	
 	private Direction opposite;
 
