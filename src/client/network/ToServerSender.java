@@ -1,11 +1,22 @@
 package client.network;
+import java.io.IOException;
+import java.net.Socket;
+
+import com.google.gson.Gson;
+
 import client.model.DirectionMonitor;
+import common.model.Direction;
+import common.model.PacketHandler;
+import common.model.PacketType;
 
 public class ToServerSender implements Runnable {
 	private final DirectionMonitor directionMonitor;
+	private final Gson gson = new Gson();
+	private Socket socket = null;
 	
-	public ToServerSender(DirectionMonitor directionMonitor) {
+	public ToServerSender(DirectionMonitor directionMonitor, Socket socket) {
 		this.directionMonitor = directionMonitor;
+		this.socket = socket;
 	}
 	
 	@Override
@@ -18,7 +29,22 @@ public class ToServerSender implements Runnable {
 					e.printStackTrace();
 				}
 			}
-			directionMonitor.broadcastDirection();
+			
+			String message = PacketHandler.createProtocolPacket(PacketType.DIRECTION,
+					gson.toJson(directionMonitor.getDirection(), Direction.class));
+			try {
+				if (socket != null) {
+					try {
+						socket.getOutputStream().write(message.getBytes());
+						socket.getOutputStream().flush();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				directionMonitor.directionSent();
+			} catch (Exception e) {
+				System.out.println("Error in DirectionMonitor");
+			}
 		}
 	}
 }
