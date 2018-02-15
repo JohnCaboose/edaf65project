@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 
 @SuppressWarnings("serial")
 public class Tile extends JLabel {
-	private static int TILE_SIZE = 30;
+	private static int TILE_SIZE = 15;
 	private String color;
 
 	public Tile() {
