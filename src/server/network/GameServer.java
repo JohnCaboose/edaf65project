@@ -72,7 +72,7 @@ public class GameServer implements Runnable {
 	@Override
 	public void run() {
 		try (ServerSocket serverSocket = new ServerSocket(port)) {
-			// Wait for all players to connect
+			//Wait for all players to connect
 			new Thread(new ToClientsSender(gameStateMonitor, connectionMonitor)).start();
 			while (!connectionMonitor.allPlayersConnected()) {
 				Socket socket = serverSocket.accept();
@@ -95,8 +95,15 @@ public class GameServer implements Runnable {
 					System.err.println("Could not add new player as the game is already full.");
 				}				
 			}
+			//Wait for players to be ready
+			//TODO implement more robustly (use some sort of new packet type "PLAYER_READY" or something?)
+			try {
+				Thread.sleep(5000);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
 			
-			// Start game
+			//Start game
 			while (true) {
 				long frameStartTime = System.currentTimeMillis();
 				gameStateMonitor.updateGameState();
