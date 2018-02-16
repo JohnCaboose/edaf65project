@@ -1,11 +1,13 @@
 package server.model;
 
 import java.io.IOException;
+
 import java.net.Socket;
 import java.util.Map;
 import java.util.TreeMap;
 
 import com.google.gson.Gson;
+
 
 import common.model.Direction;
 import common.model.PlayerIdentity;
@@ -13,7 +15,7 @@ import common.model.Snake;
 import common.model.GameState;
 import common.model.PacketHandler;
 import common.model.PacketType;
-
+import server.exceptions.GameIsFullException;
 import server.network.FromClientReceiver;
 
 /**
@@ -73,26 +75,18 @@ public class ServerGameStateMonitor {
 	/**
 	 * Adds a new player to the game, sends the playerIdentity to the player
 	 * @param socket the socket of the player
+	 * @return the identity of the player added
 	 */
-	public synchronized void addPlayer(Socket socket) {	
+	public synchronized PlayerIdentity addPlayer(Socket socket) throws GameIsFullException {	
 		for(PlayerIdentity playerIdentity : playerSockets.keySet()) {
 			if(playerSockets.get(playerIdentity) == null) {
 				System.out.println("Adding new player " + playerIdentity);
 				playerSockets.put(playerIdentity, socket);
-				//TODO: Consider moving this network functionality outside monitor 
-				String message = PacketHandler.createProtocolPacket(PacketType.PLAYERIDENTITY, gson.toJson(playerIdentity, PlayerIdentity.class));
-				try {
-					socket.getOutputStream().write(message.getBytes());
-					socket.getOutputStream().flush();
-				} catch (IOException e) {
-					e.printStackTrace();
-					this.removePlayer(playerIdentity);
-					return;
-				}
 				new Thread(new FromClientReceiver(playerIdentity, this, socket)).start();
-				break;
+				return playerIdentity;
 			}
 		}
+		throw new GameIsFullException();
 	}
 	
 	/**

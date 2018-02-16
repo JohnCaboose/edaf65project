@@ -4,7 +4,13 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.google.gson.Gson;
+
 import common.constants.Constants;
+import common.model.PacketHandler;
+import common.model.PacketType;
+import common.model.PlayerIdentity;
+import server.exceptions.GameIsFullException;
 import server.model.ServerGameStateMonitor;
 
 public class GameServer implements Runnable {
@@ -20,6 +26,7 @@ public class GameServer implements Runnable {
 	private final int MILLIS_PER_STATE_FRAME = 400;
 
 	private final ServerGameStateMonitor gameStateMonitor;
+	private final Gson gson = new Gson();
 
 	/**
 	 * 
@@ -66,8 +73,23 @@ public class GameServer implements Runnable {
 			new Thread(new ToClientsSender(gameStateMonitor)).start();
 			while (!gameStateMonitor.allPlayersConnected()) {
 				Socket socket = serverSocket.accept();
-				gameStateMonitor.addPlayer(socket);
+				
+				PlayerIdentity playerIdentity;
+				try {
+					playerIdentity = gameStateMonitor.addPlayer(socket);
+					String message = PacketHandler.createProtocolPacket(PacketType.PLAYERIDENTITY, gson .toJson(playerIdentity, PlayerIdentity.class));
+					try {
+						socket.getOutputStream().write(message.getBytes());
+						socket.getOutputStream().flush();
+					} catch (IOException e) {
+						System.err.println("Could not communicate with client, dropping them.");
+						gameStateMonitor.removePlayer(playerIdentity);
+					}
+				} catch (GameIsFullException e1) {
+					System.err.println("Could not add new player as the game is already full.");
+				}				
 			}
+			
 			// Start game
 			while (true) {
 				long frameStartTime = System.currentTimeMillis();
