@@ -39,7 +39,7 @@ public class ServerGameStateMonitor {
 		//Coordinate.width = boardWidth;
 		//Coordinate.height = boardHeight;
 		
-		lastStateSent = -2;
+		lastStateSent = -1;
 		playerSockets = new TreeMap<PlayerIdentity, Socket>();
 		
 		switch(playerCount) {
@@ -182,6 +182,13 @@ public class ServerGameStateMonitor {
 	 */
 	public synchronized boolean isGameOver() {
 		return this.gameState.isGameOver();
+	}
+	/**
+	 * Get the current state of the game as a JSON object string
+	 * @return JSON string of the current game state
+	 */
+	public synchronized String getJsonState() {
+		return jsonState;
 	}
 
 }

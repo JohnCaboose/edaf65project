@@ -77,9 +77,11 @@ public class GameServer implements Runnable {
 				PlayerIdentity playerIdentity;
 				try {
 					playerIdentity = gameStateMonitor.addPlayer(socket);
-					String message = PacketHandler.createProtocolPacket(PacketType.PLAYERIDENTITY, gson .toJson(playerIdentity, PlayerIdentity.class));
+					String identityMessage = PacketHandler.createProtocolPacket(PacketType.PLAYERIDENTITY, gson.toJson(playerIdentity, PlayerIdentity.class));
+					String stateMessage = PacketHandler.createProtocolPacket(PacketType.GAMESTATE, gameStateMonitor.getJsonState());
 					try {
-						socket.getOutputStream().write(message.getBytes());
+						socket.getOutputStream().write(identityMessage.getBytes());
+						socket.getOutputStream().write(stateMessage.getBytes());
 						socket.getOutputStream().flush();
 					} catch (IOException e) {
 						System.err.println("Could not communicate with client, dropping them.");
