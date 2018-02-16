@@ -82,6 +82,7 @@ public class Snake {
 		if(travelDirection.getOppositeDirection() != dir) {
 			travelDirection = dir;
 		}
+		//TODO: make it so that it actually cant go into itself by fixing this
 	}
 
 	/**

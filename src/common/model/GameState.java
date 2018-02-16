@@ -97,7 +97,6 @@ public class GameState {
 			playerSnakes.get(i).moveForward();
 		}
 		//TODO: add spawning of fruit and that whole thing, if time allows and stuff 
-		//TODO: find out why snake of size 4 can eat itself
 		checkSnakeCollisions();
 		tickCounter++;
 	}

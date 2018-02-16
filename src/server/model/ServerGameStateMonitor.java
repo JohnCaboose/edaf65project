@@ -139,7 +139,6 @@ public class ServerGameStateMonitor {
 	 * @return the JSON string for the snakes of the players
 	 */
 	public synchronized void broadcastState() {
-		//TODO: think about how to only send out first gamestate once all players are connected but to also keep sending if someone disconnects...
 		while(gameState.getTickCounter() <= lastStateSent) {
 			try {
 				this.wait();
