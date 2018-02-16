@@ -17,7 +17,7 @@ public class GameServer implements Runnable {
 	private final int LOWEST_LEGAL_PLAYERCOUNT = 1;
 	private final int HIGHEST_LEGAL_PLAYERCOUNT = 4;
 	private final int SMALLEST_SIZE_FIELD = 20;
-	private final int MILLIS_PER_STATE_FRAME = 1000;
+	private final int MILLIS_PER_STATE_FRAME = 400;
 
 	private final ServerGameStateMonitor gameStateMonitor;
 

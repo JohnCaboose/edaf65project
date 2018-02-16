@@ -23,28 +23,44 @@ public class PaintSnakesOnViewThread extends Thread {
 	}
 	
 	public void run() {
+		GameState previousGameState = null;
 		while (true) {
 			GameState state = monitor.getGameState();
-			System.out.println("Got a state!");
+			if(previousGameState != null){
+				//rita svansarna svarta
+				for(Snake s : previousGameState.getPlayerSnakes()){
+					Coordinate c = s.getBody().getLast();
+					view.colorTileAt(c.x, c.y, "BLACK");
+				}
+			}
+			
+			
+			//System.out.println("Got a state!");
 			List<Snake> snakes = state.getPlayerSnakes();
 			int k = 0;
 			for (Snake snake : snakes) {
-				System.out.println("Printing snake: " + k);
+				//System.out.println("Printing snake: " + k);
 				String color = colors[k++];
 				for (Coordinate c : snake.getBody()) {
-					if (!view.isColoredAt(c.x, c.y)) {
+					/*if (!view.isColoredAt(c.x, c.y)) {
 						view.colorTileAt(c.x, c.y, color);
 					} else {
-						String msg = String.format("Tile skipped: (%d, %d)\n", c.x, c.y);
+						String msg = String.format("Tile skipped: (%d, %d)", c.x, c.y);
 						System.out.println(msg);
-					}
+					}*/
+					view.colorTileAt(c.x, c.y, color);
 				}
 			}
+			if(!state.getPlayerSnakes().get(monitor.getPlayerIdentity().ordinal()).isAlive()){
+				view.displayDeadSnakeStatus();
+				view.println("Your snake died :(");
+			}
 			if(state.isGameOver()){
-				System.out.println("Game is over, goodbye!");
+				//System.out.println("Game is over, goodbye!");
 				view.println("Game is over, goodbye!");
 				break;
 			}
+			previousGameState = state;
 		}
 		System.err.println("paintsnakes is dead");
 	}

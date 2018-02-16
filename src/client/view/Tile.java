@@ -16,7 +16,7 @@ public class Tile extends JLabel {
 		setOpaque(true);
 		setPreferredSize(new Dimension(TILE_SIZE, TILE_SIZE));
 		/* TODO: remove border */
-		setBorder(BorderFactory.createLineBorder(Color.white));
+		//setBorder(BorderFactory.createLineBorder(Color.white));
 		color = "black";
 		setColor(color);
 	}

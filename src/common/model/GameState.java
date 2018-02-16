@@ -10,6 +10,7 @@ public class GameState {
 	//It counts from 0 to LONG_MAX and then the game behavior is undefined :) 
 	private long tickCounter = -1;
 	private final List<Snake> playerSnakes;
+	private final int ORIGINAL_SNAKE_LENGTH = 5;
 	
 	public GameState(int playerCount, int boardWidth, int boardHeight) {
 		//Define the initial spawn corners
@@ -26,7 +27,7 @@ public class GameState {
 		
 		playerSnakes = new ArrayList<Snake>(playerCount);
 		for(int i = 0; i < playerCount; i++) {
-			playerSnakes.add(new Snake(initialCorners.get(i), initialDirections.get(i), 3));
+			playerSnakes.add(new Snake(initialCorners.get(i), initialDirections.get(i), ORIGINAL_SNAKE_LENGTH));
 		}
 	}
 	
@@ -96,6 +97,7 @@ public class GameState {
 			playerSnakes.get(i).moveForward();
 		}
 		//TODO: add spawning of fruit and that whole thing, if time allows and stuff 
+		//TODO: find out why snake of size 4 can eat itself
 		checkSnakeCollisions();
 		tickCounter++;
 	}

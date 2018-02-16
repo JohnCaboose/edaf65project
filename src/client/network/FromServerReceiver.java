@@ -38,7 +38,7 @@ public class FromServerReceiver extends Thread {
 					break;
 				}
 				sb.append('>');
-				System.out.println("Client read end of tag: " + sb.toString());
+				//System.out.println("Client read end of tag: " + sb.toString());
 				if (PacketHandler.stringContainsProtocolPacket(sb.toString())) {
 					String packet = PacketHandler.extractFirstPacketFromMultiPacketStringBuilder(sb);
 					PacketType type = PacketHandler.getProtocolPacketType(packet);
@@ -49,12 +49,11 @@ public class FromServerReceiver extends Thread {
 							stateMonitor.setGameState(gameState);
 							break;
 						case PLAYERIDENTITY:
-							
-							// TODO: give the player identity to the classes which
-							// need it
+							stateMonitor.setPlayerIdentity(PacketHandler.getPlayerIdentityFromProtocolPacket(packet));
 							break;
 						default:
 							System.err.println("Packet type " + type + " not supported by client.");
+							break;
 					}
 				}
 			}

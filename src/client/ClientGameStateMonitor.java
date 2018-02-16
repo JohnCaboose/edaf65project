@@ -1,11 +1,13 @@
 package client;
 
 import common.model.GameState;
+import common.model.PlayerIdentity;
 
 public class ClientGameStateMonitor {
 
 	private GameState state;
 	private boolean hasNewGameState;
+	private PlayerIdentity playerIdentity;
 	
 	public ClientGameStateMonitor() {
 		state = null;
@@ -28,5 +30,13 @@ public class ClientGameStateMonitor {
 		return state;
 	}
 	//TODO: make client interpret game being over and then shutting everything down typ
+
+	public synchronized void setPlayerIdentity(PlayerIdentity playerIdentityFromProtocolPacket) {
+		this.playerIdentity = playerIdentityFromProtocolPacket;
+	}
+	
+	public synchronized PlayerIdentity getPlayerIdentity(){
+		return this.playerIdentity;
+	}
 
 }
