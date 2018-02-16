@@ -92,7 +92,7 @@ public class ServerGameStateMonitor {
 				break;
 			}
 		}
-		
+		notifyAll();
 	}
 	
 	/**
@@ -139,7 +139,7 @@ public class ServerGameStateMonitor {
 	 * @return the JSON string for the snakes of the players
 	 */
 	public synchronized void broadcastState() {
-		while(gameState.getTickCounter() <= lastStateSent) {
+		while(gameState.getTickCounter() <= lastStateSent && !allPlayersConnected()) {
 			try {
 				this.wait();
 			} catch (InterruptedException e) {
@@ -147,7 +147,7 @@ public class ServerGameStateMonitor {
 			}
 		}
 		lastStateSent = gameState.getTickCounter();
-		System.out.println(String.format("Broadcasting game state #%d to all players", gameState.getTickCounter()));
+		System.err.println(String.format("Broadcasting game state #%d to all players", gameState.getTickCounter()));
 		//TODO consider moving outside synchronized zone for performance, this should include making a new connectionmonitor
 		for(Socket socket : playerSockets.values()) {
 			if(socket != null) {

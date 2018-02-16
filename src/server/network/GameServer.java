@@ -67,6 +67,7 @@ public class GameServer implements Runnable {
 			while (!gameStateMonitor.allPlayersConnected()) {
 				Socket socket = serverSocket.accept();
 				gameStateMonitor.addPlayer(socket);
+				//TODO: send playerID for that socket to that socket
 			}
 			// Start game
 			while (true) {
