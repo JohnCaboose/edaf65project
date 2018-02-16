@@ -143,8 +143,8 @@ public class GameServer implements Runnable {
 		if (args.length == 2) {
 			int port = Integer.parseInt(args[0]);
 			int playerCount = Integer.parseInt(args[1]);
-			int width = Constants.BOARDWIDTH;
-			int height = Constants.BOARDHEIGHT;
+			int width = Constants.BOARD_WIDTH;
+			int height = Constants.BOARD_HEIGHT;
 			try {
 				GameServer gameServer = new GameServer(port, playerCount, width, height);
 				new Thread(gameServer).start();

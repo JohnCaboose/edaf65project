@@ -10,8 +10,8 @@ import common.constants.Constants;
 /* Monitor for the GUI */
 public class View {
 	private final static String WINDOW_TITLE = "MultiSnake";
-	public static final int FIELD_SIZE_X = Constants.BOARDWIDTH;
-	public static final int FIELD_SIZE_Y = Constants.BOARDHEIGHT;
+	public static final int FIELD_SIZE_X = Constants.BOARD_WIDTH;
+	public static final int FIELD_SIZE_Y = Constants.BOARD_HEIGHT;
 	private final MainFrame frame;
 	private boolean visible;
 

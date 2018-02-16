@@ -69,7 +69,7 @@ public class ProtocolAndJSONTests {
 	
 	@Test
 	public void testGameTick() {
-		GameState gameState = new GameState(2,common.constants.Constants.BOARDWIDTH,common.constants.Constants.BOARDHEIGHT);
+		GameState gameState = new GameState(2,common.constants.Constants.BOARD_WIDTH,common.constants.Constants.BOARD_HEIGHT);
 		gameState.performGameTick();
 		String expected = "{\"tickCounter\":0,\"playerSnakes\":[{\"body\":[{\"x\":0,\"y\":20},{\"x\":0,\"y\":21},{\"x\":0,\"y\":22}],\"travelDirection\":\"UP\",\"alive\":true},{\"body\":[{\"x\":23,\"y\":3},{\"x\":23,\"y\":2},{\"x\":23,\"y\":1}],\"travelDirection\":\"DOWN\",\"alive\":true}]}";
 		String actual = gson.toJson(gameState);
@@ -100,7 +100,7 @@ public class ProtocolAndJSONTests {
 	public void testMultiPacketExtraction(){
 		
 		String firstPacket = PacketHandler.createProtocolPacket(PacketType.PLAYERIDENTITY, gson.toJson(PlayerIdentity.ONE, PlayerIdentity.class));
-		String secondPacket = PacketHandler.createProtocolPacket(PacketType.GAMESTATE, gson.toJson(new GameState(1, Constants.BOARDWIDTH, Constants.BOARDHEIGHT), GameState.class)); 
+		String secondPacket = PacketHandler.createProtocolPacket(PacketType.GAMESTATE, gson.toJson(new GameState(1, Constants.BOARD_WIDTH, Constants.BOARD_HEIGHT), GameState.class)); 
 		StringBuilder sb = new StringBuilder();
 		sb.append(firstPacket);
 		sb.append(secondPacket);
