@@ -87,6 +87,9 @@ public class GameServer implements Runnable {
 			System.exit(-1);
 		}
 		//Game is over
+		System.out.println("Game over, shutting down server.");
+		//TODO: this shouldn't really be needed later on as fromclientreceiver should be updated to kill itself automatically 
+		System.exit(0);
 	}
 
 	/**

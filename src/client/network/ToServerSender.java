@@ -46,5 +46,7 @@ public class ToServerSender implements Runnable {
 				System.out.println("Error in DirectionMonitor");
 			}
 		}
+		System.err.println("ToServerSender just died.");
+		//TODO: fix bug so server sender doesn't immediately die.....
 	}
 }

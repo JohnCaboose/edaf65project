@@ -64,7 +64,7 @@ public class ServerGameStateMonitor {
 	 * This corresponds to a game logic "tick".
 	 */
 	public synchronized void updateGameState() {
-		System.out.println("Updating game state #" + gameState.getTickCounter()+1);
+		System.out.println("Updating game state #" + (gameState.getTickCounter()+1));
 		gameState.performGameTick();
 		updateJSONState();
 		this.notifyAll();
@@ -148,7 +148,7 @@ public class ServerGameStateMonitor {
 			}
 		}
 		lastStateSent = gameState.getTickCounter();
-		System.err.println(String.format("Broadcasting game state #%d to all players", gameState.getTickCounter()));
+		System.out.println(String.format("Broadcasting game state #%d to all players", gameState.getTickCounter()));
 		//TODO consider moving outside synchronized zone for performance, this should include making a new connectionmonitor
 		for(Socket socket : playerSockets.values()) {
 			if(socket != null) {

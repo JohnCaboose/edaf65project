@@ -36,7 +36,8 @@ public class FromClientReceiver implements Runnable {
 				int c;
 				while ((c = reader.read()) != -1) {
 					sb.append((char) c);
-				}
+					System.err.println("Read: " + sb.toString());
+				} //TODO This most likely will not work, it will not return -1 until the socket dies afaik.
 				
 				if(PacketHandler.stringContainsProtocolPacket(sb.toString())) {
 					packet = PacketHandler.extractFirstPacketFromMultiPacketStringBuilder(sb);
@@ -49,13 +50,13 @@ public class FromClientReceiver implements Runnable {
 						}
 					}
 				}
-				
+				/*
 				//TODO remove the sleeping here once actual reading is taking place
 				try {
 					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
-				}
+				}*/
 			}
 		} catch (IOException e) {
 			gameStateMonitor.removePlayer(playerIdentity);
