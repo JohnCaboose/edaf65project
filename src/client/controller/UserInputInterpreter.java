@@ -46,6 +46,7 @@ public class UserInputInterpreter implements KeyListener {
 			monitor.submit(newInput);
 			previousInput = newInput;
 		}
+		//TODO: make it so that it actually cant go into itself by fixing this to check for the last actually used input instead or both?
 	}
 
 	@Override

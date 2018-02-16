@@ -11,6 +11,7 @@ import common.model.PacketHandler;
 import common.model.PacketType;
 import common.model.PlayerIdentity;
 import server.exceptions.GameIsFullException;
+import server.model.ServerConnectionMonitor;
 import server.model.ServerGameStateMonitor;
 
 public class GameServer implements Runnable {
@@ -26,6 +27,7 @@ public class GameServer implements Runnable {
 	private final int MILLIS_PER_STATE_FRAME = 400;
 
 	private final ServerGameStateMonitor gameStateMonitor;
+	private final ServerConnectionMonitor connectionMonitor;
 	private final Gson gson = new Gson();
 
 	/**
@@ -63,6 +65,7 @@ public class GameServer implements Runnable {
 		}
 
 		gameStateMonitor = new ServerGameStateMonitor(this.playerCount, this.width, this.height);
+		connectionMonitor = new ServerConnectionMonitor(this.playerCount, this.gameStateMonitor);
 
 	}
 
@@ -70,13 +73,14 @@ public class GameServer implements Runnable {
 	public void run() {
 		try (ServerSocket serverSocket = new ServerSocket(port)) {
 			// Wait for all players to connect
-			new Thread(new ToClientsSender(gameStateMonitor)).start();
-			while (!gameStateMonitor.allPlayersConnected()) {
+			new Thread(new ToClientsSender(gameStateMonitor, connectionMonitor)).start();
+			while (!connectionMonitor.allPlayersConnected()) {
 				Socket socket = serverSocket.accept();
 				
 				PlayerIdentity playerIdentity;
 				try {
-					playerIdentity = gameStateMonitor.addPlayer(socket);
+					playerIdentity = connectionMonitor.addPlayer(socket);
+					new Thread(new FromClientReceiver(playerIdentity,gameStateMonitor,socket,connectionMonitor)).start();
 					String identityMessage = PacketHandler.createProtocolPacket(PacketType.PLAYERIDENTITY, gson.toJson(playerIdentity, PlayerIdentity.class));
 					String stateMessage = PacketHandler.createProtocolPacket(PacketType.GAMESTATE, gameStateMonitor.getJsonState());
 					try {
@@ -85,7 +89,7 @@ public class GameServer implements Runnable {
 						socket.getOutputStream().flush();
 					} catch (IOException e) {
 						System.err.println("Could not communicate with client, dropping them.");
-						gameStateMonitor.removePlayer(playerIdentity);
+						connectionMonitor.removePlayer(playerIdentity);
 					}
 				} catch (GameIsFullException e1) {
 					System.err.println("Could not add new player as the game is already full.");

@@ -10,6 +10,7 @@ import common.model.Direction;
 import common.model.PacketHandler;
 import common.model.PacketType;
 import common.model.PlayerIdentity;
+import server.model.ServerConnectionMonitor;
 import server.model.ServerGameStateMonitor;
 
 public class FromClientReceiver implements Runnable {
@@ -17,11 +18,13 @@ public class FromClientReceiver implements Runnable {
 	private final PlayerIdentity playerIdentity;
 	private final ServerGameStateMonitor gameStateMonitor;
 	private final Socket socket;
+	private final ServerConnectionMonitor connectionMonitor;
 
-	public FromClientReceiver(PlayerIdentity playerIdentity, ServerGameStateMonitor gameStateMonitor, Socket socket) {
+	public FromClientReceiver(PlayerIdentity playerIdentity, ServerGameStateMonitor gameStateMonitor, Socket socket, ServerConnectionMonitor connectionMonitor) {
 		this.playerIdentity = playerIdentity;
 		this.gameStateMonitor = gameStateMonitor;
 		this.socket = socket;
+		this.connectionMonitor = connectionMonitor;
 	}
 
 	@Override
@@ -56,7 +59,8 @@ public class FromClientReceiver implements Runnable {
 				}
 			}
 		} catch (IOException e) {
-			gameStateMonitor.removePlayer(playerIdentity);
+			connectionMonitor.removePlayer(playerIdentity);
+			gameStateMonitor.killSnake(playerIdentity);
 		}
 		System.out.println(String.format("FromClientReceiver %s shutting down.", playerIdentity.name()));
 	}
