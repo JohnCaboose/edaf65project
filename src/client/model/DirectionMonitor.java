@@ -18,6 +18,22 @@ public class DirectionMonitor {
 	}
 	
 	public synchronized Direction getDirection() {
+		while(!directionExists()){
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		while(!hasNewDirection()){
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		return direction;
 	}
 

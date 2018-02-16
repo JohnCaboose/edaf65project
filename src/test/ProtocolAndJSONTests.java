@@ -11,11 +11,13 @@ import org.junit.Test;
 
 import com.google.gson.Gson;
 
+import common.constants.Constants;
 import common.model.Coordinate;
 import common.model.Direction;
 import common.model.GameState;
-
+import common.model.PacketHandler;
 import common.model.PacketType;
+import common.model.PlayerIdentity;
 import common.model.Snake;
 
 
@@ -92,6 +94,25 @@ public class ProtocolAndJSONTests {
 		expectedLocations[1] = new Coordinate(1,0);
 		expectedLocations[2] = new Coordinate(0,0);
 		assertArrayEquals(expectedLocations,s.getBody().toArray());
+	}
+	
+	@Test
+	public void testMultiPacketExtraction(){
+		
+		String firstPacket = PacketHandler.createProtocolPacket(PacketType.PLAYERIDENTITY, gson.toJson(PlayerIdentity.ONE, PlayerIdentity.class));
+		String secondPacket = PacketHandler.createProtocolPacket(PacketType.GAMESTATE, gson.toJson(new GameState(1, Constants.BOARDWIDTH, Constants.BOARDHEIGHT), GameState.class)); 
+		StringBuilder sb = new StringBuilder();
+		sb.append(firstPacket);
+		sb.append(secondPacket);
+		
+		
+		String firstExtracted = PacketHandler.extractFirstPacketFromMultiPacketStringBuilder(sb);
+		assertEquals(firstPacket, firstExtracted);
+		assertEquals(secondPacket, sb.toString());
+		
+		String secondExtracted = PacketHandler.extractFirstPacketFromMultiPacketStringBuilder(sb);
+		assertEquals(secondPacket, secondExtracted);
+		assertEquals("", sb.toString());
 	}
 	
 	

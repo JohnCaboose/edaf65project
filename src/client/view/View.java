@@ -12,13 +12,13 @@ public class View {
 	private final static String WINDOW_TITLE = "MultiSnake";
 	public static final int FIELD_SIZE_X = Constants.BOARDWIDTH;
 	public static final int FIELD_SIZE_Y = Constants.BOARDHEIGHT;
-	private MainFrame frame;
+	private final MainFrame frame;
 	private boolean visible;
 
 	public View(DirectionMonitor monitor) {
+		frame = new MainFrame(WINDOW_TITLE, FIELD_SIZE_X, FIELD_SIZE_Y);
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
-				frame = new MainFrame(WINDOW_TITLE, FIELD_SIZE_X, FIELD_SIZE_Y);
 				frame.pack();
 				frame.setResizable(false);
 				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -148,12 +148,13 @@ public class ServerGameStateMonitor {
 			}
 		}
 		lastStateSent = gameState.getTickCounter();
-		System.out.println(String.format("Broadcasting game state #%d to all players", gameState.getTickCounter()));
+		System.out.println(String.format("Broadcasting game state #%d to all players. Game is over? %b", gameState.getTickCounter(), gameState.isGameOver()));
 		//TODO consider moving outside synchronized zone for performance, this should include making a new connectionmonitor
+		byte[] packet = PacketHandler.createProtocolPacket(PacketType.GAMESTATE, jsonState).getBytes();
 		for(Socket socket : playerSockets.values()) {
 			if(socket != null) {
 				try {
-					socket.getOutputStream().write(jsonState.getBytes());
+					socket.getOutputStream().write(packet);
 					socket.getOutputStream().flush();
 				} catch (IOException e) {
 					this.removePlayer(socket);

@@ -13,7 +13,7 @@ import common.model.PacketType;
 public class FromServerReceiver extends Thread {
 	private final ClientGameStateMonitor stateMonitor;
 	private Socket socket;
-	private GameState gameState = null;
+	
 
 	public FromServerReceiver(ClientGameStateMonitor stateMonitor, Socket socket) {
 		this.stateMonitor = stateMonitor;
@@ -22,30 +22,39 @@ public class FromServerReceiver extends Thread {
 
 	public void run() {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-			while (!isInterrupted()) {
-				StringBuilder sb = new StringBuilder();
-				String packet;
-
+			StringBuilder sb = new StringBuilder();
+			while (true) {
 				int c;
-				while ((c = reader.read()) != -1) {
+				while ((c = reader.read()) != '>') {
+					if(c == -1){
+						break;
+					}
 					sb.append((char) c);
+					//System.err.println("Read: " + sb.toString());
 				}
-
+				if(c == -1){
+					//TODO disconnect ? 
+					System.err.println("FromServerReceiver got end of stream, is killing itself.");
+					break;
+				}
+				sb.append('>');
+				System.out.println("Client read end of tag: " + sb.toString());
 				if (PacketHandler.stringContainsProtocolPacket(sb.toString())) {
-					packet = PacketHandler.extractFirstPacketFromMultiPacketStringBuilder(sb);
+					String packet = PacketHandler.extractFirstPacketFromMultiPacketStringBuilder(sb);
 					PacketType type = PacketHandler.getProtocolPacketType(packet);
-
+					
 					switch (type) {
-					case GAMESTATE:
-						gameState = PacketHandler.getStateFromProtocolPacket(packet);
-						stateMonitor.setGameState(gameState);
-						break;
-					case PLAYERIDENTITY:
-						// TODO: give the player identity to the classes which
-						// need it
-						break;
-					default:
-						System.err.println("Packet type " + type + " not supported by client.");
+						case GAMESTATE:
+							GameState gameState = PacketHandler.getStateFromProtocolPacket(packet);
+							stateMonitor.setGameState(gameState);
+							break;
+						case PLAYERIDENTITY:
+							
+							// TODO: give the player identity to the classes which
+							// need it
+							break;
+						default:
+							System.err.println("Packet type " + type + " not supported by client.");
 					}
 				}
 			}

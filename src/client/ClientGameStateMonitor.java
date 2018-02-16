@@ -27,5 +27,6 @@ public class ClientGameStateMonitor {
 		hasNewGameState = false;
 		return state;
 	}
+	//TODO: make client interpret game being over and then shutting everything down typ
 
 }

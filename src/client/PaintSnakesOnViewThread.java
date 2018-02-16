@@ -8,12 +8,13 @@ import common.model.GameState;
 import common.model.Snake;
 
 public class PaintSnakesOnViewThread extends Thread {
-	private ClientGameStateMonitor monitor;
-	private View view;
+	private final ClientGameStateMonitor monitor;
+	private final View view;
 	private final String[] colors;
 	
-	public PaintSnakesOnViewThread(ClientGameStateMonitor monitor) {
+	public PaintSnakesOnViewThread(ClientGameStateMonitor monitor, View view) {
 		this.monitor = monitor;
+		this.view = view;
 		colors = new String[4];
 		colors[0] = "blue";
 		colors[1] = "green";
@@ -22,11 +23,13 @@ public class PaintSnakesOnViewThread extends Thread {
 	}
 	
 	public void run() {
-		while (!isInterrupted()) {
+		while (true) {
 			GameState state = monitor.getGameState();
+			System.out.println("Got a state!");
 			List<Snake> snakes = state.getPlayerSnakes();
 			int k = 0;
 			for (Snake snake : snakes) {
+				System.out.println("Printing snake: " + k);
 				String color = colors[k++];
 				for (Coordinate c : snake.getBody()) {
 					if (!view.isColoredAt(c.x, c.y)) {
@@ -37,6 +40,12 @@ public class PaintSnakesOnViewThread extends Thread {
 					}
 				}
 			}
+			if(state.isGameOver()){
+				System.out.println("Game is over, goodbye!");
+				view.println("Game is over, goodbye!");
+				break;
+			}
 		}
+		System.err.println("paintsnakes is dead");
 	}
 }

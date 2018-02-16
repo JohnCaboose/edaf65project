@@ -21,32 +21,29 @@ public class ToServerSender implements Runnable {
 	
 	@Override
 	public void run() {
-		while (directionMonitor.directionExists()) {
-			while(!directionMonitor.hasNewDirection()) {
-				try {
-					wait(); 
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-			}
-			
+		while (true) {
+			Direction direction = directionMonitor.getDirection(); 
 			String message = PacketHandler.createProtocolPacket(PacketType.DIRECTION,
 					gson.toJson(directionMonitor.getDirection(), Direction.class));
-			try {
-				if (socket != null) {
-					try {
-						socket.getOutputStream().write(message.getBytes());
-						socket.getOutputStream().flush();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
+			
+			if (socket != null) {
+				if (socket.isClosed()){
+					System.err.println("ToServerSender dying");
+					break;
 				}
-				directionMonitor.directionSent();
-			} catch (Exception e) {
-				System.out.println("Error in DirectionMonitor");
-			}
+				try {
+					socket.getOutputStream().write(message.getBytes());
+					socket.getOutputStream().flush();
+				} catch (IOException e) {
+					e.printStackTrace();
+					System.err.println("ToServerSender dying");
+					break;
+				}
+			} 
+			
+
+			directionMonitor.directionSent();
+
 		}
-		System.err.println("ToServerSender just died.");
-		//TODO: fix bug so server sender doesn't immediately die.....
 	}
 }

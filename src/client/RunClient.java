@@ -36,9 +36,10 @@ public class RunClient {
 			Socket socket = new Socket(hostname, port);
 			DirectionMonitor directionMonitor = new DirectionMonitor();
 			ClientGameStateMonitor stateMonitor = new ClientGameStateMonitor();
-			new View(directionMonitor);
+			View view = new View(directionMonitor);
 			new Thread(new FromServerReceiver(stateMonitor, socket)).start();
 			new Thread(new ToServerSender(directionMonitor, socket)).start();
+			new Thread(new PaintSnakesOnViewThread(stateMonitor, view)).start();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 			System.err.println("Host not found:" + hostname);

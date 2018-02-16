@@ -29,18 +29,17 @@ public class FromClientReceiver implements Runnable {
 		try (InputStream is = socket.getInputStream()){
 			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
 			
+			StringBuilder sb = new StringBuilder();
 			while(true) {
-				StringBuilder sb = new StringBuilder();
-				String packet ="";
-				
 				int c;
-				while ((c = reader.read()) != -1) {
+				while ((c = reader.read()) != '>') {
 					sb.append((char) c);
-					System.err.println("Read: " + sb.toString());
-				} //TODO This most likely will not work, it will not return -1 until the socket dies afaik.
+					//System.err.println("Read: " + sb.toString());
+				} 
+				sb.append('>');
 				
 				if(PacketHandler.stringContainsProtocolPacket(sb.toString())) {
-					packet = PacketHandler.extractFirstPacketFromMultiPacketStringBuilder(sb);
+					String packet = PacketHandler.extractFirstPacketFromMultiPacketStringBuilder(sb);
 					PacketType type = PacketHandler.getProtocolPacketType(packet);
 					
 					if(type == PacketType.DIRECTION) {
