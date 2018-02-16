@@ -33,8 +33,14 @@ public class FromClientReceiver implements Runnable {
 			while(true) {
 				int c;
 				while ((c = reader.read()) != '>') {
+					if(c == -1){
+						break;
+					}
 					sb.append((char) c);
-				} 
+				}
+				if(c == -1){
+					break;
+				}
 				sb.append('>');
 				
 				if(PacketHandler.stringContainsProtocolPacket(sb.toString())) {
@@ -52,6 +58,7 @@ public class FromClientReceiver implements Runnable {
 		} catch (IOException e) {
 			gameStateMonitor.removePlayer(playerIdentity);
 		}
+		System.out.println(String.format("FromClientReceiver %s shutting down.", playerIdentity.name()));
 	}
-
+	
 }

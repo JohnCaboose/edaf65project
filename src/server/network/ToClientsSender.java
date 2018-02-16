@@ -19,7 +19,7 @@ public class ToClientsSender implements Runnable {
 		for(PlayerIdentity pi : PlayerIdentity.values()) {
 			gameStateMonitor.removePlayer(pi);
 		}
-		
+		System.out.println("ToClientsSender shutting down.");
 	}
 
 }
