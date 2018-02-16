@@ -34,7 +34,6 @@ public class FromClientReceiver implements Runnable {
 				int c;
 				while ((c = reader.read()) != '>') {
 					sb.append((char) c);
-					//System.err.println("Read: " + sb.toString());
 				} 
 				sb.append('>');
 				
@@ -49,17 +48,9 @@ public class FromClientReceiver implements Runnable {
 						}
 					}
 				}
-				/*
-				//TODO remove the sleeping here once actual reading is taking place
-				try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}*/
 			}
 		} catch (IOException e) {
 			gameStateMonitor.removePlayer(playerIdentity);
-			//e.printStackTrace();
 		}
 	}
 

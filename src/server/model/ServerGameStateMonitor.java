@@ -79,6 +79,7 @@ public class ServerGameStateMonitor {
 			if(playerSockets.get(playerIdentity) == null) {
 				System.out.println("Adding new player " + playerIdentity);
 				playerSockets.put(playerIdentity, socket);
+				//TODO: Consider moving this network functionality outside monitor 
 				String message = PacketHandler.createProtocolPacket(PacketType.PLAYERIDENTITY, gson.toJson(playerIdentity, PlayerIdentity.class));
 				try {
 					socket.getOutputStream().write(message.getBytes());
@@ -92,7 +93,6 @@ public class ServerGameStateMonitor {
 				break;
 			}
 		}
-		//notifyAll();
 	}
 	
 	/**
