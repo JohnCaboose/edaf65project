@@ -26,11 +26,16 @@ public class PaintSnakesOnViewThread extends Thread {
 		GameState previousGameState = null;
 		while (true) {
 			GameState state = monitor.getGameState();
+			view.println(String.format("#%d state received, updating view.", state.getTickCounter()));
 			if(previousGameState != null){
 				//rita svansarna svarta
 				for(Snake s : previousGameState.getPlayerSnakes()){
 					Coordinate c = s.getBody().getLast();
 					view.colorTileAt(c.x, c.y, "BLACK");
+				}
+				//Missed a state, redraw entire screen so as to not leave old snake bits on the screen 
+				if(previousGameState.getTickCounter() < (state.getTickCounter() -1) ) {
+					view.paintScreenBlack();
 				}
 			}
 			

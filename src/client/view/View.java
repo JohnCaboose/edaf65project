@@ -87,4 +87,12 @@ public class View {
 	public synchronized boolean isColoredAt(int x, int y) {
 		return frame.isColoredAt(x, y);
 	}
+
+	public synchronized void paintScreenBlack() {
+		for(int x = 0; x < FIELD_SIZE_X; x++) {
+			for(int y = 0; y < FIELD_SIZE_Y; y++) {
+				colorTileAt(x,y,"black");
+			}
+		}
+	}
 }
