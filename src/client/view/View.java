@@ -83,6 +83,7 @@ public class View {
 	 *            the text to display in the console window
 	 */
 	public synchronized void println(String content) {
+		//TODO: fix race condition (frame not created yet)
 		frame.println(content);
 	}
 

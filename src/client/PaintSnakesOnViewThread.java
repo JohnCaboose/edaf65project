@@ -26,7 +26,10 @@ public class PaintSnakesOnViewThread extends Thread {
 		GameState previousGameState = null;
 		while (true) {
 			GameState state = monitor.getGameState();
-			view.println(String.format("#%d state received, updating view.", state.getTickCounter()));
+			//TODO when race condition in view.println fixed, this line can be used again
+			//view.println(String.format("#%d state received, updating view.", state.getTickCounter()));
+			
+			
 			if(previousGameState != null){
 				//rita svansarna svarta
 				for(Snake s : previousGameState.getPlayerSnakes()){
