@@ -24,7 +24,7 @@ public class ToServerSender implements Runnable {
 		while (true) {
 			Direction direction = directionMonitor.getDirection(); 
 			String message = PacketHandler.createProtocolPacket(PacketType.DIRECTION,
-					gson.toJson(directionMonitor.getDirection(), Direction.class));
+					gson.toJson(direction, Direction.class));
 			
 			if (socket != null) {
 				if (socket.isClosed()){

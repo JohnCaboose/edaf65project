@@ -8,13 +8,13 @@ import common.model.Direction;
 import common.model.Snake;
 
 /* Periodic thread, currently used for testing Snake. */
-public class SnakeToViewThread extends Thread {
+public class MockSnakeThread extends Thread {
 	private Snake snake;
 	private View v;
 	private String color;
 	private static final long delay = 300;
 
-	public SnakeToViewThread(View v) {
+	public MockSnakeThread(View v) {
 		this.v = v;
 		color = "blue";
 		Coordinate head = new Coordinate(10, 10);

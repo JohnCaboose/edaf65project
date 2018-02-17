@@ -10,15 +10,17 @@ import client.network.ToServerSender;
 import client.view.View;
 
 /**
- * Run this class to start a client. 
- * Takes ip and port of server as input.
+ * Run this class to start a client. Takes ip and port of server as input.
  */
 public class RunClient {
 	public static void main(String[] args) {
 		String hostname = null;
 		int port = -1;
-		
-		/* Parses the two arguments and stores them in hostname and port variables. */
+
+		/*
+		 * Parses the two arguments and stores them in hostname and port
+		 * variables.
+		 */
 		if (args.length < 2) {
 			System.err.println("Not enough parameters: " + args.length);
 			System.exit(1);
@@ -30,13 +32,16 @@ public class RunClient {
 			System.err.println("Second parameter is not a number.");
 			System.exit(1);
 		}
-		
+
 		/* Starts communication with server. */
 		try {
 			Socket socket = new Socket(hostname, port);
 			DirectionMonitor directionMonitor = new DirectionMonitor();
 			ClientGameStateMonitor stateMonitor = new ClientGameStateMonitor();
-			View view = new View(directionMonitor);
+			/*
+			 * TODO: send correct color to view constructor
+			 */
+			View view = new View(directionMonitor, "blue");
 			new Thread(new FromServerReceiver(stateMonitor, socket)).start();
 			new Thread(new ToServerSender(directionMonitor, socket)).start();
 			new Thread(new PaintSnakesOnViewThread(stateMonitor, view)).start();

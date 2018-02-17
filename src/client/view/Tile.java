@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
 @SuppressWarnings("serial")
@@ -15,8 +14,6 @@ public class Tile extends JLabel {
 	public Tile() {
 		setOpaque(true);
 		setPreferredSize(new Dimension(TILE_SIZE, TILE_SIZE));
-		/* TODO: remove border */
-		//setBorder(BorderFactory.createLineBorder(Color.white));
 		color = "black";
 		setColor(color);
 	}
