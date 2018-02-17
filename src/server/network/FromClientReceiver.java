@@ -37,13 +37,13 @@ public class FromClientReceiver implements Runnable {
 				int c;
 				while ((c = reader.read()) != '>') {
 					if(c == -1){
-						break;
+						throw new IOException("Player " + playerIdentity +  " disconnected.");
 					}
 					sb.append((char) c);
 				}
-				if(c == -1){
+				/*if(c == -1){
 					break;
-				}
+				}*/
 				sb.append('>');
 				
 				if(PacketHandler.stringContainsProtocolPacket(sb.toString())) {
@@ -60,7 +60,6 @@ public class FromClientReceiver implements Runnable {
 			}
 		} catch (IOException e) {
 			connectionMonitor.removePlayer(playerIdentity);
-			gameStateMonitor.killSnake(playerIdentity);
 		}
 		System.out.println(String.format("FromClientReceiver %s shutting down.", playerIdentity.name()));
 	}

@@ -11,6 +11,7 @@ import server.exceptions.GameIsFullException;
 public class ServerConnectionMonitor {
 	private final Map<PlayerIdentity,Socket> playerSockets;
 	private final ServerGameStateMonitor gameStateMonitor;
+	private boolean allPlayersConnected = false;
 	
 	public ServerConnectionMonitor (int playerCount, ServerGameStateMonitor gameStateMonitor) {
 		playerSockets = new TreeMap<PlayerIdentity, Socket>();
@@ -68,6 +69,9 @@ public class ServerConnectionMonitor {
 	 * @param playerIdentity the identity of the player
 	 */
 	public synchronized void removePlayer(PlayerIdentity playerIdentity) {
+		if(this.allPlayersConnected()) {
+			gameStateMonitor.killSnake(playerIdentity);
+		}
 		Socket socket = playerSockets.get(playerIdentity);
 		if(socket != null) {
 			System.out.println("Removing player " + playerIdentity.name());
@@ -79,6 +83,7 @@ public class ServerConnectionMonitor {
 			}
 			playerSockets.put(playerIdentity, null);
 			
+				
 		}
 	}
 	
@@ -105,7 +110,10 @@ public class ServerConnectionMonitor {
 	 * @return true if all players are connected, false otherwise
 	 */
 	public synchronized boolean allPlayersConnected() {
-		return !playerSockets.containsValue(null);
+		if(!allPlayersConnected) {
+			allPlayersConnected = !playerSockets.containsValue(null);
+		}
+		return allPlayersConnected;
 	}
 
 }

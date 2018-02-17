@@ -54,6 +54,7 @@ public class ServerGameStateMonitor {
 	 * @param playerIdentity the identity of the snake to kill
 	 */
 	public synchronized void killSnake(PlayerIdentity playerIdentity) {
+		System.out.println("Force-killing snake: " + playerIdentity.name());
 		gameState.getPlayerSnakes().get(playerIdentity.ordinal()).kill();
 	}
 	

@@ -37,6 +37,7 @@ public class GameState {
 			for(Snake s2 : playerSnakes) {
 				if(s1.isCrashingIntoBodyOf(s2)) {
 					s1.kill();
+					System.out.println("Killing snake because of collision.");
 				}
 			}
 		}
@@ -52,6 +53,7 @@ public class GameState {
 					if(s1Head.equals(s2Head)) {
 						s1.kill();
 						s2.kill();
+						System.out.println("Killing two snakes because of head on collision.");
 					}
 				}
 			}
