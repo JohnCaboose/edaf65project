@@ -8,11 +8,11 @@ import common.model.Direction;
 
 public class UserInputInterpreter implements KeyListener {
 	private DirectionMonitor monitor;
-	private Direction previousInput;
+	private Direction previousLocalInput;
 
 	public UserInputInterpreter(DirectionMonitor monitor) {
 		this.monitor = monitor;
-		previousInput = Direction.NONE;
+		previousLocalInput = Direction.NONE;
 	}
 
 	@Override
@@ -36,15 +36,15 @@ public class UserInputInterpreter implements KeyListener {
 	}
 
 	private void sendInput(Direction newInput) {
-		if ((newInput == Direction.UP && previousInput == Direction.DOWN)
-				|| (newInput == Direction.DOWN && previousInput == Direction.UP)
-				|| (newInput == Direction.LEFT && previousInput == Direction.RIGHT)
-				|| (newInput == Direction.RIGHT && previousInput == Direction.LEFT)) {
+		if ((newInput == Direction.UP && previousLocalInput == Direction.DOWN)
+				|| (newInput == Direction.DOWN && previousLocalInput == Direction.UP)
+				|| (newInput == Direction.LEFT && previousLocalInput == Direction.RIGHT)
+				|| (newInput == Direction.RIGHT && previousLocalInput == Direction.LEFT)) {
 			return; // movement does not make sense
 		} else {
 			if (monitor != null)
 			monitor.submit(newInput);
-			previousInput = newInput;
+			previousLocalInput = newInput;
 		}
 		//TODO: make it so that it actually cant go into itself by fixing this to check for the last actually used input instead or both?
 	}
