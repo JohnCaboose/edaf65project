@@ -37,11 +37,8 @@ public class UserInputInterpreter implements KeyListener {
 	}
 
 	private void sendInput(Direction newInput) {
-		if ((newInput == Direction.UP && previousLocalInput == Direction.DOWN)
-				|| (newInput == Direction.DOWN && previousLocalInput == Direction.UP)
-				|| (newInput == Direction.LEFT && previousLocalInput == Direction.RIGHT)
-				|| (newInput == Direction.RIGHT && previousLocalInput == Direction.LEFT)) {
-			return; // movement does not make sense
+		if (illegalInput(newInput)) {
+			return;
 		} else {
 			if (monitor != null)
 			monitor.submit(newInput);
@@ -58,5 +55,13 @@ public class UserInputInterpreter implements KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 		return;
+	}
+	
+	private boolean illegalInput(Direction newInput) {
+		boolean b1 = newInput == Direction.UP && previousLocalInput == Direction.DOWN;
+		boolean b2 = newInput == Direction.DOWN && previousLocalInput == Direction.UP;
+		boolean b3 = newInput == Direction.LEFT && previousLocalInput == Direction.RIGHT;
+		boolean b4 = newInput == Direction.RIGHT && previousLocalInput == Direction.LEFT;
+		return b1 || b2 || b3 || b4;
 	}
 }
