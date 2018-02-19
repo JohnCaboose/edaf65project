@@ -60,8 +60,9 @@ public class PaintSnakesOnViewThread extends Thread {
 				}
 			}
 			if(!state.getPlayerSnakes().get(monitor.getPlayerIdentity().ordinal()).isAlive()){
+				//TODO: fix so this only triggers once
 				view.displayDeadSnakeStatus();
-				view.println("Your snake died :(");
+				view.println("Your snake is dead, better luck next time!");
 			}
 			if(state.isGameOver()){
 				//System.out.println("Game is over, goodbye!");
@@ -70,6 +71,6 @@ public class PaintSnakesOnViewThread extends Thread {
 			}
 			previousGameState = state;
 		}
-		System.err.println("paintsnakes is dead");
+		System.err.println("PaintSnakesOnViewThread shutting down.");
 	}
 }

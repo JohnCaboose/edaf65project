@@ -18,11 +18,11 @@ public class DirectionMonitor {
 	}
 	
 	public synchronized Direction getDirection() {
+		//TODO
 		while(!directionExists()){
 			try {
 				wait();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -30,7 +30,6 @@ public class DirectionMonitor {
 			try {
 				wait();
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

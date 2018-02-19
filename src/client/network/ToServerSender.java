@@ -22,6 +22,7 @@ public class ToServerSender implements Runnable {
 	@Override
 	public void run() {
 		while (true) {
+			//TODO: Make it so that you don't have to press a button after game is over for this thread to die
 			Direction direction = directionMonitor.getDirection(); 
 			String message = PacketHandler.createProtocolPacket(PacketType.DIRECTION,
 					gson.toJson(direction, Direction.class));
@@ -45,5 +46,6 @@ public class ToServerSender implements Runnable {
 			directionMonitor.directionSent();
 
 		}
+		System.err.println("ToServerSender shutting down.");
 	}
 }

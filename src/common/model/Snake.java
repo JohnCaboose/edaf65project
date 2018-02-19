@@ -156,5 +156,14 @@ public class Snake {
 		
 	}
 	
+	/**
+	 * Grows this snake by one (tail "stays" in the same place for an extra tick)
+	 */
+	public void grow() {
+		Coordinate tail = this.body.getLast();
+		Coordinate newCoord = new Coordinate(tail.x,tail.y);
+		this.body.addLast(newCoord);
+	}
+	
 	//TODO implement comparison functions for purpose of effectively syncing predictions with server (optional)
 }
