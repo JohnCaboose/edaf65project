@@ -1,6 +1,7 @@
 package client.network;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
@@ -26,15 +27,10 @@ public class FromServerReceiver extends Thread {
 				int c;
 				while ((c = reader.read()) != '>') {
 					if(c == -1){
-						break;
+						throw new IOException("FromServerReceiver got end of stream.");
 					}
 					sb.append((char) c);
 					//System.err.println("Read: " + sb.toString());
-				}
-				if(c == -1){
-					//TODO disconnect ? 
-					System.err.println("FromServerReceiver got end of stream, is killing itself.");
-					break;
 				}
 				sb.append('>');
 				//System.out.println("Client read end of tag: " + sb.toString());
@@ -56,9 +52,14 @@ public class FromServerReceiver extends Thread {
 					}
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (IOException e) {
+			if(e.getMessage().equals("FromServerReceiver got end of stream.")) {
+				System.err.println("FromServerReceiver got end of stream.");
+			}else {
+				e.printStackTrace();
+			}
+			
 		}
-
+		System.err.println("FromServerReceiver shutting down.");
 	}
 }

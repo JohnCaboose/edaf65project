@@ -24,8 +24,6 @@ public class GameServer implements Runnable {
 	private final int LOWEST_LEGAL_PLAYERCOUNT = 1;
 	private final int HIGHEST_LEGAL_PLAYERCOUNT = 4;
 	private final int SMALLEST_SIZE_FIELD = 20;
-	private final int MILLIS_PER_STATE_FRAME = 400;
-
 	private final ServerGameStateMonitor gameStateMonitor;
 	private final ServerConnectionMonitor connectionMonitor;
 	private final Gson gson = new Gson();
@@ -111,7 +109,7 @@ public class GameServer implements Runnable {
 					break;
 				}
 				try {
-					Thread.sleep(frameStartTime + MILLIS_PER_STATE_FRAME - System.currentTimeMillis());
+					Thread.sleep(frameStartTime + common.constants.Constants.MILLIS_PER_STATE_FRAME - System.currentTimeMillis());
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

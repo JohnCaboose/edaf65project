@@ -3,6 +3,12 @@ package common.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sun.corba.se.impl.protocol.MinimalServantCacheLocalCRDImpl;
+
+import common.constants.Constants;
+
+import server.network.GameServer;
+
 public class GameState {
 	//This class is the jsonable object that will represent the entire state of the game
 	
@@ -31,7 +37,7 @@ public class GameState {
 		}
 	}
 	
-	public void checkSnakeCollisions() {
+	public void performSnakeCollisionDetection() {
 		//check "head into body" collisions
 		for(Snake s1 : playerSnakes) {
 			for(Snake s2 : playerSnakes) {
@@ -95,11 +101,19 @@ public class GameState {
 	 * Performs a tick of the game logic
 	 */
 	public void performGameTick() {
+		//Temporary way of snakes to grow
+		
+		if((tickCounter*Constants.MILLIS_PER_STATE_FRAME) % Constants.MILLIS_BETWEEN_SNAKE_GROWTHS  == 0 && tickCounter > 1) {
+			for(int i = 0; i < playerSnakes.size(); i++) {
+				playerSnakes.get(i).grow();
+			}
+		}
+		//move all snakes
 		for(int i = 0; i < playerSnakes.size(); i++) {
 			playerSnakes.get(i).moveForward();
 		}
 		//TODO: add spawning of fruit and that whole thing, if time allows and stuff 
-		checkSnakeCollisions();
+		performSnakeCollisionDetection();
 		tickCounter++;
 	}
 	
