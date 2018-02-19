@@ -40,7 +40,7 @@ public class SnakePainterThread extends Thread {
 				// Missed a state, redraw entire screen so as to not leave old
 				// snake bits on the screen
 				if (previousGameState.getTickCounter() < (state.getTickCounter() - 1)) {
-					view.paintScreenBlack();
+					view.clearPlayField();
 				}
 			}
 
@@ -70,6 +70,7 @@ public class SnakePainterThread extends Thread {
 				break;
 			}
 			previousGameState = state;
+			view.setPreviousGameState(previousGameState);
 		}
 		System.err.println("paintsnakes is dead");
 	}

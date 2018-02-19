@@ -4,13 +4,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import client.model.DirectionMonitor;
+import client.view.View;
 import common.model.Direction;
 
 public class UserInputInterpreter implements KeyListener {
 	private DirectionMonitor monitor;
 	private Direction previousLocalInput;
 
-	public UserInputInterpreter(DirectionMonitor monitor) {
+	public UserInputInterpreter(View view, DirectionMonitor monitor) {
 		this.monitor = monitor;
 		previousLocalInput = Direction.NONE;
 	}

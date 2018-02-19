@@ -6,6 +6,7 @@ import javax.swing.SwingUtilities;
 import client.controller.UserInputInterpreter;
 import client.model.DirectionMonitor;
 import common.constants.Constants;
+import common.model.GameState;
 
 /* Monitor for the GUI */
 public class View {
@@ -13,6 +14,7 @@ public class View {
 	public static final int FIELD_SIZE_X = Constants.BOARD_WIDTH;
 	public static final int FIELD_SIZE_Y = Constants.BOARD_HEIGHT;
 	private MainFrame frame;
+	private GameState previousGameState;
 	private boolean visible;
 
 	/**
@@ -25,6 +27,7 @@ public class View {
 	 *            indicates what snake belongs to the player.
 	 */
 	public View(DirectionMonitor monitor, String snakeColor) {
+		UserInputInterpreter keyListener = new UserInputInterpreter(this, monitor);
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				frame = new MainFrame(WINDOW_TITLE, snakeColor, FIELD_SIZE_X, FIELD_SIZE_Y);
@@ -34,7 +37,7 @@ public class View {
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 				frame.setFocusable(true);
-				frame.addKeyListener(new UserInputInterpreter(monitor));
+				frame.addKeyListener(keyListener);
 				setVisible(true);
 			}
 		});
@@ -83,7 +86,7 @@ public class View {
 	 *            the text to display in the console window
 	 */
 	public synchronized void println(String content) {
-		//TODO: fix race condition (frame not created yet)
+		// TODO: fix race condition (frame not created yet)
 		frame.println(content);
 	}
 
@@ -102,11 +105,28 @@ public class View {
 		return frame.isColoredAt(x, y);
 	}
 
-	public synchronized void paintScreenBlack() {
-		for(int x = 0; x < FIELD_SIZE_X; x++) {
-			for(int y = 0; y < FIELD_SIZE_Y; y++) {
-				colorTileAt(x,y,"black");
+	/** Paints all tiles on the play field black. */
+	public synchronized void clearPlayField() {
+		for (int x = 0; x < FIELD_SIZE_X; x++) {
+			for (int y = 0; y < FIELD_SIZE_Y; y++) {
+				colorTileAt(x, y, "black");
 			}
 		}
+	}
+
+	/**
+	 * Submits the previous game state to this monitor. The state is used by the
+	 * key listener as help to determine if a given user input is legal or not.
+	 * 
+	 * @param previousGameState
+	 *            the previously retrieved game state from the server
+	 */
+	public synchronized void setPreviousGameState(GameState previousGameState) {
+		this.previousGameState = previousGameState;
+
+	}
+
+	public synchronized GameState getPreviousGameState() {
+		return previousGameState;
 	}
 }
