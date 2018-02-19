@@ -10,9 +10,11 @@ import common.model.Direction;
 public class UserInputInterpreter implements KeyListener {
 	private DirectionMonitor monitor;
 	private Direction previousLocalInput;
+	private View view;
 
 	public UserInputInterpreter(View view, DirectionMonitor monitor) {
 		this.monitor = monitor;
+		this.view = view;
 		previousLocalInput = Direction.NONE;
 	}
 
@@ -58,10 +60,12 @@ public class UserInputInterpreter implements KeyListener {
 	}
 	
 	private boolean illegalInput(Direction newInput) {
-		boolean b1 = newInput == Direction.UP && previousLocalInput == Direction.DOWN;
-		boolean b2 = newInput == Direction.DOWN && previousLocalInput == Direction.UP;
-		boolean b3 = newInput == Direction.LEFT && previousLocalInput == Direction.RIGHT;
-		boolean b4 = newInput == Direction.RIGHT && previousLocalInput == Direction.LEFT;
-		return b1 || b2 || b3 || b4;
+		// TODO: finish implementation
+		// Direction previousPublicInput = view.getPreviousGameState().getPlayerSnakes(). ... ?
+		boolean downThenUp = newInput == Direction.UP && previousLocalInput == Direction.DOWN;
+		boolean upThenDown = newInput == Direction.DOWN && previousLocalInput == Direction.UP;
+		boolean rightThenLeft = newInput == Direction.LEFT && previousLocalInput == Direction.RIGHT;
+		boolean leftThenRight = newInput == Direction.RIGHT && previousLocalInput == Direction.LEFT;
+		return downThenUp || upThenDown || rightThenLeft || leftThenRight;
 	}
 }
