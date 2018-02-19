@@ -7,6 +7,7 @@ import java.net.UnknownHostException;
 import client.model.DirectionMonitor;
 import client.network.FromServerReceiver;
 import client.network.ToServerSender;
+import client.view.SnakePainterThread;
 import client.view.View;
 
 /**
@@ -44,7 +45,7 @@ public class RunClient {
 			View view = new View(directionMonitor, "blue");
 			new Thread(new FromServerReceiver(stateMonitor, socket)).start();
 			new Thread(new ToServerSender(directionMonitor, socket)).start();
-			new Thread(new PaintSnakesOnViewThread(stateMonitor, view)).start();
+			new Thread(new SnakePainterThread(stateMonitor, view)).start();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 			System.err.println("Host not found:" + hostname);

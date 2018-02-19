@@ -4,15 +4,18 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import client.model.DirectionMonitor;
+import client.view.View;
 import common.model.Direction;
 
 public class UserInputInterpreter implements KeyListener {
 	private DirectionMonitor monitor;
-	private Direction previousInput;
+	private Direction previousLocalInput;
+	private View view;
 
-	public UserInputInterpreter(DirectionMonitor monitor) {
+	public UserInputInterpreter(View view, DirectionMonitor monitor) {
 		this.monitor = monitor;
-		previousInput = Direction.NONE;
+		this.view = view;
+		previousLocalInput = Direction.NONE;
 	}
 
 	@Override
@@ -36,15 +39,12 @@ public class UserInputInterpreter implements KeyListener {
 	}
 
 	private void sendInput(Direction newInput) {
-		if ((newInput == Direction.UP && previousInput == Direction.DOWN)
-				|| (newInput == Direction.DOWN && previousInput == Direction.UP)
-				|| (newInput == Direction.LEFT && previousInput == Direction.RIGHT)
-				|| (newInput == Direction.RIGHT && previousInput == Direction.LEFT)) {
-			return; // movement does not make sense
+		if (illegalInput(newInput)) {
+			return;
 		} else {
 			if (monitor != null)
 			monitor.submit(newInput);
-			previousInput = newInput;
+			previousLocalInput = newInput;
 		}
 		//TODO: make it so that it actually cant go into itself by fixing this to check for the last actually used input instead or both?
 	}
@@ -57,5 +57,15 @@ public class UserInputInterpreter implements KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 		return;
+	}
+	
+	private boolean illegalInput(Direction newInput) {
+		// TODO: finish implementation
+		// Direction previousPublicInput = view.getPreviousGameState().getPlayerSnakes(). ... ?
+		boolean downThenUp = newInput == Direction.UP && previousLocalInput == Direction.DOWN;
+		boolean upThenDown = newInput == Direction.DOWN && previousLocalInput == Direction.UP;
+		boolean rightThenLeft = newInput == Direction.LEFT && previousLocalInput == Direction.RIGHT;
+		boolean leftThenRight = newInput == Direction.RIGHT && previousLocalInput == Direction.LEFT;
+		return downThenUp || upThenDown || rightThenLeft || leftThenRight;
 	}
 }
