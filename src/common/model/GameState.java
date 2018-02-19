@@ -3,11 +3,7 @@ package common.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.sun.corba.se.impl.protocol.MinimalServantCacheLocalCRDImpl;
-
 import common.constants.Constants;
-
-import server.network.GameServer;
 
 public class GameState {
 	//This class is the jsonable object that will represent the entire state of the game
