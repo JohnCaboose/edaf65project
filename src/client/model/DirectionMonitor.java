@@ -18,7 +18,6 @@ public class DirectionMonitor {
 	}
 	
 	public synchronized Direction getDirection() {
-		//TODO
 		while(!directionExists()){
 			try {
 				wait();

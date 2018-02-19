@@ -5,8 +5,15 @@ import java.util.List;
 
 import common.constants.Constants;
 
+/**
+ * This class is the jsonable object that will represent the entire state of the game
+ *
+ */
 public class GameState {
-	//This class is the jsonable object that will represent the entire state of the game
+	/* TODO: implement that tickCounter starts at -5 and counts "down" to 0. 
+	 * 0 would be the the first "real" tick and starting the actual game.
+	 * This lets players get ready for the game to start. 
+	 */
 	
 	//tickCounter is -1 when game is not started yet
 	//It counts from 0 to LONG_MAX and then the game behavior is undefined :) 
