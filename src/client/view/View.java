@@ -27,7 +27,6 @@ public class View {
 	 *            indicates what snake belongs to the player.
 	 */
 	public View(DirectionMonitor monitor, String snakeColor) {
-		UserInputInterpreter keyListener = new UserInputInterpreter(this, monitor);
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
 				frame = new MainFrame(WINDOW_TITLE, snakeColor, FIELD_SIZE_X, FIELD_SIZE_Y);
@@ -37,7 +36,7 @@ public class View {
 				frame.setLocationRelativeTo(null);
 				frame.setVisible(true);
 				frame.setFocusable(true);
-				frame.addKeyListener(keyListener);
+				frame.addKeyListener(new UserInputInterpreter(monitor));
 				setVisible(true);
 			}
 		});

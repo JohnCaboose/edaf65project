@@ -10,11 +10,9 @@ import common.model.Direction;
 public class UserInputInterpreter implements KeyListener {
 	private DirectionMonitor monitor;
 	private Direction previousLocalInput;
-	private View view;
 
-	public UserInputInterpreter(View view, DirectionMonitor monitor) {
+	public UserInputInterpreter(DirectionMonitor monitor) {
 		this.monitor = monitor;
-		this.view = view;
 		previousLocalInput = Direction.NONE;
 	}
 
