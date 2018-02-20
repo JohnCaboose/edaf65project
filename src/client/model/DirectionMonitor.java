@@ -65,6 +65,12 @@ public class DirectionMonitor {
 	 * input is legal or not.
 	 */
 	public synchronized void setAsSent(Direction recentlySentDirection) {
+		/*
+		 * TODO: the timing of which this method is called is wrong. Basically,
+		 * it has to be called at the same time as when the snake moves in order
+		 * to work. I have tried making the reader thread call this method by
+		 * interpreting the retrieved packet but it does not seem to work.
+		 */
 		previouslySentDirection = recentlySentDirection;
 		notifyAll();
 	}
