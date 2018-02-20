@@ -40,30 +40,54 @@ public class UserInputInterpreter implements KeyListener {
 		if (illegalInput(newInput)) {
 			return;
 		} else {
-			if (monitor != null)
-			monitor.submit(newInput);
+			if (monitor != null) {
+				monitor.submit(newInput);
+			}
 			previousLocalInput = newInput;
 		}
-		//TODO: make it so that it actually cant go into itself by fixing this to check for the last actually used input instead or both?
 	}
 
-	@Override
+	private boolean illegalInput(Direction newInput) {
+		boolean localLegalCheck = legalCheckWith(newInput, previousLocalInput);
+		Direction previousPublicInput = monitor.getPreviouslySentDirection();
+		if (previousPublicInput == null) {
+			return localLegalCheck;
+		} else {
+			boolean publicLegalCheck = legalCheckWith(newInput, previousPublicInput);
+			return localLegalCheck && publicLegalCheck;
+		}
+	}
+
+	/**
+	 * Helper method. Checks if the two given directions are opposite of one
+	 * another.
+	 * 
+	 * @param newInput
+	 *            the input you want to validate
+	 * @param previous
+	 *            the input you want to compare with
+	 * @return <code>true</code> if they are opposite of one another, otherwise
+	 *         <code>false</code>
+	 */
+	private boolean legalCheckWith(Direction newInput, Direction previous) {
+		boolean downThenUp = newInput == Direction.UP && previous == Direction.DOWN;
+		boolean upThenDown = newInput == Direction.DOWN && previous == Direction.UP;
+		boolean rightThenLeft = newInput == Direction.LEFT && previous == Direction.RIGHT;
+		boolean leftThenRight = newInput == Direction.RIGHT && previous == Direction.LEFT;
+		return downThenUp || upThenDown || rightThenLeft || leftThenRight;
+	}
+
+	/**
+	 * Required to exist due to the KeyListener interface. Please ignore.
+	 */
 	public void keyReleased(KeyEvent e) {
 		return;
 	}
 
-	@Override
+	/**
+	 * Required to exist due to the KeyListener interface. Please ignore.
+	 */
 	public void keyTyped(KeyEvent e) {
 		return;
-	}
-	
-	private boolean illegalInput(Direction newInput) {
-		// TODO: finish implementation
-		// Direction previousPublicInput = view.getPreviousGameState().getPlayerSnakes(). ... ?
-		boolean downThenUp = newInput == Direction.UP && previousLocalInput == Direction.DOWN;
-		boolean upThenDown = newInput == Direction.DOWN && previousLocalInput == Direction.UP;
-		boolean rightThenLeft = newInput == Direction.LEFT && previousLocalInput == Direction.RIGHT;
-		boolean leftThenRight = newInput == Direction.RIGHT && previousLocalInput == Direction.LEFT;
-		return downThenUp || upThenDown || rightThenLeft || leftThenRight;
 	}
 }
