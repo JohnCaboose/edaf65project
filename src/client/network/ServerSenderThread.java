@@ -1,4 +1,5 @@
 package client.network;
+
 import java.io.IOException;
 import java.net.Socket;
 
@@ -9,26 +10,27 @@ import common.model.Direction;
 import common.model.PacketHandler;
 import common.model.PacketType;
 
-public class ToServerSender implements Runnable {
+public class ServerSenderThread extends Thread {
 	private final DirectionMonitor directionMonitor;
 	private final Gson gson = new Gson();
 	private Socket socket = null;
-	
-	public ToServerSender(DirectionMonitor directionMonitor, Socket socket) {
+
+	public ServerSenderThread(DirectionMonitor directionMonitor, Socket socket) {
 		this.directionMonitor = directionMonitor;
 		this.socket = socket;
 	}
-	
+
 	@Override
 	public void run() {
 		while (true) {
-			//TODO: Make it so that you don't have to press a button after game is over for this thread to die
-			Direction direction = directionMonitor.getDirection(); 
+			// TODO: Make it so that you don't have to press a button after game
+			// is over for this thread to die
+			Direction direction = directionMonitor.getDirection();
 			String message = PacketHandler.createProtocolPacket(PacketType.DIRECTION,
 					gson.toJson(direction, Direction.class));
-			
+
 			if (socket != null) {
-				if (socket.isClosed()){
+				if (socket.isClosed()) {
 					System.err.println("ToServerSender dying");
 					break;
 				}
@@ -40,8 +42,8 @@ public class ToServerSender implements Runnable {
 					System.err.println("ToServerSender dying");
 					break;
 				}
-			} 
-			
+			}
+
 			directionMonitor.setAsSent(direction);
 			directionMonitor.directionSent();
 

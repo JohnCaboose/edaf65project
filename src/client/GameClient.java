@@ -5,15 +5,15 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 import client.model.DirectionMonitor;
-import client.network.FromServerReceiver;
-import client.network.ToServerSender;
+import client.network.ServerReceiverThread;
+import client.network.ServerSenderThread;
 import client.view.SnakePainterThread;
 import client.view.View;
 
 /**
  * Run this class to start a client. Takes ip and port of server as input.
  */
-public class RunClient {
+public class GameClient {
 	public static void main(String[] args) {
 		String hostname = null;
 		int port = -1;
@@ -43,9 +43,9 @@ public class RunClient {
 			 * TODO: send correct color to view constructor
 			 */
 			View view = new View(directionMonitor, "blue");
-			new Thread(new FromServerReceiver(stateMonitor, socket)).start();
-			new Thread(new ToServerSender(directionMonitor, socket)).start();
-			new Thread(new SnakePainterThread(stateMonitor, view)).start();
+			new ServerReceiverThread(stateMonitor, socket).start();
+			new ServerSenderThread(directionMonitor, socket).start();
+			new SnakePainterThread(stateMonitor, view).start();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 			System.err.println("Host not found:" + hostname);
