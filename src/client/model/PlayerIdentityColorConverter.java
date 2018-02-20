@@ -1,6 +1,5 @@
 package client.model;
 
-import client.ClientGameStateMonitor;
 import common.model.PlayerIdentity;
 
 //TODO: implement class so it returns a color based on input of PlayerIdentity

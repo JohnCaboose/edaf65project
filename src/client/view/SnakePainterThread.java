@@ -2,7 +2,7 @@ package client.view;
 
 import java.util.List;
 
-import client.ClientGameStateMonitor;
+import client.model.ClientGameStateMonitor;
 import common.model.Coordinate;
 import common.model.GameState;
 import common.model.Snake;

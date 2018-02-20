@@ -1,9 +1,10 @@
-package client;
+package client.main;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import client.model.ClientGameStateMonitor;
 import client.model.DirectionMonitor;
 import client.network.ServerReceiverThread;
 import client.network.ServerSenderThread;

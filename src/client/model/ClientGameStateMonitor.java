@@ -1,4 +1,4 @@
-package client;
+package client.model;
 
 import common.model.GameState;
 import common.model.PlayerIdentity;

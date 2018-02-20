@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
 
-import client.ClientGameStateMonitor;
+import client.model.ClientGameStateMonitor;
 import common.model.GameState;
 import common.model.PacketHandler;
 import common.model.PacketType;
