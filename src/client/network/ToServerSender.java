@@ -42,7 +42,7 @@ public class ToServerSender implements Runnable {
 				}
 			} 
 			
-
+			directionMonitor.setAsSent(direction);
 			directionMonitor.directionSent();
 
 		}

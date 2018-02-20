@@ -3,8 +3,15 @@ package client.model;
 import common.model.Direction;
 
 public class DirectionMonitor {
-	private Direction directionToSend = null;
-	private boolean hasNewDirection = false;
+	private Direction directionToSend;
+	private Direction previouslySentDirection;
+	private boolean hasNewDirection;
+
+	public DirectionMonitor() {
+		directionToSend = null;
+		previouslySentDirection = null;
+		hasNewDirection = false;
+	}
 
 	public synchronized boolean directionExists() {
 		return directionToSend != null;
@@ -50,5 +57,26 @@ public class DirectionMonitor {
 		directionToSend = newInput;
 		hasNewDirection = true;
 		notifyAll();
+	}
+
+	/**
+	 * Called by the sender thread to notify what direction was just recently
+	 * sent to the game server. Used by the controller to determine if recent
+	 * input is legal or not.
+	 */
+	public synchronized void setAsSent(Direction recentlySentDirection) {
+		previouslySentDirection = recentlySentDirection;
+		notifyAll();
+	}
+
+	/**
+	 * Returns the direction that was just recently sent to the game server.
+	 * This method will return <code>null</code> if no inputs have been sent to
+	 * the server yet.
+	 * 
+	 * @return the previously sent direction
+	 */
+	public synchronized Direction getPreviouslySentDirection() {
+		return previouslySentDirection;
 	}
 }
