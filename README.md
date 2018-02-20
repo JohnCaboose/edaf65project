@@ -22,7 +22,7 @@ Vi vill använda MVC-modellen. Vyn visar spelplanen och modellen bevarar spelets
 3. Ormarna blir längre med tiden
 4. Lägga till mat slumpmässigt
 
-# Klassdiagram
+## Klassdiagram
 Gå in på denna länk för att lägga till eller ändra klasser i klassdiagrammet:
 [Projektet i draw.io, redigerbart från LU-konton](https://drive.google.com/file/d/1ySFAS2BC3kVP5scLmQCLO6bZMZbVb02T/view?usp=sharing)
 
@@ -36,3 +36,8 @@ Spelet använder följande protokoll för att kommunicera mellan server och klie
 Där type är namnen på PacketType enums: DIRECTION, GAMESTATE, PLAYERIDENTITY
 
 Och jsonContents är jsonrepresentationen av ett Direction, GameState, och PlayerIdentity objekt, respektive.
+
+## Rapport
+[Redigeringssida för rapporten i Overleaf](https://www.overleaf.com/13873697rsgrjwmpkdqt)
+
+
