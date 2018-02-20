@@ -10,7 +10,7 @@ public class PacketHandler {
 	private final static Gson gson;
 	private final static Pattern packetPattern;
 	private final static String packetRegex;
-	
+	//TODO: change type attribute to use "" so as to match XML syntax
 	static {
 		gson = new Gson();
 		packetRegex = "<GAMEPACKET.*?TYPE=(DIRECTION|GAMESTATE|PLAYERIDENTITY)>(.*?)</GAMEPACKET>";
