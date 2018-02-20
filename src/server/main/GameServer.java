@@ -1,4 +1,4 @@
-package server.network;
+package server.main;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -13,6 +13,8 @@ import common.model.PlayerIdentity;
 import server.exceptions.GameIsFullException;
 import server.model.ServerConnectionMonitor;
 import server.model.ServerGameStateMonitor;
+import server.network.FromClientReceiver;
+import server.network.ToClientsSender;
 
 public class GameServer implements Runnable {
 	private final int port;
