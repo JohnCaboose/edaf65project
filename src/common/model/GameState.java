@@ -23,12 +23,17 @@ public class GameState {
 	
 	public GameState(int playerCount, int boardWidth, int boardHeight) {
 		//Define the initial spawn corners
+		Coordinate topLeft = new Coordinate(0, 0);
+		Coordinate topRight = new Coordinate(boardWidth - 1, 0);
+		Coordinate bottomLeft = new Coordinate(0,boardHeight - 1);
+		Coordinate bottomRight = new Coordinate(boardWidth - 1, boardHeight - 1);
+		
 		ArrayList<Coordinate> initialCorners = new ArrayList<Coordinate>();
 		ArrayList<Direction> initialDirections = new ArrayList<Direction>();
-		initialCorners.add(new Coordinate(0,boardHeight-1));
-		initialCorners.add(new Coordinate(boardWidth-1, 0));
-		initialCorners.add(new Coordinate(0, 0));
-		initialCorners.add(new Coordinate(boardWidth-1, boardHeight-1));
+		initialCorners.add(bottomLeft);
+		initialCorners.add(topRight);
+		initialCorners.add(topLeft);
+		initialCorners.add(bottomRight);
 		initialDirections.add(Direction.UP);
 		initialDirections.add(Direction.DOWN);
 		initialDirections.add(Direction.RIGHT);
