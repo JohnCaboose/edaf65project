@@ -24,6 +24,7 @@ public class SnakePainterThread extends Thread {
 
 	public void run() {
 		GameState previousGameState = null;
+		boolean deathReported = false;
 		while (true) {
 			GameState state = monitor.getGameState();
 			// TODO when race condition in view.println fixed, this line can be
@@ -60,9 +61,10 @@ public class SnakePainterThread extends Thread {
 					view.colorTileAt(c.x, c.y, color);
 				}
 			}
-			if (!state.getPlayerSnakes().get(monitor.getPlayerIdentity().ordinal()).isAlive()) {
+			if (!deathReported && !state.getPlayerSnakes().get(monitor.getPlayerIdentity().ordinal()).isAlive()) {
 				view.displayDeadSnakeStatus();
 				view.println("Your snake died :(");
+				deathReported = true;
 			}
 			if (state.isGameOver()) {
 				// System.out.println("Game is over, goodbye!");
@@ -72,6 +74,6 @@ public class SnakePainterThread extends Thread {
 			previousGameState = state;
 			view.setPreviousGameState(previousGameState);
 		}
-		System.err.println("paintsnakes is dead");
+		System.err.println("SnakePainterThread is dead");
 	}
 }
