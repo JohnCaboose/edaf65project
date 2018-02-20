@@ -15,7 +15,7 @@ public class GameState {
 	 * This lets players get ready for the game to start. 
 	 */
 	
-	//tickCounter is -1 when game is not started yet
+	// a negative tickCounter means the game has not started yet
 	//It counts from 0 to LONG_MAX and then the game behavior is undefined :) 
 	private long tickCounter = -1;
 	private final List<Snake> playerSnakes;
