@@ -41,3 +41,19 @@ Och jsonContents är jsonrepresentationen av ett Direction, GameState, och Playe
 [Redigeringssida för rapporten i Overleaf](https://www.overleaf.com/13873697rsgrjwmpkdqt)
 
 
+## Gör detta inför inlämning (och inget annat?)
+fixa ritning av färg (you are - färgen)
+
+flytta klasser för consistency osv
+
+uml på drawio
+
+paket ska använda proper xml (använd "" för attribut)
+
+gör diagram över paket och paketkrav
+
+rapport
+
+hemsida
+
+denna readme
