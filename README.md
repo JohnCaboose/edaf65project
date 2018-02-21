@@ -42,18 +42,18 @@ Och jsonContents är jsonrepresentationen av ett Direction, GameState, och Playe
 
 
 ## Gör detta inför inlämning (och inget annat?)
-fixa ritning av färg (you are - färgen)
+[x] fixa ritning av färg (you are - färgen)
 
-flytta klasser för consistency osv
+[ ] flytta klasser för consistency osv
 
-uml på drawio
+[ ] uml på drawio
 
-paket ska använda proper xml (använd "" för attribut)
+[ ] paket ska använda proper xml (använd "" för attribut)
 
-gör diagram över paket och paketkrav
+[ ] gör diagram över paket och paketkrav
 
-rapport
+[ ] rapport
 
-hemsida
+[ ] hemsida
 
-denna readme
+[ ] denna readme
