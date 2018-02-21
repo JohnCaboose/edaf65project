@@ -16,7 +16,7 @@ import client.view.View;
  * Run this class to start a client. Takes ip and port of server as input.
  */
 public class GameClient {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		String hostname = null;
 		int port = -1;
 
@@ -36,28 +36,28 @@ public class GameClient {
 			System.exit(1);
 		}
 
-		/* Starts communication with server. */
-		try {
-			Socket socket = new Socket(hostname, port);
-			DirectionMonitor directionMonitor = new DirectionMonitor();
-			ClientGameStateMonitor stateMonitor = new ClientGameStateMonitor();
-			new ServerReceiverThread(stateMonitor, socket).start();
-			new ServerSenderThread(directionMonitor, socket).start();
-			/*
-			 * TODO: send correct color to view constructor
-			 */
-			
-			String color = PlayerIdentityColorConverter.getColor(stateMonitor.getPlayerIdentity());
-			View view = new View(directionMonitor, color);
-			new SnakePainterThread(stateMonitor, view).start();
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-			System.err.println("Host not found:" + hostname);
-			System.exit(1);
-		} catch (IOException e) {
-			System.err.println("An IO Exception occurred.");
-			e.printStackTrace();
-			System.exit(1);
-		}
+		/* Starts communication with the game server. */
+		boolean reconnect = false;
+		do {
+			try {
+				Socket socket = new Socket(hostname, port);
+				reconnect = false;
+				DirectionMonitor directionMonitor = new DirectionMonitor();
+				ClientGameStateMonitor stateMonitor = new ClientGameStateMonitor();
+				new ServerReceiverThread(stateMonitor, socket).start();
+				new ServerSenderThread(directionMonitor, socket).start();
+				String color = PlayerIdentityColorConverter.getColor(stateMonitor.getPlayerIdentity());
+				View view = new View(directionMonitor, color);
+				new SnakePainterThread(stateMonitor, view).start();
+			} catch (UnknownHostException e) {
+				System.err.println("Host not found:" + hostname);
+				System.exit(1);
+			} catch (IOException e) {
+				System.err.println("Error: connection refused.");
+				System.err.println("Retrying in 5 seconds...");
+				reconnect = true;
+				Thread.sleep(5000);
+			}
+		} while (reconnect);
 	}
 }
