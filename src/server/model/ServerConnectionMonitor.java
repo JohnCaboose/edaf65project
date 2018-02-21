@@ -68,12 +68,12 @@ public class ServerConnectionMonitor {
 	 * Removes player from game, killing their snake if the game is running or otherwise waiting for more players
 	 * @param playerIdentity the identity of the player
 	 */
-	public synchronized void removePlayer(PlayerIdentity playerIdentity) {
-		if(this.allPlayersConnected()) {
-			gameStateMonitor.killSnake(playerIdentity);
-		}
+	public synchronized void removePlayer(PlayerIdentity playerIdentity) {		
 		Socket socket = playerSockets.get(playerIdentity);
 		if(socket != null) {
+			if(this.allPlayersConnected()) {
+				gameStateMonitor.killSnake(playerIdentity);
+			}
 			System.out.println("Removing player " + playerIdentity.name());
 			try {
 				socket.shutdownInput();

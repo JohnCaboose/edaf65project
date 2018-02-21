@@ -9,6 +9,7 @@ public class Snake {
 	// public int score;
 	private LinkedList<Coordinate> body;
 	private Direction travelDirection;
+	private Direction lastMovedDirection;
 	private boolean alive;
 
 	/**
@@ -34,6 +35,7 @@ public class Snake {
 		}
 		alive = true;
 		travelDirection = directionFromTailToHead;
+		lastMovedDirection = travelDirection;
 	}
 
 	/**
@@ -51,6 +53,7 @@ public class Snake {
 			newHead.x = oldHead.x;
 			newHead.y = oldHead.y;
 			newHead.move(direction);
+			lastMovedDirection = direction;
 		}
 	}
 
@@ -79,7 +82,7 @@ public class Snake {
 	 *            the direction to change to
 	 */
 	public void setDirection(Direction dir) {
-		if(travelDirection.getOppositeDirection() != dir) {
+		if(lastMovedDirection.getOppositeDirection() != dir) {
 			travelDirection = dir;
 		}
 		//TODO: make it so that it actually cant go into itself by fixing this
