@@ -1,17 +1,12 @@
 # View
 
-The class `View` is a monitor which holds a `JFrame` object which contains the GUI itself. The play field is represented by a grid of `Tile` objects. Every `Tile` on the play field can be colored by calling the `View.colorTileAt(int, int, String)` method. The play field is used to display the location and form of all snakes.
+The class `View` is a monitor which holds a `JFrame` object which contains the GUI itself. The play field is represented by a grid of `Tile` objects. Every `Tile` on the play field can be colored by calling the `View.colorTileAt(int, int, String)` method. The play field is used to display the location and form of all snakes. All color constants available in `java.awt.Color` are supported.
 
-At the time of writing, six different colors are supported:
+It is recommended to refrain from using some colors to paint the play field, as a handful of them are used for some specific use cases:
 
-* Pink
-* Green
-* Blue
-* Orange
-* (Red)
-* (Black)
+* Black -- used to represent an empty tile on the play field
 
-Black is currently used to represent an empty tile. Red is currently used in the top panel to signal to the user that their snake is dead. These are subject to change.
+* Red -- signaling to the user that their snake is dead. This is used in the top panel on the right hand side.
 
 ## Top Panel
 
