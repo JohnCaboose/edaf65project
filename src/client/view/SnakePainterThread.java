@@ -3,6 +3,7 @@ package client.view;
 import java.util.List;
 
 import client.model.ClientGameStateMonitor;
+import common.constants.Constants;
 import common.model.Coordinate;
 import common.model.GameState;
 import common.model.Snake;
@@ -16,10 +17,9 @@ public class SnakePainterThread extends Thread {
 		this.monitor = monitor;
 		this.view = view;
 		colors = new String[4];
-		colors[0] = "blue";
-		colors[1] = "green";
-		colors[2] = "pink";
-		colors[3] = "orange";
+		for (int i = 0; i < colors.length; i++) {
+			colors[i] = Constants.playerColors[i];
+		}
 	}
 
 	public void run() {

@@ -1,8 +1,5 @@
 package common.constants;
 
-import client.model.PlayerIdentityColorConverter;
-import common.model.PlayerIdentity;
-
 public class Constants {
 
 	/**
