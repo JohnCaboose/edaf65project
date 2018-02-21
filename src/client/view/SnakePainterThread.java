@@ -73,7 +73,6 @@ public class SnakePainterThread extends Thread {
 				break;
 			}
 			previousGameState = state;
-			view.setPreviousGameState(previousGameState);
 		}
 		System.err.println("SnakePainterThread is dead");
 	}

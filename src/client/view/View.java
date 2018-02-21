@@ -6,7 +6,6 @@ import javax.swing.SwingUtilities;
 import client.controller.UserInputInterpreter;
 import client.model.DirectionMonitor;
 import common.constants.Constants;
-import common.model.GameState;
 
 /* Monitor for the GUI */
 public class View {
@@ -14,7 +13,6 @@ public class View {
 	public static final int FIELD_SIZE_X = Constants.BOARD_WIDTH;
 	public static final int FIELD_SIZE_Y = Constants.BOARD_HEIGHT;
 	private MainFrame frame;
-	private GameState previousGameState;
 	private boolean visible;
 
 	/**
@@ -53,6 +51,7 @@ public class View {
 	 * field in the top panel.
 	 */
 	public synchronized void displayDeadSnakeStatus() {
+		blockWhileNotVisible();
 		frame.displayDeadSnakeStatus();
 	}
 
@@ -67,11 +66,7 @@ public class View {
 	 *            what color to paint on the specified tile
 	 */
 	public synchronized void colorTileAt(int x, int y, String color) {
-		try {
-			while (!visible)
-				wait();
-		} catch (Exception e) {
-		}
+		blockWhileNotVisible();
 		frame.colorTileAt(x, y, color);
 		notifyAll();
 	}
@@ -85,13 +80,7 @@ public class View {
 	 *            the text to display in the console window
 	 */
 	public synchronized void println(String content) {
-		while(!visible){
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
+		blockWhileNotVisible();
 		frame.println(content);
 	}
 
@@ -118,20 +107,14 @@ public class View {
 			}
 		}
 	}
-
-	/**
-	 * Submits the previous game state to this monitor. The state is used by the
-	 * key listener as help to determine if a given user input is legal or not.
-	 * 
-	 * @param previousGameState
-	 *            the previously retrieved game state from the server
-	 */
-	public synchronized void setPreviousGameState(GameState previousGameState) {
-		this.previousGameState = previousGameState;
-
-	}
-
-	public synchronized GameState getPreviousGameState() {
-		return previousGameState;
+	
+	private void blockWhileNotVisible() {
+		while (!visible) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

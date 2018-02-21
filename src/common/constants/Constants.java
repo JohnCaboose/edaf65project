@@ -16,9 +16,12 @@ public class Constants {
 
 	/** Defined as the time difference between any two given server ticks. */
 	public static final int MILLIS_PER_STATE_FRAME = 500;
-	
-	/**The amount of ticks that are "negative" before the game starts to make it count for five second*/
-	public static final int TICKS_UNTIL_ZERO = 5000/MILLIS_PER_STATE_FRAME;
+
+	/**
+	 * The amount of ticks that are "negative" before the game starts to make it
+	 * count for five seconds.
+	 */
+	public static final int TICKS_UNTIL_ZERO = 5000 / MILLIS_PER_STATE_FRAME;
 
 	/**
 	 * Defined as the frequency at which all snakes will grow. This value is
