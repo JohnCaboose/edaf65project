@@ -17,7 +17,7 @@ public class GameState {
 	
 	// a negative tickCounter means the game has not started yet
 	//It counts from 0 to LONG_MAX and then the game behavior is undefined :) 
-	private long tickCounter = -1;
+	private long tickCounter = -Constants.TICKS_UNTIL_ZERO;
 	private final List<Snake> playerSnakes;
 	private final int ORIGINAL_SNAKE_LENGTH = 5;
 	
@@ -109,19 +109,21 @@ public class GameState {
 	 * Performs a tick of the game logic
 	 */
 	public void performGameTick() {
-		//Temporary way of snakes to grow
-		
-		if((tickCounter*Constants.MILLIS_PER_STATE_FRAME) % Constants.MILLIS_BETWEEN_SNAKE_GROWTHS  == 0 && tickCounter > 1) {
-			for(int i = 0; i < playerSnakes.size(); i++) {
-				playerSnakes.get(i).grow();
+		if(tickCounter >= 0){
+			//Temporary way of snakes to grow
+			
+			if((tickCounter*Constants.MILLIS_PER_STATE_FRAME) % Constants.MILLIS_BETWEEN_SNAKE_GROWTHS  == 0 && tickCounter > 1) {
+				for(int i = 0; i < playerSnakes.size(); i++) {
+					playerSnakes.get(i).grow();
+				}
 			}
+			//move all snakes
+			for(int i = 0; i < playerSnakes.size(); i++) {
+				playerSnakes.get(i).moveForward();
+			}
+			//TODO: add spawning of fruit and that whole thing, if time allows and stuff 
+			performSnakeCollisionDetection();
 		}
-		//move all snakes
-		for(int i = 0; i < playerSnakes.size(); i++) {
-			playerSnakes.get(i).moveForward();
-		}
-		//TODO: add spawning of fruit and that whole thing, if time allows and stuff 
-		performSnakeCollisionDetection();
 		tickCounter++;
 	}
 	

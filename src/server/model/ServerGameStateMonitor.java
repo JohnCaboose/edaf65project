@@ -31,8 +31,9 @@ public class ServerGameStateMonitor {
 		//Coordinate.width = boardWidth;
 		//Coordinate.height = boardHeight;
 		
-		lastStateSent = -1;		
+		
 		gameState = new GameState(playerCount,boardWidth,boardHeight);
+		lastStateSent = gameState.getTickCounter();
 		updateJSONState();
 	}
 	

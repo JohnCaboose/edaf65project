@@ -95,13 +95,6 @@ public class GameServer implements Runnable {
 					System.err.println("Could not add new player as the game is already full.");
 				}				
 			}
-			//Wait for players to be ready
-			//TODO implement more robustly (use some sort of new packet type "PLAYER_READY" or something?)
-			try {
-				Thread.sleep(5000);
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
-			}
 			
 			//Start game
 			while (true) {
@@ -111,7 +104,7 @@ public class GameServer implements Runnable {
 					break;
 				}
 				try {
-					Thread.sleep(frameStartTime + common.constants.Constants.MILLIS_PER_STATE_FRAME - System.currentTimeMillis());
+					Thread.sleep(frameStartTime + Constants.MILLIS_PER_STATE_FRAME - System.currentTimeMillis());
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

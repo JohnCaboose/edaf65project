@@ -27,6 +27,7 @@ public class SnakePainterThread extends Thread {
 		boolean deathReported = false;
 		while (true) {
 			GameState state = monitor.getGameState();
+			view.println(""+state.getTickCounter());
 			// TODO when race condition in view.println fixed, this line can be
 			// used again
 			// view.println(String.format("#%d state received, updating view.",
