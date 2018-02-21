@@ -96,6 +96,7 @@ public class View {
 	 *         <code>false</code>
 	 */
 	public synchronized boolean isColoredAt(int x, int y) {
+		blockWhileNotVisible();
 		return frame.isColoredAt(x, y);
 	}
 
@@ -107,7 +108,7 @@ public class View {
 			}
 		}
 	}
-	
+
 	private void blockWhileNotVisible() {
 		while (!visible) {
 			try {
