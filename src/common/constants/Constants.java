@@ -1,5 +1,8 @@
 package common.constants;
 
+import client.model.PlayerIdentityColorConverter;
+import common.model.PlayerIdentity;
+
 public class Constants {
 
 	/**
@@ -29,5 +32,12 @@ public class Constants {
 	 * <code>Constants.MILLIS_PER_STATE_FRAME</code>.
 	 */
 	public static final int MILLIS_BETWEEN_SNAKE_GROWTHS = MILLIS_PER_STATE_FRAME * 10;
+
+	/**
+	 * Defines what player should get what color on their snake. The first
+	 * element of this array denotes the color of player one, the second element
+	 * for player two and so on.
+	 */
+	public static final String[] playerColors = { "blue", "green", "pink", "orange" };
 
 }

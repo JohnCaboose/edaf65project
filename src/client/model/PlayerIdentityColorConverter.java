@@ -1,24 +1,22 @@
 package client.model;
 
+import common.constants.Constants;
 import common.model.PlayerIdentity;
 
 public class PlayerIdentityColorConverter {
-	private static final String player1Color = "blue";
-	private static final String player2Color = "green";
-	private static final String player3Color = "pink";
-	private static final String player4Color = "orange";
 
 	public static String getColor(PlayerIdentity player) {
 		switch (player) {
 		case ONE:
-			return player1Color;
+			return Constants.playerColors[0];
 		case TWO:
-			return player2Color;
+			return Constants.playerColors[1];
 		case THREE:
-			return player3Color;
+			return Constants.playerColors[2];
 		case FOUR:
-			return player4Color;
+			return Constants.playerColors[3];
 		default:
+			System.err.println("Error in PlayerIdentityColorConverter.getColor");
 			return "black"; /* Should not happen */
 		}
 	}
