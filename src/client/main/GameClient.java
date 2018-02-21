@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 
 import client.model.ClientGameStateMonitor;
 import client.model.DirectionMonitor;
+import client.model.PlayerIdentityColorConverter;
 import client.network.ServerReceiverThread;
 import client.network.ServerSenderThread;
 import client.view.SnakePainterThread;
@@ -45,7 +46,9 @@ public class GameClient {
 			/*
 			 * TODO: send correct color to view constructor
 			 */
-			View view = new View(directionMonitor, "blue");
+			
+			String color = PlayerIdentityColorConverter.getColor(stateMonitor.getPlayerIdentity());
+			View view = new View(directionMonitor, color);
 			new SnakePainterThread(stateMonitor, view).start();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();

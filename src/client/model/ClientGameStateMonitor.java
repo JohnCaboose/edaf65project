@@ -8,18 +8,17 @@ public class ClientGameStateMonitor {
 	private GameState state;
 	private boolean hasNewGameState;
 	private PlayerIdentity playerIdentity;
-	
+
 	public ClientGameStateMonitor() {
 		state = null;
 	}
-	
+
 	public synchronized void setGameState(GameState state) {
 		this.state = state;
 		hasNewGameState = true;
 		notifyAll();
 	}
-	
-	
+
 	public synchronized GameState getGameState() {
 		while (!hasNewGameState)
 			try {
@@ -29,13 +28,19 @@ public class ClientGameStateMonitor {
 		hasNewGameState = false;
 		return state;
 	}
-	//TODO: make client interpret game being over and then shutting everything down typ
+	// TODO: make client interpret game being over and then shutting everything
+	// down typ
 
 	public synchronized void setPlayerIdentity(PlayerIdentity playerIdentityFromProtocolPacket) {
 		this.playerIdentity = playerIdentityFromProtocolPacket;
 	}
-	
-	public synchronized PlayerIdentity getPlayerIdentity(){
+
+	public synchronized PlayerIdentity getPlayerIdentity() {
+		while (playerIdentity == null)
+			try {
+				wait();
+			} catch (InterruptedException e) {
+			}
 		return this.playerIdentity;
 	}
 
