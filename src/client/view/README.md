@@ -6,7 +6,11 @@ It is recommended to refrain from using some colors to paint the play field, as 
 
 * Black -- used to represent an empty tile on the play field
 
-* Red -- signaling to the user that their snake is dead. This is used in the top panel on the right hand side.
+* Red -- signaling to the user that their snake is **dead**.
+
+* Green -- signaling to the user that their snake is **alive**.
+
+The red and green colors are meant to be used exclusively by the top panel.
 
 ## Top Panel
 

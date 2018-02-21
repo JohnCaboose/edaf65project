@@ -35,6 +35,6 @@ public class Constants {
 	 * element of this array denotes the color of player one, the second element
 	 * for player two and so on.
 	 */
-	public static final String[] playerColors = { "blue", "green", "pink", "orange" };
+	public static final String[] playerColors = { "blue", "magenta", "pink", "orange" };
 
 }
