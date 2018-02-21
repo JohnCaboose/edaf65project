@@ -3,6 +3,7 @@ package client.view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.lang.reflect.Field;
 
 import javax.swing.JLabel;
 
@@ -28,24 +29,23 @@ public class Tile extends JLabel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 	}
-	
+
 	public String getColor() {
 		return color;
 	}
-	
+
 	private Color stringToColorConverter(String arg) {
+		/*
+		 * Inspired by
+		 * https://stackoverflow.com/questions/2854043/converting-a-string-to-
+		 * color-in-java
+		 */
 		Color c;
-		if (arg.equals("pink")) {
-			c = Color.pink;
-		} else if (arg.equals("green")) {
-			c = Color.green;
-		} else if (arg.equals("blue")) {
-			c = Color.blue;
-		} else if (arg.equals("orange")) {
-			c = Color.orange;
-		} else if (arg.equals("red")) {
-			c = Color.red;
-		} else {
+		try {
+			Field field = Class.forName("java.awt.Color").getField(arg);
+			c = (Color) field.get(null);
+		} catch (Exception e) {
+			System.err.println("Tile.stringToColorConverter error. Using default color.");
 			c = Color.black; /* Default color */
 		}
 		return c;
