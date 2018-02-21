@@ -40,12 +40,12 @@ public class GameClient {
 			Socket socket = new Socket(hostname, port);
 			DirectionMonitor directionMonitor = new DirectionMonitor();
 			ClientGameStateMonitor stateMonitor = new ClientGameStateMonitor();
+			new ServerReceiverThread(stateMonitor, socket).start();
+			new ServerSenderThread(directionMonitor, socket).start();
 			/*
 			 * TODO: send correct color to view constructor
 			 */
 			View view = new View(directionMonitor, "blue");
-			new ServerReceiverThread(stateMonitor, socket).start();
-			new ServerSenderThread(directionMonitor, socket).start();
 			new SnakePainterThread(stateMonitor, view).start();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
