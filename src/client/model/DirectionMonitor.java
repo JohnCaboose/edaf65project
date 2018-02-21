@@ -4,12 +4,10 @@ import common.model.Direction;
 
 public class DirectionMonitor {
 	private Direction directionToSend;
-	private Direction previouslySentDirection;
 	private boolean hasNewDirection;
 
 	public DirectionMonitor() {
 		directionToSend = null;
-		previouslySentDirection = null;
 		hasNewDirection = false;
 	}
 
@@ -57,32 +55,5 @@ public class DirectionMonitor {
 		directionToSend = newInput;
 		hasNewDirection = true;
 		notifyAll();
-	}
-
-	/**
-	 * Called by the sender thread to notify what direction was just recently
-	 * sent to the game server. Used by the controller to determine if recent
-	 * input is legal or not.
-	 */
-	public synchronized void setAsSent(Direction recentlySentDirection) {
-		/*
-		 * TODO: the timing of which this method is called is wrong. Basically,
-		 * it has to be called at the same time as when the snake moves in order
-		 * to work. I have tried making the reader thread call this method by
-		 * interpreting the retrieved packet but it does not seem to work.
-		 */
-		previouslySentDirection = recentlySentDirection;
-		notifyAll();
-	}
-
-	/**
-	 * Returns the direction that was just recently sent to the game server.
-	 * This method will return <code>null</code> if no inputs have been sent to
-	 * the server yet.
-	 * 
-	 * @return the previously sent direction
-	 */
-	public synchronized Direction getPreviouslySentDirection() {
-		return previouslySentDirection;
 	}
 }

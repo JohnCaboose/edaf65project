@@ -43,8 +43,6 @@ public class ServerSenderThread extends Thread {
 					break;
 				}
 			}
-
-			directionMonitor.setAsSent(direction);
 			directionMonitor.directionSent();
 
 		}
