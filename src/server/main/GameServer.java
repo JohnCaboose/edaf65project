@@ -72,17 +72,19 @@ public class GameServer implements Runnable {
 	@Override
 	public void run() {
 		try (ServerSocket serverSocket = new ServerSocket(port)) {
-			//Wait for all players to connect
+			// Wait for all players to connect
 			new ServerSenderThread(gameStateMonitor, connectionMonitor).start();
 			while (!connectionMonitor.allPlayersConnected()) {
 				Socket socket = serverSocket.accept();
-				
+
 				PlayerIdentity playerIdentity;
 				try {
 					playerIdentity = connectionMonitor.addPlayer(socket);
-					new ServerReceiverThread(playerIdentity,gameStateMonitor,socket,connectionMonitor).start();
-					String identityMessage = PacketHandler.createProtocolPacket(PacketType.PLAYERIDENTITY, gson.toJson(playerIdentity, PlayerIdentity.class));
-					String stateMessage = PacketHandler.createProtocolPacket(PacketType.GAMESTATE, gameStateMonitor.getJsonState());
+					new ServerReceiverThread(playerIdentity, gameStateMonitor, socket, connectionMonitor).start();
+					String identityMessage = PacketHandler.createProtocolPacket(PacketType.PLAYERIDENTITY,
+							gson.toJson(playerIdentity, PlayerIdentity.class));
+					String stateMessage = PacketHandler.createProtocolPacket(PacketType.GAMESTATE,
+							gameStateMonitor.getJsonState());
 					try {
 						socket.getOutputStream().write(identityMessage.getBytes());
 						socket.getOutputStream().write(stateMessage.getBytes());
@@ -93,14 +95,14 @@ public class GameServer implements Runnable {
 					}
 				} catch (GameIsFullException e1) {
 					System.err.println("Could not add new player as the game is already full.");
-				}				
+				}
 			}
-			
-			//Start game
+
+			// Start game
 			while (true) {
 				long frameStartTime = System.currentTimeMillis();
 				gameStateMonitor.updateGameState();
-				if(gameStateMonitor.isGameOver()) {
+				if (gameStateMonitor.isGameOver()) {
 					break;
 				}
 				try {
@@ -113,29 +115,26 @@ public class GameServer implements Runnable {
 			e.printStackTrace();
 			System.exit(-1);
 		}
-		//Game is over
+		// Game is over
 		System.out.println("GameServer shutting down...");
 	}
 
 	/**
 	 * Starts the game server, this is run in the terminal separately from the
 	 * client. (The client being able to boot up a server will be added in a
-	 * later step.)
-	 * Note that game board size is currently fixed.
+	 * later step.) Note that game board size is currently fixed.
 	 * 
 	 * @param args
+	 *            args[0] = number of players (values from 1 to 4 acceptable,
+	 *            inclusive) <br/>
 	 *            the parameters for starting the game server, defined as:<br/>
-	 *            args[0] = portnumber (values from 1024 to 65535 acceptable,
+	 *            args[1] = portnumber (values from 1024 to 65535 acceptable,
 	 *            inclusive) <br/>
-	 *            args[1] = number of players (values from 1 to 4 acceptable,
-	 *            inclusive) <br/>
-
-	 * 
 	 */
 	public static void main(String[] args) {
 		if (args.length == 2) {
-			int port = Integer.parseInt(args[0]);
-			int playerCount = Integer.parseInt(args[1]);
+			int playerCount = Integer.parseInt(args[0]);
+			int port = Integer.parseInt(args[1]);
 			int width = Constants.BOARD_WIDTH;
 			int height = Constants.BOARD_HEIGHT;
 			try {
@@ -146,7 +145,8 @@ public class GameServer implements Runnable {
 				System.exit(-1);
 			}
 		} else {
-			System.err.println("Wrong number of arguments. See javadoc for class GameServer for more information.");
+			System.err.println("Wrong number of arguments.");
+			System.err.println("Expected format: GameServer [PLAYERCOUNT] [PORT]");
 		}
 
 	}
