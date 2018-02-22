@@ -1,5 +1,5 @@
 package common.model;
 
 public enum PacketType {
-	PLAYERIDENTITY,GAMESTATE,DIRECTION
+	PLAYERIDENTITY, GAMESTATE, DIRECTION
 }

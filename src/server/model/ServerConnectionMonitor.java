@@ -39,7 +39,8 @@ public class ServerConnectionMonitor {
 	public synchronized PlayerIdentity addPlayer(Socket socket) throws GameIsFullException {	
 		for(PlayerIdentity playerIdentity : playerSockets.keySet()) {
 			if(playerSockets.get(playerIdentity) == null) {
-				System.out.println("Adding new player " + playerIdentity);
+				//System.out.println("Adding new player " + playerIdentity);
+				System.out.println("A new player has successfully connected to the game!");
 				playerSockets.put(playerIdentity, socket);
 				return playerIdentity;
 			}
@@ -74,7 +75,7 @@ public class ServerConnectionMonitor {
 			if(this.allPlayersConnected()) {
 				gameStateMonitor.killSnake(playerIdentity);
 			}
-			System.out.println("Removing player " + playerIdentity.name());
+			//System.out.println("Removing player " + playerIdentity.name());
 			try {
 				socket.shutdownInput();
 				socket.close();

@@ -73,6 +73,12 @@ public class SnakePainterThread extends Thread {
 			}
 			previousGameState = state;
 		}
-		System.err.println("SnakePainterThread is dead");
+		//System.err.println("SnakePainterThread is dead");
+		try {
+			System.out.println("Game over. Client will close in 10 seconds.");
+			Thread.sleep(10000);
+			System.exit(0);
+		} catch (InterruptedException e) {
+		}
 	}
 }

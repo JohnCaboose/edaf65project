@@ -113,10 +113,10 @@ public class GameServer implements Runnable {
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.exit(-1);
+			System.exit(1);
 		}
 		// Game is over
-		System.out.println("GameServer shutting down...");
+		System.out.println("Game Server shutting down...");
 	}
 
 	/**
@@ -140,9 +140,10 @@ public class GameServer implements Runnable {
 			try {
 				GameServer gameServer = new GameServer(port, playerCount, width, height);
 				new Thread(gameServer).start();
+				System.out.println("Game Server started. Waiting for players to connect.");
 			} catch (IllegalArgumentException e) {
 				e.printStackTrace();
-				System.exit(-1);
+				System.exit(1);
 			}
 		} else {
 			System.err.println("Wrong number of arguments.");

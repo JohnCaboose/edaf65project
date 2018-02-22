@@ -60,7 +60,7 @@ public class ServerReceiverThread extends Thread {
 		} catch (IOException e) {
 			connectionMonitor.removePlayer(playerIdentity);
 		}
-		System.out.println(String.format("FromClientReceiver %s shutting down.", playerIdentity.name()));
+		//System.out.println(String.format("FromClientReceiver %s shutting down.", playerIdentity.name()));
 	}
 	
 }

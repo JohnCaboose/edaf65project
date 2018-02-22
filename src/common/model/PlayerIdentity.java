@@ -1,5 +1,5 @@
 package common.model;
 
 public enum PlayerIdentity {
-	ONE,TWO,THREE,FOUR
+	ONE, TWO, THREE, FOUR
 }

@@ -51,7 +51,7 @@ public class GameState {
 			for(Snake s2 : playerSnakes) {
 				if(s1.isCrashingIntoBodyOf(s2)) {
 					s1.kill();
-					System.out.println("Killing snake because of collision.");
+					//System.out.println("Killing snake because of collision.");
 				}
 			}
 		}
@@ -67,7 +67,7 @@ public class GameState {
 					if(s1Head.equals(s2Head)) {
 						s1.kill();
 						s2.kill();
-						System.out.println("Killing two snakes because of head on collision.");
+						//System.out.println("Killing two snakes because of head on collision.");
 					}
 				}
 			}
@@ -109,6 +109,10 @@ public class GameState {
 	 * Performs a tick of the game logic
 	 */
 	public void performGameTick() {
+		if (tickCounter == 0) {
+			System.out.println("The game has been started!");
+		}
+		
 		if(tickCounter >= 0){
 			//Temporary way of snakes to grow
 			

@@ -30,7 +30,7 @@ public class ClientSenderThread extends Thread {
 
 			if (socket != null) {
 				if (socket.isClosed()) {
-					System.err.println("ToServerSender dying");
+					//System.err.println("ToServerSender dying");
 					break;
 				}
 				try {
@@ -38,13 +38,13 @@ public class ClientSenderThread extends Thread {
 					socket.getOutputStream().flush();
 				} catch (IOException e) {
 					e.printStackTrace();
-					System.err.println("ToServerSender dying");
+					//System.err.println("ToServerSender dying");
 					break;
 				}
 			}
 			directionMonitor.directionSent();
 
 		}
-		System.err.println("ToServerSender shutting down.");
+		//System.err.println("ToServerSender shutting down.");
 	}
 }

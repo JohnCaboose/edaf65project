@@ -49,6 +49,7 @@ public class GameClient {
 				String color = PlayerIdentityColorConverter.getColor(stateMonitor.getPlayerIdentity());
 				View view = new View(directionMonitor, color);
 				new SnakePainterThread(stateMonitor, view).start();
+				System.out.println("Connected successfully to " + hostname + " using port " + port + ".");
 			} catch (UnknownHostException e) {
 				System.err.println("Host not found:" + hostname);
 				System.exit(1);

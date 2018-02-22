@@ -24,7 +24,7 @@ public class ServerSenderThread extends Thread {
 			String stateToSend = gameStateMonitor.getNewJsonState();
 			//This outprint could be removed for increased performance.
 			GameState gameState =  gson.fromJson(stateToSend, GameState.class);
-			System.out.println(String.format("#%d Game State broadcasting. " + (gameState.isGameOver() ? "Game is over." : ""), gameState.getTickCounter()));
+			//System.out.println(String.format("#%d Game State broadcasting. " + (gameState.isGameOver() ? "Game is over." : ""), gameState.getTickCounter()));
 			String packet = PacketHandler.createProtocolPacket(PacketType.GAMESTATE, stateToSend);
 			connectionMonitor.sendPacketToAllPlayers(packet);
 		} while (!gameStateMonitor.isGameOver());
@@ -33,7 +33,7 @@ public class ServerSenderThread extends Thread {
 			connectionMonitor.removePlayer(pi);
 			//gameStateMonitor.killSnake(pi);
 		}
-		System.out.println("ToClientsSender shutting down.");
+		//System.out.println("ToClientsSender shutting down.");
 	}
 
 }

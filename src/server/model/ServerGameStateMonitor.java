@@ -42,7 +42,7 @@ public class ServerGameStateMonitor {
 	 * This corresponds to a game logic "tick".
 	 */
 	public synchronized void updateGameState() {
-		System.out.println(String.format("#%d Game State being calculated.", (gameState.getTickCounter()+1)));
+		//System.out.println(String.format("#%d Game State being calculated.", (gameState.getTickCounter()+1)));
 		gameState.performGameTick();
 		updateJSONState();
 		this.notifyAll();
@@ -55,7 +55,7 @@ public class ServerGameStateMonitor {
 	 * @param playerIdentity the identity of the snake to kill
 	 */
 	public synchronized void killSnake(PlayerIdentity playerIdentity) {
-		System.out.println("Force-killing snake: " + playerIdentity.name());
+		//System.out.println("Force-killing snake: " + playerIdentity.name());
 		gameState.getPlayerSnakes().get(playerIdentity.ordinal()).kill();
 	}
 	
@@ -96,10 +96,8 @@ public class ServerGameStateMonitor {
 	public synchronized void changePlayerDirection(PlayerIdentity player, Direction direction) {
 		if(player.ordinal() < gameState.getPlayerSnakes().size()) {
 			Snake snake = gameState.getPlayerSnakes().get(player.ordinal());
-			Direction oldDirection = snake.getDirection();
 			snake.setDirection(direction);
-			Direction newDirection = snake.getDirection();
-			System.out.println("Changed direction of Snake " + player.name() +" from " + oldDirection + " to " + newDirection);
+			//System.out.println("Changed direction of Snake " + player.name() +" from " + oldDirection + " to " + newDirection);
 		}
 	}
 

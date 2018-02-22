@@ -54,12 +54,12 @@ public class ClientReceiverThread extends Thread {
 			}
 		} catch (IOException e) {
 			if(e.getMessage().equals("FromServerReceiver got end of stream.")) {
-				System.err.println("FromServerReceiver got end of stream.");
+				//System.err.println("FromServerReceiver got end of stream.");
 			}else {
 				e.printStackTrace();
 			}
 			
 		}
-		System.err.println("FromServerReceiver shutting down.");
+		//System.err.println("FromServerReceiver shutting down.");
 	}
 }
