@@ -10,12 +10,12 @@ import common.model.GameState;
 import common.model.PacketHandler;
 import common.model.PacketType;
 
-public class ServerReceiverThread extends Thread {
+public class ClientReceiverThread extends Thread {
 	private final ClientGameStateMonitor stateMonitor;
 	private Socket socket;
 	
 
-	public ServerReceiverThread(ClientGameStateMonitor stateMonitor, Socket socket) {
+	public ClientReceiverThread(ClientGameStateMonitor stateMonitor, Socket socket) {
 		this.stateMonitor = stateMonitor;
 		this.socket = socket;
 	}

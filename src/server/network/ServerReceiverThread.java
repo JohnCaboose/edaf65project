@@ -13,14 +13,13 @@ import common.model.PlayerIdentity;
 import server.model.ServerConnectionMonitor;
 import server.model.ServerGameStateMonitor;
 
-public class FromClientReceiver implements Runnable {
-
+public class ServerReceiverThread extends Thread {
 	private final PlayerIdentity playerIdentity;
 	private final ServerGameStateMonitor gameStateMonitor;
 	private final Socket socket;
 	private final ServerConnectionMonitor connectionMonitor;
 
-	public FromClientReceiver(PlayerIdentity playerIdentity, ServerGameStateMonitor gameStateMonitor, Socket socket, ServerConnectionMonitor connectionMonitor) {
+	public ServerReceiverThread(PlayerIdentity playerIdentity, ServerGameStateMonitor gameStateMonitor, Socket socket, ServerConnectionMonitor connectionMonitor) {
 		this.playerIdentity = playerIdentity;
 		this.gameStateMonitor = gameStateMonitor;
 		this.socket = socket;

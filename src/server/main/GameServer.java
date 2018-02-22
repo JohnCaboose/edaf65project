@@ -13,8 +13,8 @@ import common.model.PlayerIdentity;
 import server.exceptions.GameIsFullException;
 import server.model.ServerConnectionMonitor;
 import server.model.ServerGameStateMonitor;
-import server.network.FromClientReceiver;
-import server.network.ToClientsSender;
+import server.network.ServerReceiverThread;
+import server.network.ServerSenderThread;
 
 public class GameServer implements Runnable {
 	private final int port;
@@ -73,14 +73,14 @@ public class GameServer implements Runnable {
 	public void run() {
 		try (ServerSocket serverSocket = new ServerSocket(port)) {
 			//Wait for all players to connect
-			new Thread(new ToClientsSender(gameStateMonitor, connectionMonitor)).start();
+			new ServerSenderThread(gameStateMonitor, connectionMonitor).start();
 			while (!connectionMonitor.allPlayersConnected()) {
 				Socket socket = serverSocket.accept();
 				
 				PlayerIdentity playerIdentity;
 				try {
 					playerIdentity = connectionMonitor.addPlayer(socket);
-					new Thread(new FromClientReceiver(playerIdentity,gameStateMonitor,socket,connectionMonitor)).start();
+					new ServerReceiverThread(playerIdentity,gameStateMonitor,socket,connectionMonitor).start();
 					String identityMessage = PacketHandler.createProtocolPacket(PacketType.PLAYERIDENTITY, gson.toJson(playerIdentity, PlayerIdentity.class));
 					String stateMessage = PacketHandler.createProtocolPacket(PacketType.GAMESTATE, gameStateMonitor.getJsonState());
 					try {

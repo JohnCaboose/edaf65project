@@ -7,8 +7,8 @@ import java.net.UnknownHostException;
 import client.model.ClientGameStateMonitor;
 import client.model.DirectionMonitor;
 import client.model.PlayerIdentityColorConverter;
-import client.network.ServerReceiverThread;
-import client.network.ServerSenderThread;
+import client.network.ClientReceiverThread;
+import client.network.ClientSenderThread;
 import client.view.SnakePainterThread;
 import client.view.View;
 
@@ -44,8 +44,8 @@ public class GameClient {
 				reconnect = false;
 				DirectionMonitor directionMonitor = new DirectionMonitor();
 				ClientGameStateMonitor stateMonitor = new ClientGameStateMonitor();
-				new ServerReceiverThread(stateMonitor, socket).start();
-				new ServerSenderThread(directionMonitor, socket).start();
+				new ClientReceiverThread(stateMonitor, socket).start();
+				new ClientSenderThread(directionMonitor, socket).start();
 				String color = PlayerIdentityColorConverter.getColor(stateMonitor.getPlayerIdentity());
 				View view = new View(directionMonitor, color);
 				new SnakePainterThread(stateMonitor, view).start();

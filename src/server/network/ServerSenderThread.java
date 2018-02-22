@@ -9,17 +9,16 @@ import common.model.PlayerIdentity;
 import server.model.ServerConnectionMonitor;
 import server.model.ServerGameStateMonitor;
 
-public class ToClientsSender implements Runnable {
+public class ServerSenderThread extends Thread {
 	private final ServerGameStateMonitor gameStateMonitor;
 	private final ServerConnectionMonitor connectionMonitor;
 	private final Gson gson = new Gson();
 
-	public ToClientsSender(ServerGameStateMonitor gameStateMonitor, ServerConnectionMonitor connectionMonitor) {
+	public ServerSenderThread(ServerGameStateMonitor gameStateMonitor, ServerConnectionMonitor connectionMonitor) {
 		this.gameStateMonitor = gameStateMonitor;
 		this.connectionMonitor = connectionMonitor;
 	}
 
-	@Override
 	public void run() {
 		do {
 			String stateToSend = gameStateMonitor.getNewJsonState();

@@ -10,17 +10,16 @@ import common.model.Direction;
 import common.model.PacketHandler;
 import common.model.PacketType;
 
-public class ServerSenderThread extends Thread {
+public class ClientSenderThread extends Thread {
 	private final DirectionMonitor directionMonitor;
 	private final Gson gson = new Gson();
 	private Socket socket = null;
 
-	public ServerSenderThread(DirectionMonitor directionMonitor, Socket socket) {
+	public ClientSenderThread(DirectionMonitor directionMonitor, Socket socket) {
 		this.directionMonitor = directionMonitor;
 		this.socket = socket;
 	}
 
-	@Override
 	public void run() {
 		while (true) {
 			// TODO: Make it so that you don't have to press a button after game
