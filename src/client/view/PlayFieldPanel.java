@@ -6,10 +6,10 @@ import java.awt.GridBagLayout;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class MiddlePanel extends JPanel {
+public class PlayFieldPanel extends JPanel {
 	private Tile[][] playField;
 
-	public MiddlePanel(int rows, int cols) {
+	public PlayFieldPanel(int rows, int cols) {
 		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		playField = new Tile[rows][cols];

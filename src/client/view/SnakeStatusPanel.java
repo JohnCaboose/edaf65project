@@ -9,11 +9,11 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
-public class TopPanel extends JPanel {
+public class SnakeStatusPanel extends JPanel {
 	private final Font font = new Font("arial", Font.BOLD, 24);
 	private String aliveColor;
 	private Tile aliveTile;
-	public TopPanel(String snakeColor) {
+	public SnakeStatusPanel(String snakeColor) {
 		aliveColor = "green";
 		setLayout(new GridLayout(1, 2));
 		setBorder(new EmptyBorder(5, 5, 5, 5));

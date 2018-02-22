@@ -7,16 +7,16 @@ import javax.swing.JFrame;
 public class MainFrame extends JFrame {
 
 	// TODO: better names
-	private TopPanel top;
-	private MiddlePanel middle;
-	private BottomPanel bottom;
+	private SnakeStatusPanel top;
+	private PlayFieldPanel middle;
+	private ConsolePanel bottom;
 
 	public MainFrame(String title, String snakeColor, int rows, int cols) {
 		super(title);
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-		add(top = new TopPanel(snakeColor));
-		add(middle = new MiddlePanel(rows, cols));
-		add(bottom = new BottomPanel());
+		add(top = new SnakeStatusPanel(snakeColor));
+		add(middle = new PlayFieldPanel(rows, cols));
+		add(bottom = new ConsolePanel());
 		setFocusable(true);
 	}
 

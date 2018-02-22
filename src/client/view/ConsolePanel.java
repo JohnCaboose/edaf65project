@@ -10,12 +10,12 @@ import javax.swing.JTextArea;
 import javax.swing.border.EmptyBorder;
 
 @SuppressWarnings("serial")
-public class BottomPanel extends JPanel {
+public class ConsolePanel extends JPanel {
 	private JTextArea textArea;
 	private boolean autoscroll;
 	private boolean firstLine;
 
-	public BottomPanel() {
+	public ConsolePanel() {
 		setLayout(new GridLayout(1, 1));
 		setBorder(new EmptyBorder(5, 5, 5, 5));
 		textArea = new JTextArea(10, 1);
