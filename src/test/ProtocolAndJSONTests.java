@@ -20,7 +20,7 @@ import common.model.PacketType;
 import common.model.PlayerIdentity;
 import common.model.Snake;
 
-
+/* TODO: make tests pass again or remove. */
 public class ProtocolAndJSONTests {
 
 	private static Gson gson;
